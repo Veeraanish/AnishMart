@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AnishMart - Wishlist</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#333;
+}
+
+/* HEADER */
+
+header{
+    background:white;
+    padding:18px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#667eea;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    text-decoration:none;
+    color:#444;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#667eea;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-align:center;
+    padding:55px 20px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+/* CONTAINER */
+
+.container{
+    width:90%;
+    max-width:1250px;
+    margin:35px auto;
+}
+
+.wishlist-info{
+    margin-bottom:20px;
+    font-weight:bold;
+    color:#666;
+}
+
+/* PRODUCT GRID */
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.product-card{
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.product-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 28px rgba(0,0,0,.14);
+}
+
+.product-icon{
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f4f5ff;
+    border-radius:12px;
+    font-size:70px;
+    margin-bottom:18px;
+}
+
+.category{
+    display:inline-block;
+    background:#eeeaff;
+    color:#667eea;
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.product-card h3{
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.description{
+    color:#777;
+    font-size:14px;
+    line-height:1.5;
+    min-height:42px;
+    margin-bottom:12px;
+}
+
+.price{
+    color:#667eea;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.stock{
+    color:#16803a;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.out-stock{
+    color:#d93025;
+}
+
+/* BUTTONS */
+
+.cart-btn,
+.remove-btn{
+    width:100%;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.cart-btn{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    margin-bottom:9px;
+}
+
+.remove-btn{
+    background:#fff0f0;
+    color:#d93025;
+    border:1px solid #ffd0d0;
+}
+
+.cart-btn:hover,
+.remove-btn:hover{
+    opacity:.9;
+}
+
+.cart-btn:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+/* EMPTY */
+
+.empty{
+    background:white;
+    grid-column:1/-1;
+    text-align:center;
+    padding:70px 20px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.empty-icon{
+    font-size:70px;
+    margin-bottom:15px;
+}
+
+.empty h2{
+    margin-bottom:10px;
+}
+
+.empty p{
+    color:#777;
+    margin-bottom:20px;
+}
+
+.shop-btn{
+    display:inline-block;
+    text-decoration:none;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    padding:12px 22px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* MESSAGE */
+
+.message{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#222;
+    color:white;
+    padding:15px 22px;
+    border-radius:8px;
+    display:none;
+    z-index:2000;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:60px;
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+footer p{
+    color:#bbb;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .products-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:750px){
+
+    header{
+        padding:15px 25px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav{
+        gap:15px;
+        justify-content:center;
+    }
+
+    .products-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:500px){
+
+    .products-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🛒 AnishMart
+    </div>
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a href="wishlist.html">
+            ❤️ Wishlist
+        </a>
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+        <a href="orders.html">
+            Orders
+        </a>
+
+        <a href="index.html" onclick="logout()">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>
+        ❤️ My Wishlist
+    </h1>
+
+    <p>
+        Save your favourite products and shop them anytime
+    </p>
+
+</section>
+
+
+<div class="container">
+
+    <div
+        id="wishlistInfo"
+        class="wishlist-info"
+    >
+        Loading wishlist...
+    </div>
+
+    <div
+        id="wishlistContainer"
+        class="products-grid"
+    ></div>
+
+</div>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<footer>
+
+    <p>
+        © 2026 AnishMart. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   LOGIN CHECK
+========================================= */
+
+const storedUser =
+    localStorage.getItem(
+        "anishmartUser"
+    );
+
+
+if(!storedUser){
+
+    alert(
+        "Please login to continue."
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+let currentUser;
+
+
+try{
+
+    currentUser =
+        JSON.parse(
+            storedUser
+        );
+
+}catch(error){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+if(
+    !currentUser ||
+    !currentUser.id ||
+    currentUser.role !== "buyer"
+){
+
+    alert(
+        "Buyer login required."
+    );
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+const buyerId =
+    currentUser.id;
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const wishlistContainer =
+    document.getElementById(
+        "wishlistContainer"
+    );
+
+
+const wishlistInfo =
+    document.getElementById(
+        "wishlistInfo"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+}
+
+
+/* =========================================
+   LOAD WISHLIST
+========================================= */
+
+async function loadWishlist(){
+
+    try{
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/wishlist/${buyerId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            throw new Error(
+                data.message ||
+                "Failed to load wishlist"
+            );
+
+        }
+
+
+        const wishlist =
+            data.wishlist || [];
+
+
+        wishlistInfo.textContent =
+
+            `${wishlist.length} wishlist item${wishlist.length !== 1 ? "s" : ""}`;
+
+
+        renderWishlist(
+            wishlist
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        wishlistInfo.textContent =
+            "";
+
+
+        wishlistContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h2>
+                    Unable to Load Wishlist
+                </h2>
+
+                <p>
+                    Please make sure the AnishMart server is running.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   PRODUCT ICON
+========================================= */
+
+function getProductIcon(
+    category
+){
+
+    switch(
+        String(
+            category || ""
+        ).toLowerCase()
+    ){
+
+        case "electronics":
+            return "📱";
+
+        case "books":
+            return "📚";
+
+        case "fashion":
+            return "👕";
+
+        case "home":
+            return "🏠";
+
+        case "groceries":
+            return "🛒";
+
+        default:
+            return "🛍️";
+
+    }
+
+}
+
+
+/* =========================================
+   RENDER WISHLIST
+========================================= */
+
+function renderWishlist(
+    wishlist
+){
+
+    if(
+        wishlist.length === 0
+    ){
+
+        wishlistContainer.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🤍
+                </div>
+
+                <h2>
+                    Your Wishlist is Empty
+                </h2>
+
+                <p>
+                    Add products you love to your wishlist.
+                </p>
+
+                <a
+                    class="shop-btn"
+                    href="products.html"
+                >
+                    🛍️ Browse Products
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    wishlistContainer.innerHTML =
+        wishlist.map(
+            product => {
+
+
+                const stock =
+                    Number(
+                        product.stock
+                    );
+
+
+                const outOfStock =
+                    stock <= 0;
+
+
+                return `
+
+                    <div class="product-card">
+
+                        <div class="product-icon">
+
+                            ${getProductIcon(
+                                product.category
+                            )}
+
+                        </div>
+
+
+                        <span class="category">
+
+                            ${escapeHTML(
+                                product.category
+                            )}
+
+                        </span>
+
+
+                        <h3>
+
+                            ${escapeHTML(
+                                product.name
+                            )}
+
+                        </h3>
+
+
+                        <p class="description">
+
+                            ${
+                                product.description
+                                ?
+                                escapeHTML(
+                                    product.description
+                                )
+                                :
+                                "Quality product from AnishMart"
+                            }
+
+                        </p>
+
+
+                        <div class="price">
+
+                            ₹${Number(
+                                product.price
+                            ).toLocaleString(
+                                "en-IN"
+                            )}
+
+                        </div>
+
+
+                        <div
+                            class="${
+                                outOfStock
+                                ? "stock out-stock"
+                                : "stock"
+                            }"
+                        >
+
+                            ${
+                                outOfStock
+                                ? "Out of Stock"
+                                : `In Stock (${stock})`
+                            }
+
+                        </div>
+
+
+                        <button
+                            class="cart-btn"
+                            ${
+                                outOfStock
+                                ? "disabled"
+                                : ""
+                            }
+                            onclick="addToCart(${product.product_id})"
+                        >
+
+                            ${
+                                outOfStock
+                                ? "Out of Stock"
+                                : "🛒 Add to Cart"
+                            }
+
+                        </button>
+
+
+                        <button
+                            class="remove-btn"
+                            onclick="removeFromWishlist(${product.product_id})"
+                        >
+
+                            🗑️ Remove from Wishlist
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+        ).join("");
+
+}
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+async function addToCart(
+    productId
+){
+
+    try{
+
+        const response =
+            await fetch(
+
+                "http://localhost:5000/api/cart/add",
+
+                {
+
+                    method:
+                        "POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            buyer_id:
+                                buyerId,
+
+                            product_id:
+                                productId,
+
+                            quantity:
+                                1
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+
+                data.message ||
+                "❌ Failed to add product to cart"
+
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "✅ Product added to cart!"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showMessage(
+            "❌ Unable to add product to cart"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   REMOVE FROM WISHLIST
+========================================= */
+
+async function removeFromWishlist(
+    productId
+){
+
+    const confirmRemove =
+        confirm(
+            "Remove this product from your wishlist?"
+        );
+
+
+    if(!confirmRemove){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+
+                "http://localhost:5000/api/wishlist/remove",
+
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            buyer_id:
+                                buyerId,
+
+                            product_id:
+                                productId
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+
+                data.message ||
+                "❌ Failed to remove product"
+
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "🗑️ Removed from wishlist"
+        );
+
+
+        await loadWishlist();
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showMessage(
+            "❌ Unable to remove product"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHTML(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(
+            value || ""
+        );
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(
+    text
+){
+
+    message.textContent =
+        text;
+
+
+    message.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            message.style.display =
+                "none";
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadWishlist();
+
+</script>
+
+</body>
+</html>

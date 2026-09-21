@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AnishMart - Register</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+        }
+
+        .register-container {
+            width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            color: #667eea;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #667eea;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .register-btn:hover {
+            background: #5568d8;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <div class="logo">
+            <h1>🛒 AnishMart</h1>
+        </div>
+
+        <p class="welcome">
+            Create your account and start shopping.
+        </p>
+
+        <form id="registerForm">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Create a password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="role">Account Type</label>
+
+                <select id="role">
+                    <option value="buyer">Buyer</option>
+                    <option value="seller">Seller</option>
+                </select>
+            </div>
+
+            <button type="submit" class="register-btn">
+                Create Account
+            </button>
+
+        </form>
+
+        <p id="message"></p>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="index.html">Login</a>
+        </div>
+
+    </div>
+
+    <script>
+
+        document
+            .getElementById("registerForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+                const name =
+                    document.getElementById("name").value;
+
+                const email =
+                    document.getElementById("email").value;
+
+                const password =
+                    document.getElementById("password").value;
+
+                const role =
+                    document.getElementById("role").value;
+
+                const message =
+                    document.getElementById("message");
+
+                try {
+
+                    const response = await fetch(
+                        "http://localhost:5000/api/users/register",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                name: name,
+                                email: email,
+                                password: password,
+                                role: role
+                            })
+                        }
+                    );
+
+                    const data = await response.json();
+
+                    message.textContent = data.message;
+
+                    if (data.success) {
+
+                        message.style.color = "green";
+
+                        document
+                            .getElementById("registerForm")
+                            .reset();
+
+                    } else {
+
+                        message.style.color = "red";
+
+                    }
+
+                } catch (error) {
+
+                    message.textContent =
+                        "Unable to connect to server";
+
+                    message.style.color = "red";
+
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

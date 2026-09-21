@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AnishMart - Order Details</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #222;
+        }
+
+        header {
+            background: #4f46e5;
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn,
+        .print-btn {
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .header-btn {
+            background: white;
+            color: #4f46e5;
+        }
+
+        .print-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .invoice-header {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand h2 {
+            color: #4f46e5;
+            font-size: 28px;
+        }
+
+        .brand p {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .invoice-title {
+            text-align: right;
+        }
+
+        .invoice-title h1 {
+            color: #4f46e5;
+        }
+
+        .invoice-title p {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.08);
+        }
+
+        .card h2 {
+            color: #4f46e5;
+            margin-bottom: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 18px;
+        }
+
+        .detail-box {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 9px;
+        }
+
+        .label {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .PLACED {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .PROCESSING {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .SHIPPED {
+            background: #ecfeff;
+            color: #0e7490;
+        }
+
+        .DELIVERED {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+
+        .CANCELLED {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f3f4ff;
+            color: #4f46e5;
+        }
+
+        .total-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .grand-total {
+            background: #f3f4ff;
+            color: #4f46e5;
+            padding: 16px 22px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .invoice-footer {
+            text-align: center;
+            color: #777;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .error {
+            text-align: center;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        @media(max-width:700px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .header-btn,
+            .print-btn {
+                flex: 1;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .invoice-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .invoice-title {
+                text-align: left;
+            }
+        }
+
+
+        .floating-print-btn {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 2000;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            background: #22c55e;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0,0,0,.22);
+        }
+
+        .floating-print-btn:hover {
+            background: #16a34a;
+        }
+
+        @media(max-width:700px) {
+            .floating-print-btn {
+                right: 14px;
+                bottom: 14px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
+        /* ==========================
+           PRINT INVOICE
+           ========================== */
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            header {
+                display: none;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .invoice-header,
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+
+            .detail-box {
+                background: white;
+                border: 1px solid #eee;
+            }
+
+            .invoice-header {
+                margin-top: 0;
+            }
+
+            .no-print,
+            .floating-print-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>📦 Order Details</h1>
+
+    <div class="header-actions">
+
+        <button
+            class="print-btn"
+            onclick="printInvoice()"
+        >
+            🖨️ Print Invoice
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="backToOrders()"
+        >
+            ← Orders
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="goDashboard()"
+        >
+            Dashboard
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<div
+    class="container"
+    id="mainContainer"
+>
+
+    <div class="card loading">
+        Loading order details...
+    </div>
+
+</div>
+
+
+
+<button
+    type="button"
+    class="floating-print-btn no-print"
+    onclick="printInvoice()"
+>
+    🖨️ Print Invoice
+</button>
+
+<script>
+
+const currentUser =
+    JSON.parse(
+        localStorage.getItem("anishmartUser")
+    );
+
+
+if (
+    !currentUser ||
+    currentUser.role !== "admin"
+) {
+    window.location.href = "index.html";
+}
+
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const orderId =
+    params.get("id");
+
+
+if (!orderId) {
+
+    showError(
+        "Order ID is missing."
+    );
+
+} else {
+
+    loadOrderDetails();
+}
+
+
+// ==============================
+// LOAD ORDER
+// ==============================
+
+async function loadOrderDetails() {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/orders/${encodeURIComponent(orderId)}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load order details"
+            );
+        }
+
+
+        renderOrder(
+            data.order,
+            data.items || []
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "ORDER DETAILS ERROR:",
+            error
+        );
+
+        showError(
+            error.message
+        );
+    }
+}
+
+
+// ==============================
+// RENDER ORDER
+// ==============================
+
+function renderOrder(order, items) {
+
+    const container =
+        document.getElementById(
+            "mainContainer"
+        );
+
+
+    const address =
+        [
+            order.address,
+            order.city,
+            order.state,
+            order.pincode
+        ]
+        .filter(Boolean)
+        .join(", ");
+
+
+    const status =
+        String(
+            order.status || ""
+        ).toUpperCase();
+
+
+    const paymentStatus =
+        String(
+            order.payment_status || "-"
+        ).toUpperCase();
+
+
+    let itemsHtml = "";
+
+
+    if (items.length === 0) {
+
+        itemsHtml = `
+            <tr>
+                <td colspan="5"
+                    style="text-align:center;">
+                    No items found.
+                </td>
+            </tr>
+        `;
+
+    } else {
+
+        itemsHtml =
+            items.map(
+                (item, index) => {
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${index + 1}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    item.product_name ||
+                                    `Product #${item.product_id}`
+                                )}
+                            </td>
+
+                            <td>
+                                ${Number(
+                                    item.quantity || 0
+                                )}
+                            </td>
+
+                            <td>
+                                ₹${Number(
+                                    item.unit_price || 0
+                                ).toFixed(2)}
+                            </td>
+
+                            <td>
+                                ₹${Number(
+                                    item.item_total || 0
+                                ).toFixed(2)}
+                            </td>
+
+                        </tr>
+                    `;
+                }
+            ).join("");
+    }
+
+
+    container.innerHTML = `
+
+        <!-- INVOICE HEADING -->
+
+        <div class="invoice-header">
+
+            <div class="brand">
+
+                <h2>
+                    AnishMart
+                </h2>
+
+                <p>
+                    Smart Shopping
+                </p>
+
+            </div>
+
+
+            <div class="invoice-title">
+
+                <h1>
+                    INVOICE
+                </h1>
+
+                <p>
+                    Order #${escapeHtml(order.id)}
+                </p>
+
+                <p>
+                    ${formatDate(order.created_at)}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER INFORMATION -->
+
+        <div class="card">
+
+            <h2>
+                Order Information
+            </h2>
+
+
+            <div class="details-grid">
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Order ID
+                    </div>
+
+                    <div class="value">
+                        #${escapeHtml(order.id)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Order Date
+                    </div>
+
+                    <div class="value">
+                        ${formatDate(
+                            order.created_at
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Order Status
+                    </div>
+
+                    <div class="value">
+
+                        <span
+                            class="status ${status}"
+                        >
+                            ${escapeHtml(status)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Payment Method
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            order.payment_method || "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Payment Status
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            paymentStatus
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Buyer ID
+                    </div>
+
+                    <div class="value">
+                        #${escapeHtml(
+                            order.buyer_id || "-"
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMER -->
+
+        <div class="card">
+
+            <h2>
+                👤 Customer & Delivery
+            </h2>
+
+
+            <div class="details-grid">
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Buyer Name
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            order.buyer_name || "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Buyer Email
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            order.buyer_email || "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Customer Name
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            order.customer_name || "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Phone
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            order.phone || "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Delivery Address
+                    </div>
+
+                    <div class="value">
+                        ${escapeHtml(
+                            address || "-"
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div class="card">
+
+            <h2>
+                🛒 Ordered Products
+            </h2>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        ${itemsHtml}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="total-section">
+
+                <div class="grand-total">
+
+                    Grand Total:
+                    ₹${Number(
+                        order.total_amount || 0
+                    ).toFixed(2)}
+
+                </div>
+
+            </div>
+
+
+            <div class="invoice-footer">
+
+                <strong>
+                    Thank you for shopping with AnishMart!
+                </strong>
+
+                <br><br>
+
+                This is a computer-generated invoice.
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+// ==============================
+// PRINT
+// ==============================
+
+function printInvoice() {
+
+    window.print();
+}
+
+
+// ==============================
+// ERROR
+// ==============================
+
+function showError(message) {
+
+    document.getElementById(
+        "mainContainer"
+    ).innerHTML = `
+
+        <div class="card error">
+            ${escapeHtml(message)}
+        </div>
+
+    `;
+}
+
+
+// ==============================
+// DATE
+// ==============================
+
+function formatDate(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+    return new Date(
+        value
+    ).toLocaleString();
+}
+
+
+// ==============================
+// SAFE TEXT
+// ==============================
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(text ?? "");
+
+    return div.innerHTML;
+}
+
+
+// ==============================
+// NAVIGATION
+// ==============================
+
+function backToOrders() {
+
+    window.location.href =
+        "admin-orders.html";
+}
+
+
+function goDashboard() {
+
+    window.location.href =
+        "admin-dashboard.html";
+}
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+        "index.html";
+}
+
+</script>
+
+</body>
+</html>

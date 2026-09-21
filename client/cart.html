@@ -1,0 +1,3219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AnishMart - Cart</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f7fb;
+
+            color: #333;
+
+        }
+
+
+        header {
+
+            background: white;
+
+            padding: 18px 60px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.08);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .logo {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #667eea;
+
+        }
+
+
+        nav {
+
+            display: flex;
+
+            gap: 25px;
+
+        }
+
+
+        nav a {
+
+            text-decoration: none;
+
+            color: #444;
+
+            font-weight: bold;
+
+        }
+
+
+        nav a:hover {
+
+            color: #667eea;
+
+        }
+
+
+        .page-header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 55px 20px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 40px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .page-header p {
+
+            font-size: 17px;
+
+            opacity: 0.9;
+
+        }
+
+
+        .container {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+        }
+
+
+        .cart-layout {
+
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr;
+
+            gap: 30px;
+
+        }
+
+
+        .cart-section,
+        .summary {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .cart-section h2,
+        .summary h2 {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .cart-item {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 20px 0;
+
+            border-bottom:
+                1px solid #eee;
+
+        }
+
+
+        .cart-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .product-info {
+
+            flex: 1;
+
+        }
+
+
+        .product-info h3 {
+
+            color: #333;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .category {
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .price {
+
+            color: #667eea;
+
+            font-weight: bold;
+
+            font-size: 18px;
+
+        }
+
+
+        .quantity-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        .quantity-btn {
+
+            width: 34px;
+
+            height: 34px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #667eea;
+
+            color: white;
+
+            font-size: 19px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .quantity-btn:hover {
+
+            opacity: 0.85;
+
+        }
+
+
+        .quantity-btn:disabled {
+
+            background: #bbb;
+
+            cursor: not-allowed;
+
+        }
+
+
+        .quantity-number {
+
+            min-width: 35px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            font-size: 16px;
+
+        }
+
+
+        .item-total {
+
+            font-weight: bold;
+
+            font-size: 17px;
+
+            min-width: 110px;
+
+            text-align: right;
+
+        }
+
+
+        .remove-btn {
+
+            border: none;
+
+            background: #ffe5e5;
+
+            color: #d93025;
+
+            padding: 9px 12px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .remove-btn:hover {
+
+            background: #ffd0d0;
+
+        }
+
+
+        .summary-row {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            margin: 15px 0;
+
+            font-size: 16px;
+
+        }
+
+
+        .summary-total {
+
+            border-top:
+                1px solid #ddd;
+
+            padding-top: 18px;
+
+            margin-top: 20px;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+        }
+
+
+        .checkout-btn {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 15px;
+
+            margin-top: 25px;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .checkout-btn:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        .empty-cart {
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+        }
+
+
+        .empty-cart-icon {
+
+            font-size: 70px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .empty-cart h2 {
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .empty-cart p {
+
+            color: #777;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .shop-btn {
+
+            display: inline-block;
+
+            padding: 13px 25px;
+
+            background: #667eea;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+        }
+
+
+        .message {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+
+            min-height: 20px;
+
+        }
+
+
+        .success {
+
+            color: #16803a;
+
+        }
+
+
+        .error {
+
+            color: #d93025;
+
+        }
+
+
+        /* CHECKOUT */
+
+        .checkout-form {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            margin-top: 30px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, .08);
+
+            display: none;
+
+        }
+
+
+        .checkout-form.active {
+
+            display: block;
+
+        }
+
+
+        .checkout-form h2 {
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .form-subtitle {
+
+            color: #777;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .form-group.full-width {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .form-group label {
+
+            font-weight: bold;
+
+            color: #444;
+
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border:
+                1px solid #ddd;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            font-family: inherit;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+
+            border-color: #667eea;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(102, 126, 234, .1);
+
+        }
+
+
+        .form-group textarea {
+
+            min-height: 90px;
+
+            resize: vertical;
+
+        }
+
+
+        /* PAYMENT */
+
+        .payment-section {
+
+            margin-top: 28px;
+
+            border-top:
+                1px solid #eee;
+
+            padding-top: 25px;
+
+        }
+
+
+        .payment-section h2 {
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .payment-subtitle {
+
+            color: #777;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .payment-options {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        .payment-card {
+
+            border:
+                2px solid #e3e5ee;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            position: relative;
+
+        }
+
+
+        .payment-card:hover {
+
+            border-color: #667eea;
+
+        }
+
+
+        .payment-card.active {
+
+            border-color: #667eea;
+
+            background: #f2f3ff;
+
+        }
+
+
+        .payment-card input {
+
+            position: absolute;
+
+            opacity: 0;
+
+        }
+
+
+        .payment-title {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .payment-info {
+
+            font-size: 13px;
+
+            color: #777;
+
+            line-height: 1.5;
+
+        }
+
+
+        .online-note {
+
+            display: none;
+
+            background: #fff8e1;
+
+            color: #765c00;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-top: 14px;
+
+            font-size: 14px;
+
+        }
+
+
+        .online-note.active {
+
+            display: block;
+
+        }
+
+
+        .checkout-actions {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .confirm-order-btn,
+        .cancel-checkout-btn {
+
+            flex: 1;
+
+            border: none;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .confirm-order-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+
+        }
+
+
+        .cancel-checkout-btn {
+
+            background: #eee;
+
+            color: #444;
+
+        }
+
+
+        .confirm-order-btn:disabled {
+
+            opacity: .6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        footer {
+
+            margin-top: 60px;
+
+            background: #222;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+        }
+
+
+        footer p {
+
+            color: #bbb;
+
+        }
+
+
+        @media
+        (max-width: 900px) {
+
+            header {
+
+                padding:
+                    15px 25px;
+
+                flex-direction:
+                    column;
+
+                gap: 15px;
+
+            }
+
+
+            nav {
+
+                gap: 15px;
+
+                flex-wrap:
+                    wrap;
+
+                justify-content:
+                    center;
+
+            }
+
+
+            .cart-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-group.full-width {
+
+                grid-column: auto;
+
+            }
+
+
+            .payment-options {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .checkout-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .cart-item {
+
+                flex-wrap:
+                    wrap;
+
+            }
+
+
+            .item-total {
+
+                text-align: left;
+
+            }
+
+        }
+
+
+        @media
+        (max-width: 500px) {
+
+            .cart-item {
+
+                gap: 12px;
+
+            }
+
+
+            .quantity-controls {
+
+                width: 100%;
+
+            }
+
+
+            .remove-btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+    
+        /* =========================================
+           FINAL MOBILE + UI POLISH
+        ========================================= */
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        button,
+        a,
+        input,
+        textarea {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cart-section,
+        .summary,
+        .checkout-form,
+        .payment-card,
+        .checkout-btn,
+        .confirm-order-btn,
+        .cancel-checkout-btn,
+        .remove-btn,
+        .quantity-btn {
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                opacity .2s ease,
+                border-color .2s ease;
+        }
+
+        .summary {
+            align-self: start;
+            position: sticky;
+            top: 105px;
+        }
+
+        .checkout-btn:active,
+        .confirm-order-btn:active,
+        .cancel-checkout-btn:active,
+        .remove-btn:active,
+        .quantity-btn:active {
+            transform: scale(.98);
+        }
+
+        @media (max-width: 900px) {
+            .summary {
+                position: static;
+            }
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .page-header {
+                padding: 42px 20px;
+            }
+
+            .page-header h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                position: relative;
+                padding: 15px 14px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            nav {
+                width: 100%;
+                gap: 8px 14px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .page-header {
+                padding: 34px 18px;
+            }
+
+            .page-header h1 {
+                font-size: 29px;
+            }
+
+            .page-header p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .container {
+                width: 100%;
+                padding: 0 14px;
+                margin: 24px auto;
+            }
+
+            .cart-layout {
+                gap: 18px;
+            }
+
+            .cart-section,
+            .summary,
+            .checkout-form {
+                padding: 18px;
+                border-radius: 12px;
+            }
+
+            .cart-item {
+                align-items: flex-start;
+                padding: 18px 0;
+            }
+
+            .product-info {
+                flex-basis: 100%;
+            }
+
+            .product-info h3 {
+                font-size: 17px;
+                line-height: 1.35;
+            }
+
+            .quantity-controls {
+                width: auto;
+            }
+
+            .quantity-btn {
+                width: 38px;
+                height: 38px;
+            }
+
+            .item-total {
+                min-width: auto;
+                margin-left: auto;
+                padding-top: 9px;
+            }
+
+            .remove-btn {
+                width: 100%;
+                min-height: 42px;
+            }
+
+            .summary-row {
+                gap: 15px;
+            }
+
+            .summary-total {
+                font-size: 21px;
+            }
+
+            .checkout-btn {
+                min-height: 48px;
+            }
+
+            .checkout-form {
+                margin-top: 20px;
+            }
+
+            .checkout-form h2,
+            .payment-section h2 {
+                font-size: 21px;
+            }
+
+            .form-subtitle,
+            .payment-subtitle {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .form-grid {
+                gap: 14px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 16px;
+                min-height: 46px;
+            }
+
+            .form-group textarea {
+                min-height: 95px;
+            }
+
+            .payment-card {
+                padding: 16px;
+            }
+
+            .checkout-actions {
+                gap: 10px;
+            }
+
+            .confirm-order-btn,
+            .cancel-checkout-btn {
+                min-height: 48px;
+            }
+
+            .message {
+                padding: 0 8px;
+                line-height: 1.45;
+            }
+
+            footer {
+                margin-top: 40px;
+                padding: 22px 15px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            nav {
+                gap: 7px 10px;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+            .cart-section,
+            .summary,
+            .checkout-form {
+                padding: 15px;
+            }
+
+            .item-total {
+                width: 100%;
+                margin-left: 0;
+                text-align: left;
+            }
+        }
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+    <header>
+
+
+        <div class="logo">
+
+            🛒 AnishMart
+
+        </div>
+
+
+        <nav>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="cart.html">
+                Cart
+            </a>
+
+            <a href="orders.html">
+                Orders
+            </a>
+
+            <a
+                href="index.html"
+                onclick="logout()"
+            >
+                Logout
+            </a>
+
+        </nav>
+
+
+    </header>
+
+
+
+    <section class="page-header">
+
+        <h1>
+            🛒 Shopping Cart
+        </h1>
+
+        <p>
+            Review your products before placing your order
+        </p>
+
+    </section>
+
+
+
+    <div class="container">
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <div id="cartContent"></div>
+
+
+
+        <!-- CHECKOUT FORM -->
+
+        <div
+            id="checkoutForm"
+            class="checkout-form"
+        >
+
+
+            <h2>
+                📦 Delivery Details
+            </h2>
+
+
+            <p class="form-subtitle">
+
+                Enter your delivery details
+                to complete your order.
+
+            </p>
+
+
+
+            <form id="orderForm">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="customerName">
+
+                            Full Name
+
+                        </label>
+
+
+                        <input
+
+                            type="text"
+
+                            id="customerName"
+
+                            maxlength="100"
+
+                            placeholder=
+                            "Enter your full name"
+
+                            required
+
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+
+                            Phone Number
+
+                        </label>
+
+
+                        <input
+
+                            type="tel"
+
+                            id="phone"
+
+                            maxlength="10"
+
+                            pattern="[0-9]{10}"
+
+                            inputmode="numeric"
+
+                            placeholder=
+                            "Enter 10-digit phone number"
+
+                            required
+
+                        >
+
+                    </div>
+
+
+
+                    <div
+                        class=
+                        "form-group full-width"
+                    >
+
+                        <label for="address">
+
+                            Address
+
+                        </label>
+
+
+                        <textarea
+
+                            id="address"
+
+                            maxlength="255"
+
+                            placeholder=
+                            "House / Door No, Street, Area"
+
+                            required
+
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="city">
+
+                            City
+
+                        </label>
+
+
+                        <input
+
+                            type="text"
+
+                            id="city"
+
+                            maxlength="100"
+
+                            placeholder=
+                            "Enter your city"
+
+                            required
+
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="state">
+
+                            State
+
+                        </label>
+
+
+                        <input
+
+                            type="text"
+
+                            id="state"
+
+                            maxlength="100"
+
+                            placeholder=
+                            "Enter your state"
+
+                            required
+
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="pincode">
+
+                            Pincode
+
+                        </label>
+
+
+                        <input
+
+                            type="text"
+
+                            id="pincode"
+
+                            maxlength="6"
+
+                            pattern="[0-9]{6}"
+
+                            inputmode="numeric"
+
+                            placeholder=
+                            "Enter 6-digit pincode"
+
+                            required
+
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-group full-width" style="background:#f7f8ff;border:1px solid #e3e5ff;border-radius:10px;padding:14px;margin-top:4px;">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                        <input type="checkbox" id="saveDeliveryAddress" checked style="width:18px;height:18px;">
+                        <span>💾 Save this delivery address for next time</span>
+                    </label>
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;">
+                        <span id="savedAddressStatus" style="font-size:13px;color:#666;">Checking saved address...</span>
+                        <button type="button" id="deleteSavedAddressBtn"
+                            style="display:none;border:none;background:#ffe5e5;color:#c62828;padding:7px 10px;border-radius:7px;font-weight:bold;cursor:pointer;">
+                            Delete Saved Address
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PAYMENT METHOD -->
+
+                <div class="payment-section">
+
+
+                    <h2>
+                        💳 Payment Method
+                    </h2>
+
+
+                    <p class="payment-subtitle">
+
+                        Choose how you want
+                        to pay for this order.
+
+                    </p>
+
+
+
+                    <div class="payment-options">
+
+
+                        <!-- COD -->
+
+                        <label
+                            class=
+                            "payment-card active"
+
+                            id="codCard"
+                        >
+
+
+                            <input
+
+                                type="radio"
+
+                                name="paymentMethod"
+
+                                value="COD"
+
+                                checked
+
+                            >
+
+
+                            <div class="payment-title">
+
+                                💵 Cash on Delivery
+
+                            </div>
+
+
+                            <div class="payment-info">
+
+                                Pay when your
+                                order is delivered.
+
+                            </div>
+
+
+                        </label>
+
+
+
+                        <!-- ONLINE -->
+
+                        <label
+                            class="payment-card"
+
+                            id="onlineCard"
+                        >
+
+
+                            <input
+
+                                type="radio"
+
+                                name="paymentMethod"
+
+                                value="ONLINE"
+
+                            >
+
+
+                            <div class="payment-title">
+
+                                💳 Online Payment
+
+                            </div>
+
+
+                            <div class="payment-info">
+
+                                UPI / Card /
+                                Net Banking
+
+                            </div>
+
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <div
+                        id="onlineNote"
+                        class="online-note"
+                    >
+
+                        ⚠️ Online payment gateway
+                        is currently in prototype mode.
+                        The order can be created,
+                        but payment status will remain
+                        PENDING until gateway integration.
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="checkout-actions">
+
+
+                    <button
+
+                        type="button"
+
+                        class=
+                        "cancel-checkout-btn"
+
+                        onclick=
+                        "cancelCheckout()"
+
+                    >
+
+                        ← Back to Cart
+
+                    </button>
+
+
+
+                    <button
+
+                        type="submit"
+
+                        class=
+                        "confirm-order-btn"
+
+                        id=
+                        "confirmOrderBtn"
+
+                    >
+
+                        ✅ Place Order
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <footer>
+
+        <p>
+
+            © 2026 AnishMart.
+            All Rights Reserved.
+
+        </p>
+
+    </footer>
+
+
+
+    <script>
+
+
+        // ====================================
+        // LOGGED-IN USER
+        // ====================================
+
+        const storedUser =
+            localStorage.getItem(
+                "anishmartUser"
+            );
+
+
+        if (!storedUser) {
+
+            alert(
+                "Please login to view your cart."
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        let currentUser;
+
+
+        try {
+
+            currentUser =
+                JSON.parse(storedUser);
+
+        }
+        catch (error) {
+
+            localStorage.removeItem(
+                "anishmartUser"
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        // BUYER ONLY
+        if (
+            !currentUser ||
+            currentUser.role !== "buyer"
+        ) {
+
+            alert(
+                "Buyer access only."
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        const buyerId =
+            currentUser.id;
+
+
+
+        const cartContent =
+            document.getElementById(
+                "cartContent"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+
+        // ====================================
+        // PAYMENT UI
+        // ====================================
+
+        const codCard =
+            document.getElementById(
+                "codCard"
+            );
+
+
+        const onlineCard =
+            document.getElementById(
+                "onlineCard"
+            );
+
+
+        const onlineNote =
+            document.getElementById(
+                "onlineNote"
+            );
+
+
+
+        document
+            .querySelectorAll(
+                'input[name="paymentMethod"]'
+            )
+            .forEach(
+                radio => {
+
+                    radio.addEventListener(
+                        "change",
+                        updatePaymentUI
+                    );
+
+                }
+            );
+
+
+
+        function updatePaymentUI() {
+
+
+            const selected =
+                document.querySelector(
+                    'input[name="paymentMethod"]:checked'
+                ).value;
+
+
+            codCard.classList.remove(
+                "active"
+            );
+
+
+            onlineCard.classList.remove(
+                "active"
+            );
+
+
+            onlineNote.classList.remove(
+                "active"
+            );
+
+
+            if (
+                selected === "COD"
+            ) {
+
+                codCard.classList.add(
+                    "active"
+                );
+
+            }
+            else {
+
+                onlineCard.classList.add(
+                    "active"
+                );
+
+                onlineNote.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+
+
+
+        // ====================================
+        // LOAD CART
+        // ====================================
+
+        async function loadCart() {
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+
+                        `http://localhost:5000/api/cart/${buyerId}`
+
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+
+                if (
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message
+                    );
+
+                }
+
+
+
+                if (
+                    !data.cart ||
+                    data.cart.length === 0
+                ) {
+
+
+                    document
+                        .getElementById(
+                            "checkoutForm"
+                        )
+                        .classList
+                        .remove(
+                            "active"
+                        );
+
+
+                    cartContent.innerHTML = `
+
+                        <div class=
+                        "cart-section empty-cart">
+
+                            <div class=
+                            "empty-cart-icon">
+
+                                🛒
+
+                            </div>
+
+
+                            <h2>
+
+                                Your Cart is Empty
+
+                            </h2>
+
+
+                            <p>
+
+                                You haven't added
+                                any products yet.
+
+                            </p>
+
+
+                            <a
+                                href="products.html"
+                                class="shop-btn"
+                            >
+
+                                🛍️ Continue Shopping
+
+                            </a>
+
+                        </div>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+
+                let subtotal = 0;
+
+
+
+                data.cart.forEach(
+                    item => {
+
+                        subtotal +=
+                            Number(
+                                item.total
+                            );
+
+                    }
+                );
+
+
+
+                let itemsHTML = "";
+
+
+
+                data.cart.forEach(
+                    item => {
+
+
+                        const quantity =
+                            Number(
+                                item.quantity
+                            );
+
+
+                        const stock =
+                            Number(
+                                item.stock
+                            );
+
+
+                        itemsHTML += `
+
+
+                            <div class=
+                            "cart-item">
+
+
+                                <div class=
+                                "product-info">
+
+
+                                    <h3>
+
+                                        ${item.name}
+
+                                    </h3>
+
+
+                                    <div class=
+                                    "category">
+
+                                        ${item.category}
+
+                                    </div>
+
+
+                                    <div class=
+                                    "price">
+
+                                        ₹${Number(
+                                            item.price
+                                        ).toLocaleString(
+                                            "en-IN"
+                                        )}
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class=
+                                "quantity-controls">
+
+
+                                    <button
+
+                                        class=
+                                        "quantity-btn"
+
+                                        onclick=
+                                        "changeQuantity(
+                                            ${item.product_id},
+                                            ${quantity - 1}
+                                        )"
+
+                                        ${
+                                            quantity <= 1
+                                            ?
+                                            "disabled"
+                                            :
+                                            ""
+                                        }
+
+                                    >
+
+                                        −
+
+                                    </button>
+
+
+
+                                    <span
+                                        class=
+                                        "quantity-number"
+                                    >
+
+                                        ${quantity}
+
+                                    </span>
+
+
+
+                                    <button
+
+                                        class=
+                                        "quantity-btn"
+
+                                        onclick=
+                                        "changeQuantity(
+                                            ${item.product_id},
+                                            ${quantity + 1}
+                                        )"
+
+                                        ${
+                                            quantity >= stock
+                                            ?
+                                            "disabled"
+                                            :
+                                            ""
+                                        }
+
+                                    >
+
+                                        +
+
+                                    </button>
+
+
+                                </div>
+
+
+
+                                <div class=
+                                "item-total">
+
+                                    ₹${Number(
+                                        item.total
+                                    ).toLocaleString(
+                                        "en-IN"
+                                    )}
+
+                                </div>
+
+
+
+                                <button
+
+                                    class=
+                                    "remove-btn"
+
+                                    onclick=
+                                    "removeItem(
+                                        ${item.product_id}
+                                    )"
+
+                                >
+
+                                    🗑️ Remove
+
+                                </button>
+
+
+                            </div>
+
+
+                        `;
+
+                    }
+                );
+
+
+
+                cartContent.innerHTML = `
+
+
+                    <div class=
+                    "cart-layout">
+
+
+                        <div class=
+                        "cart-section">
+
+
+                            <h2>
+
+                                Your Items
+
+                            </h2>
+
+
+                            ${itemsHTML}
+
+
+                        </div>
+
+
+
+                        <div class=
+                        "summary">
+
+
+                            <h2>
+
+                                Order Summary
+
+                            </h2>
+
+
+
+                            <div class=
+                            "summary-row">
+
+
+                                <span>
+
+                                    Subtotal
+
+                                </span>
+
+
+                                <span>
+
+                                    ₹${subtotal
+                                        .toLocaleString(
+                                            "en-IN"
+                                        )}
+
+                                </span>
+
+
+                            </div>
+
+
+
+                            <div class=
+                            "summary-row">
+
+
+                                <span>
+
+                                    Delivery
+
+                                </span>
+
+
+                                <span>
+
+                                    Free
+
+                                </span>
+
+
+                            </div>
+
+
+
+                            <div class=
+                            "summary-row summary-total">
+
+
+                                <span>
+
+                                    Total
+
+                                </span>
+
+
+                                <span>
+
+                                    ₹${subtotal
+                                        .toLocaleString(
+                                            "en-IN"
+                                        )}
+
+                                </span>
+
+
+                            </div>
+
+
+
+                            <button
+
+                                class=
+                                "checkout-btn"
+
+                                onclick=
+                                "showCheckout()"
+
+                            >
+
+                                📦 Proceed to Checkout
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                `;
+
+
+            }
+            catch (error) {
+
+
+                console.error(
+                    error
+                );
+
+
+                cartContent.innerHTML = `
+
+
+                    <div
+                        class=
+                        "cart-section empty-cart"
+                    >
+
+
+                        <div
+                            class=
+                            "empty-cart-icon"
+                        >
+
+                            ⚠️
+
+                        </div>
+
+
+                        <h2>
+
+                            Unable to Load Cart
+
+                        </h2>
+
+
+                        <p>
+
+                            ${error.message}
+
+                        </p>
+
+
+                    </div>
+
+
+                `;
+
+            }
+
+        }
+
+
+
+        // ====================================
+        // CHANGE QUANTITY
+        // ====================================
+
+        async function changeQuantity(
+            productId,
+            newQuantity
+        ) {
+
+
+            if (
+                newQuantity < 1
+            ) {
+
+                return;
+
+            }
+
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+
+                        "http://localhost:5000/api/cart/update",
+
+                        {
+
+                            method: "PUT",
+
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+
+                            body:
+                                JSON.stringify({
+
+                                    buyer_id:
+                                        buyerId,
+
+                                    product_id:
+                                        productId,
+
+                                    quantity:
+                                        newQuantity
+
+                                })
+
+                        }
+
+                    );
+
+
+
+                const data =
+                    await response.json();
+
+
+
+                if (
+                    !data.success
+                ) {
+
+                    showMessage(
+                        data.message,
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                loadCart();
+
+
+            }
+            catch (error) {
+
+
+                console.error(
+                    error
+                );
+
+
+                showMessage(
+
+                    "❌ Unable to update quantity",
+
+                    "error"
+
+                );
+
+            }
+
+        }
+
+
+
+        // ====================================
+        // REMOVE ITEM
+        // ====================================
+
+        async function removeItem(
+            productId
+        ) {
+
+
+            const confirmRemove =
+                confirm(
+
+                    "Are you sure you want to remove this product?"
+
+                );
+
+
+            if (
+                !confirmRemove
+            ) {
+
+                return;
+
+            }
+
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+
+                        "http://localhost:5000/api/cart/remove",
+
+                        {
+
+                            method:
+                                "DELETE",
+
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+
+                            body:
+                                JSON.stringify({
+
+                                    buyer_id:
+                                        buyerId,
+
+                                    product_id:
+                                        productId
+
+                                })
+
+                        }
+
+                    );
+
+
+
+                const data =
+                    await response.json();
+
+
+
+                if (
+                    !data.success
+                ) {
+
+                    showMessage(
+                        data.message,
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+
+                showMessage(
+
+                    "🗑️ Product removed from cart",
+
+                    "success"
+
+                );
+
+
+                loadCart();
+
+
+            }
+            catch (error) {
+
+
+                console.error(
+                    error
+                );
+
+
+                showMessage(
+
+                    "❌ Unable to remove product",
+
+                    "error"
+
+                );
+
+            }
+
+        }
+
+
+
+        // ====================================
+        // SHOW CHECKOUT
+        // ====================================
+
+        function showCheckout() {
+
+
+            const form =
+                document.getElementById(
+                    "checkoutForm"
+                );
+
+
+            form.classList.add(
+                "active"
+            );
+
+
+            form.scrollIntoView({
+
+                behavior:
+                    "smooth",
+
+                block:
+                    "start"
+
+            });
+
+
+            document
+                .getElementById(
+                    "customerName"
+                )
+                .focus();
+
+        }
+
+
+
+        // ====================================
+        // CANCEL CHECKOUT
+        // ====================================
+
+        function cancelCheckout() {
+
+
+            document
+                .getElementById(
+                    "checkoutForm"
+                )
+                .classList
+                .remove(
+                    "active"
+                );
+
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+
+
+
+
+        // ====================================
+        // SAVED DELIVERY ADDRESS
+        // ====================================
+
+        let hasSavedAddress = false;
+
+        function setAddressValue(id, value) {
+            const element = document.getElementById(id);
+            if (element) element.value = value || "";
+        }
+
+        function setSavedAddressStatus(text, error = false) {
+            const status = document.getElementById("savedAddressStatus");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = error ? "#d93025" : "#666";
+        }
+
+        async function loadSavedAddress() {
+            const deleteButton = document.getElementById("deleteSavedAddressBtn");
+
+            try {
+                const response = await fetch(`/api/users/${buyerId}/address`);
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to load saved address");
+                }
+
+                if (!data.hasAddress || !data.address) {
+                    hasSavedAddress = false;
+                    setSavedAddressStatus("No saved address yet.");
+                    if (deleteButton) deleteButton.style.display = "none";
+                    return;
+                }
+
+                const saved = data.address;
+                setAddressValue("customerName", saved.customer_name);
+                setAddressValue("phone", saved.phone);
+                setAddressValue("address", saved.address);
+                setAddressValue("city", saved.city);
+                setAddressValue("state", saved.state);
+                setAddressValue("pincode", saved.pincode);
+
+                hasSavedAddress = true;
+                setSavedAddressStatus("✅ Saved address loaded automatically.");
+                if (deleteButton) deleteButton.style.display = "inline-block";
+            }
+            catch (error) {
+                console.error("LOAD SAVED ADDRESS ERROR:", error);
+                setSavedAddressStatus("Saved address could not be loaded.", true);
+            }
+        }
+
+        async function saveCurrentAddress(deliveryDetails) {
+            const checkbox = document.getElementById("saveDeliveryAddress");
+            if (!checkbox || !checkbox.checked) return;
+
+            try {
+                const response = await fetch(`/api/users/${buyerId}/address`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(deliveryDetails)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to save address");
+                }
+
+                hasSavedAddress = true;
+                setSavedAddressStatus("✅ Delivery address saved.");
+
+                const deleteButton = document.getElementById("deleteSavedAddressBtn");
+                if (deleteButton) deleteButton.style.display = "inline-block";
+            }
+            catch (error) {
+                console.error("SAVE ADDRESS ERROR:", error);
+                setSavedAddressStatus("Address could not be saved. Order can still continue.", true);
+            }
+        }
+
+        async function deleteSavedAddress() {
+            if (!hasSavedAddress) return;
+            if (!confirm("Delete your saved delivery address?")) return;
+
+            try {
+                const response = await fetch(`/api/users/${buyerId}/address`, {
+                    method: "DELETE"
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to delete saved address");
+                }
+
+                hasSavedAddress = false;
+                setSavedAddressStatus("Saved address deleted.");
+
+                const deleteButton = document.getElementById("deleteSavedAddressBtn");
+                if (deleteButton) deleteButton.style.display = "none";
+            }
+            catch (error) {
+                console.error("DELETE SAVED ADDRESS ERROR:", error);
+                setSavedAddressStatus(error.message || "Unable to delete saved address.", true);
+            }
+        }
+
+        document
+            .getElementById("deleteSavedAddressBtn")
+            ?.addEventListener("click", deleteSavedAddress);
+
+
+        // ====================================
+        // PLACE ORDER
+        // ====================================
+
+        document
+            .getElementById(
+                "orderForm"
+            )
+            .addEventListener(
+
+                "submit",
+
+                async function(
+                    event
+                ) {
+
+
+                    event
+                        .preventDefault();
+
+
+
+                    const customerName =
+                        document
+                            .getElementById(
+                                "customerName"
+                            )
+                            .value
+                            .trim();
+
+
+
+                    const phone =
+                        document
+                            .getElementById(
+                                "phone"
+                            )
+                            .value
+                            .trim();
+
+
+
+                    const address =
+                        document
+                            .getElementById(
+                                "address"
+                            )
+                            .value
+                            .trim();
+
+
+
+                    const city =
+                        document
+                            .getElementById(
+                                "city"
+                            )
+                            .value
+                            .trim();
+
+
+
+                    const state =
+                        document
+                            .getElementById(
+                                "state"
+                            )
+                            .value
+                            .trim();
+
+
+
+                    const pincode =
+                        document
+                            .getElementById(
+                                "pincode"
+                            )
+                            .value
+                            .trim();
+
+
+
+                    const paymentMethod =
+                        document
+                            .querySelector(
+
+                                'input[name="paymentMethod"]:checked'
+
+                            )
+                            .value;
+
+
+
+                    if (
+                        !customerName ||
+                        !phone ||
+                        !address ||
+                        !city ||
+                        !state ||
+                        !pincode
+                    ) {
+
+
+                        showMessage(
+
+                            "❌ Please fill all delivery details",
+
+                            "error"
+
+                        );
+
+
+                        return;
+
+                    }
+
+
+
+                    if (
+                        !/^[0-9]{10}$/
+                            .test(
+                                phone
+                            )
+                    ) {
+
+
+                        showMessage(
+
+                            "❌ Please enter a valid 10-digit phone number",
+
+                            "error"
+
+                        );
+
+
+                        return;
+
+                    }
+
+
+
+                    if (
+                        !/^[0-9]{6}$/
+                            .test(
+                                pincode
+                            )
+                    ) {
+
+
+                        showMessage(
+
+                            "❌ Please enter a valid 6-digit pincode",
+
+                            "error"
+
+                        );
+
+
+                        return;
+
+                    }
+
+
+
+                    let confirmText;
+
+
+                    if (
+                        paymentMethod ===
+                        "COD"
+                    ) {
+
+
+                        confirmText =
+                            "Place this order using Cash on Delivery?";
+
+                    }
+                    else {
+
+
+                        confirmText =
+                            "Create this order with Online Payment? Payment status will remain PENDING until gateway integration.";
+
+                    }
+
+
+
+                    if (
+                        !confirm(
+                            confirmText
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+
+                    const button =
+                        document
+                            .getElementById(
+                                "confirmOrderBtn"
+                            );
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.textContent =
+                        "⏳ Placing Order...";
+
+
+
+                    try {
+
+                        await saveCurrentAddress({
+                            customer_name: customerName,
+                            phone: phone,
+                            address: address,
+                            city: city,
+                            state: state,
+                            pincode: pincode
+                        });
+
+
+                        const response =
+                            await fetch(
+
+                                "http://localhost:5000/api/orders/create",
+
+                                {
+
+                                    method:
+                                        "POST",
+
+
+                                    headers: {
+
+                                        "Content-Type":
+                                            "application/json"
+
+                                    },
+
+
+                                    body:
+                                        JSON.stringify({
+
+                                            buyer_id:
+                                                buyerId,
+
+                                            customer_name:
+                                                customerName,
+
+                                            phone:
+                                                phone,
+
+                                            address:
+                                                address,
+
+                                            city:
+                                                city,
+
+                                            state:
+                                                state,
+
+                                            pincode:
+                                                pincode,
+
+                                            payment_method:
+                                                paymentMethod
+
+                                        })
+
+                                }
+
+                            );
+
+
+
+                        const data =
+                            await response
+                                .json();
+
+
+
+                        if (
+                            !data.success
+                        ) {
+
+
+                            showMessage(
+
+                                data.message,
+
+                                "error"
+
+                            );
+
+
+                            button.disabled =
+                                false;
+
+
+                            button.textContent =
+                                "✅ Place Order";
+
+
+                            return;
+
+                        }
+
+
+
+                        message.className =
+                            "message success";
+
+
+                        message.textContent =
+
+                            `✅ Order #${data.order_id} placed successfully! ` +
+
+                            `Payment: ${data.payment_method}. ` +
+
+                            `Total: ₹${Number(
+                                data.total_amount
+                            ).toLocaleString(
+                                "en-IN"
+                            )}`;
+
+
+
+                        document
+                            .getElementById(
+                                "orderForm"
+                            )
+                            .reset();
+
+
+
+                        document
+                            .querySelector(
+                                'input[name="paymentMethod"][value="COD"]'
+                            )
+                            .checked =
+                                true;
+
+
+
+                        updatePaymentUI();
+
+
+
+                        document
+                            .getElementById(
+                                "checkoutForm"
+                            )
+                            .classList
+                            .remove(
+                                "active"
+                            );
+
+
+
+                        setTimeout(
+                            () => {
+
+                                window
+                                    .location
+                                    .href =
+                                    "orders.html";
+
+                            },
+                            1500
+                        );
+
+
+                    }
+                    catch (error) {
+
+
+                        console.error(
+                            error
+                        );
+
+
+                        showMessage(
+
+                            "❌ Unable to place order. Please try again.",
+
+                            "error"
+
+                        );
+
+
+                        button.disabled =
+                            false;
+
+
+                        button.textContent =
+                            "✅ Place Order";
+
+                    }
+
+                }
+
+            );
+
+
+
+        // ====================================
+        // LOGOUT
+        // ====================================
+
+        function logout() {
+
+
+            localStorage
+                .removeItem(
+                    "anishmartUser"
+                );
+
+        }
+
+
+
+        // ====================================
+        // SHOW MESSAGE
+        // ====================================
+
+        function showMessage(
+            text,
+            type
+        ) {
+
+
+            message.className =
+                `message ${type}`;
+
+
+            message.textContent =
+                text;
+
+
+            setTimeout(
+                () => {
+
+
+                    message.textContent =
+                        "";
+
+
+                    message.className =
+                        "message";
+
+
+                },
+                3000
+            );
+
+        }
+
+
+
+        // ====================================
+        // INITIAL LOAD
+        // ====================================
+
+        updatePaymentUI();
+
+        loadSavedAddress();
+
+        loadCart();
+
+
+    </script>
+
+</body>
+
+</html>

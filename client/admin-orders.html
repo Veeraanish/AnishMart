@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AnishMart - Manage Orders</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f8;
+    color:#222;
+    overflow-x:hidden;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+/* HEADER */
+
+header{
+    background:#131921;
+    color:white;
+    padding:18px 28px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
+
+header h1{
+    font-size:24px;
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+}
+
+.header-btn{
+    border:none;
+    background:white;
+    color:#131921;
+
+    padding:10px 15px;
+    border-radius:8px;
+
+    font-weight:bold;
+    cursor:pointer;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.header-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 4px 12px rgba(0,0,0,.16);
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1400px;
+    margin:30px auto;
+    padding:0 20px;
+}
+
+/* SECTION */
+
+.section{
+    background:white;
+    padding:24px;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 4px 16px rgba(0,0,0,.08);
+}
+
+.section h2{
+    margin-bottom:20px;
+    font-size:23px;
+}
+
+/* SEARCH */
+
+.search-box{
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    min-height:46px;
+
+    padding:12px 14px;
+
+    border:1px solid #ddd;
+    border-radius:8px;
+
+    font-size:15px;
+    outline:none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.search-box input:focus{
+    border-color:#ff9900;
+
+    box-shadow:
+        0 0 0 3px rgba(255,153,0,.12);
+}
+
+/* TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+
+    border-radius:10px;
+
+    -webkit-overflow-scrolling:touch;
+}
+
+table{
+    width:100%;
+    min-width:1250px;
+
+    border-collapse:collapse;
+    background:white;
+}
+
+th,
+td{
+    padding:12px 10px;
+
+    text-align:left;
+
+    border-bottom:1px solid #eee;
+
+    vertical-align:middle;
+}
+
+th{
+    background:#f5f6f8;
+    color:#333;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+
+    white-space:nowrap;
+}
+
+tbody tr{
+    transition:background .15s ease;
+}
+
+tbody tr:hover{
+    background:#fffaf2;
+}
+
+/* ORDER STATUS */
+
+.status{
+    display:inline-block;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+}
+
+.placed{
+    background:#eef2ff;
+    color:#4338ca;
+}
+
+.processing{
+    background:#fff7ed;
+    color:#c2410c;
+}
+
+.shipped{
+    background:#ecfeff;
+    color:#0e7490;
+}
+
+.delivered{
+    background:#ecfdf5;
+    color:#15803d;
+}
+
+.cancelled{
+    background:#fef2f2;
+    color:#b91c1c;
+}
+
+/* PAYMENT STATUS */
+
+.payment{
+    font-weight:bold;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.pending{
+    color:#d97706;
+}
+
+.paid{
+    color:#15803d;
+}
+
+.failed{
+    color:#dc2626;
+}
+
+.refunded{
+    color:#7c3aed;
+}
+
+/* SELECT */
+
+select{
+    min-width:125px;
+    min-height:38px;
+
+    padding:8px 9px;
+
+    border:1px solid #ccc;
+    border-radius:7px;
+
+    background:white;
+
+    outline:none;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+select:focus{
+    border-color:#ff9900;
+
+    box-shadow:
+        0 0 0 3px rgba(255,153,0,.10);
+}
+
+/* UPDATE BUTTON */
+
+.update-btn{
+    margin-top:6px;
+
+    border:none;
+
+    background:#ff9900;
+    color:#111;
+
+    padding:8px 11px;
+
+    min-height:38px;
+
+    border-radius:7px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+}
+
+.update-btn:hover{
+    background:#e68a00;
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 4px 10px rgba(255,153,0,.25);
+}
+
+/* SMALL TEXT */
+
+.small-text{
+    color:#666;
+
+    font-size:12px;
+
+    margin-top:4px;
+
+    line-height:1.4;
+}
+
+/* MESSAGE */
+
+#message{
+    margin-top:18px;
+
+    font-weight:bold;
+
+    line-height:1.5;
+}
+
+/* TABLET */
+
+@media(max-width:1000px){
+
+    .container{
+        width:96%;
+        padding:0;
+        margin:24px auto;
+    }
+
+    .section{
+        padding:20px;
+    }
+
+    table{
+        min-width:1200px;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    header{
+        padding:16px;
+
+        flex-direction:column;
+
+        gap:12px;
+
+        text-align:center;
+    }
+
+    header h1{
+        font-size:21px;
+    }
+
+    .header-actions{
+        width:100%;
+        gap:8px;
+    }
+
+    .header-btn{
+        flex:1;
+
+        min-height:44px;
+
+        padding:10px;
+    }
+
+    .container{
+        width:100%;
+
+        padding:0 12px;
+
+        margin:20px auto;
+    }
+
+    .section{
+        padding:16px 12px;
+
+        border-radius:11px;
+    }
+
+    .section h2{
+        font-size:20px;
+
+        margin-bottom:16px;
+    }
+
+    .search-box{
+        margin-bottom:16px;
+    }
+
+    .search-box input{
+        padding:12px;
+
+        font-size:16px;
+    }
+
+    .table-wrapper{
+        width:100%;
+
+        overflow-x:auto;
+    }
+
+    table{
+        min-width:1100px;
+    }
+
+    th,
+    td{
+        padding:10px 8px;
+
+        font-size:12px;
+    }
+
+    .status{
+        padding:5px 8px;
+
+        font-size:10px;
+    }
+
+    .payment{
+        font-size:11px;
+    }
+
+    select{
+        min-width:120px;
+
+        font-size:12px;
+    }
+
+    .update-btn,
+    .invoice-btn{
+        width:100%;
+
+        margin-top:7px;
+
+        padding:8px;
+    }
+
+    #message{
+        font-size:14px;
+    }
+}
+
+/* SMALL MOBILE */
+
+@media(max-width:380px){
+
+    .container{
+        padding:0 8px;
+    }
+
+    .section{
+        padding:14px 9px;
+    }
+
+    header h1{
+        font-size:19px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>🧾 Manage Orders</h1>
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+        <button
+            class="header-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="section">
+
+        <h2>All Orders</h2>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by order ID, buyer name, email, city or status..."
+                oninput="filterOrders()"
+            >
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order ID</th>
+
+                        <th>Buyer</th>
+
+                        <th>Customer</th>
+
+                        <th>Amount</th>
+
+                        <th>Payment</th>
+
+                        <th>Payment Status</th>
+
+                        <th>Order Status</th>
+
+                        <th>Delivery</th>
+
+                        <th>Date</th>
+
+                        <th>Update</th>
+
+                        <th>Invoice</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="ordersTableBody">
+
+                    <tr>
+
+                        <td colspan="11">
+
+                            Loading orders...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <p id="message"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   ADMIN LOGIN CHECK
+========================================== */
+
+let currentUser = null;
+
+
+try{
+
+    currentUser =
+    JSON.parse(
+        localStorage.getItem(
+            "anishmartUser"
+        )
+    );
+
+}
+catch(error){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+}
+
+
+if(
+    !currentUser ||
+    currentUser.role !== "admin"
+){
+
+    alert(
+        "Admin access only."
+    );
+
+    window.location.href =
+    "index.html";
+
+}
+
+
+let allOrders = [];
+
+
+/* ==========================================
+   LOAD ORDERS
+========================================== */
+
+async function loadOrders(){
+
+    const tableBody =
+    document.getElementById(
+        "ordersTableBody"
+    );
+
+
+    const message =
+    document.getElementById(
+        "message"
+    );
+
+
+    message.textContent = "";
+
+
+    try{
+
+        const response =
+        await fetch(
+            "/api/admin/orders"
+        );
+
+
+        const data =
+        await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Unable to load orders"
+            );
+
+        }
+
+
+        allOrders =
+        data.orders || [];
+
+
+        renderOrders(
+            allOrders
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "LOAD ORDERS ERROR:",
+            error
+        );
+
+
+        tableBody.innerHTML =
+        `
+        <tr>
+
+            <td colspan="11">
+
+                Unable to load orders.
+
+            </td>
+
+        </tr>
+        `;
+
+
+        message.style.color =
+        "#dc2626";
+
+
+        message.textContent =
+        error.message;
+
+    }
+
+}
+
+
+/* ==========================================
+   RENDER ORDERS
+========================================== */
+
+function renderOrders(orders){
+
+    const tableBody =
+    document.getElementById(
+        "ordersTableBody"
+    );
+
+
+    if(
+        !orders ||
+        orders.length === 0
+    ){
+
+        tableBody.innerHTML =
+        `
+        <tr>
+
+            <td colspan="11">
+
+                No orders found.
+
+            </td>
+
+        </tr>
+        `;
+
+        return;
+
+    }
+
+
+    tableBody.innerHTML =
+    orders
+
+    .map(order => {
+
+        const status =
+        String(
+            order.status || ""
+        )
+        .toUpperCase();
+
+
+        const paymentStatus =
+        String(
+            order.payment_status || ""
+        )
+        .toUpperCase();
+
+
+        const deliveryAddress =
+        [
+            order.address,
+            order.city,
+            order.state,
+            order.pincode
+        ]
+        .filter(Boolean)
+        .join(", ");
+
+
+        return `
+        <tr>
+
+            <td>
+                #${escapeHtml(order.id)}
+            </td>
+
+
+            <td>
+
+                <strong>
+                    ${escapeHtml(
+                        order.buyer_name || "-"
+                    )}
+                </strong>
+
+                <div class="small-text">
+
+                    ${escapeHtml(
+                        order.buyer_email || "-"
+                    )}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHtml(
+                    order.customer_name || "-"
+                )}
+
+                <div class="small-text">
+
+                    ${escapeHtml(
+                        order.phone || "-"
+                    )}
+
+                </div>
+
+            </td>
+
+
+            <td>
+
+                ₹${Number(
+                    order.total_amount || 0
+                ).toFixed(2)}
+
+            </td>
+
+
+            <td>
+
+                ${escapeHtml(
+                    order.payment_method || "-"
+                )}
+
+            </td>
+
+
+            <td>
+
+                <span
+                    class="payment ${escapeHtml(
+                        paymentStatus.toLowerCase()
+                    )}"
+                >
+
+                    ${escapeHtml(
+                        paymentStatus || "-"
+                    )}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span
+                    class="status ${escapeHtml(
+                        status.toLowerCase()
+                    )}"
+                >
+
+                    ${escapeHtml(
+                        status || "-"
+                    )}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                ${
+                    deliveryAddress
+                    ?
+                    escapeHtml(
+                        deliveryAddress
+                    )
+                    :
+                    "-"
+                }
+
+            </td>
+
+
+            <td>
+
+                ${formatDate(
+                    order.created_at
+                )}
+
+            </td>
+
+
+            <td>
+
+                <select
+                    id="status-${Number(order.id)}"
+                >
+
+                    ${statusOption(
+                        "PLACED",
+                        status
+                    )}
+
+                    ${statusOption(
+                        "PROCESSING",
+                        status
+                    )}
+
+                    ${statusOption(
+                        "SHIPPED",
+                        status
+                    )}
+
+                    ${statusOption(
+                        "DELIVERED",
+                        status
+                    )}
+
+                    ${statusOption(
+                        "CANCELLED",
+                        status
+                    )}
+
+                </select>
+
+
+                <br>
+
+
+                <button
+                    class="update-btn"
+                    onclick="updateOrderStatus(${Number(order.id)})"
+                >
+
+                    Update
+
+                </button>
+
+            </td>
+
+            <td>
+
+                <button
+                    class="invoice-btn"
+                    onclick="openInvoice(${Number(order.id)})"
+                >
+                    🖨️ View / Print
+                </button>
+
+            </td>
+
+        </tr>
+        `;
+
+    })
+
+    .join("");
+
+}
+
+
+/* ==========================================
+   STATUS OPTION
+========================================== */
+
+function statusOption(
+    value,
+    currentStatus
+){
+
+    return `
+    <option
+        value="${value}"
+        ${
+            value === currentStatus
+            ?
+            "selected"
+            :
+            ""
+        }
+    >
+
+        ${value}
+
+    </option>
+    `;
+
+}
+
+
+/* ==========================================
+   UPDATE ORDER STATUS
+========================================== */
+
+async function updateOrderStatus(orderId){
+
+    const select =
+    document.getElementById(
+        `status-${orderId}`
+    );
+
+
+    const newStatus =
+    select.value;
+
+
+    const message =
+    document.getElementById(
+        "message"
+    );
+
+
+    try{
+
+        const response =
+        await fetch(
+
+            `/api/admin/orders/${orderId}/status`,
+
+            {
+
+                method:"PUT",
+
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                JSON.stringify({
+                    status:newStatus
+                })
+
+            }
+
+        );
+
+
+        const data =
+        await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Unable to update order"
+            );
+
+        }
+
+
+        message.style.color =
+        "#15803d";
+
+
+        message.textContent =
+        `Order #${orderId} updated successfully. ✅`;
+
+
+        await loadOrders();
+
+    }
+    catch(error){
+
+        console.error(
+            "UPDATE ORDER ERROR:",
+            error
+        );
+
+
+        message.style.color =
+        "#dc2626";
+
+
+        message.textContent =
+        error.message;
+
+    }
+
+}
+
+
+/* ==========================================
+   SEARCH ORDERS
+========================================== */
+
+function filterOrders(){
+
+    const search =
+    document
+    .getElementById(
+        "searchInput"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    const filteredOrders =
+    allOrders.filter(order => {
+
+        return(
+
+            String(
+                order.id || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                order.buyer_name || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                order.buyer_email || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                order.customer_name || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                order.city || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                order.status || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+        );
+
+    });
+
+
+    renderOrders(
+        filteredOrders
+    );
+
+}
+
+
+/* ==========================================
+   FORMAT DATE
+========================================== */
+
+function formatDate(dateValue){
+
+    if(!dateValue){
+
+        return "-";
+
+    }
+
+
+    const date =
+    new Date(
+        dateValue
+    );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN"
+    );
+
+}
+
+
+/* ==========================================
+   SAFE TEXT
+========================================== */
+
+function escapeHtml(text){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+
+    div.textContent =
+    String(
+        text ?? ""
+    );
+
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   VIEW / PRINT INVOICE
+========================================== */
+
+function openInvoice(orderId){
+
+    window.location.href =
+        `admin-order-details.html?id=${encodeURIComponent(orderId)}`;
+
+}
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+function goDashboard(){
+
+    window.location.href =
+    "admin-dashboard.html";
+
+}
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+function logout(){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+
+    window.location.href =
+    "index.html";
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+loadOrders();
+
+</script>
+
+</body>
+
+</html>

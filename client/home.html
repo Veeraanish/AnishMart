@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnishMart - Home</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #333;
+        }
+
+        header {
+            background: white;
+            padding: 18px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #444;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            min-height: 460px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 10%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            gap: 50px;
+        }
+
+        .hero-content {
+            max-width: 620px;
+        }
+
+        .welcome-text {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 19px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .shop-btn,
+        .orders-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .shop-btn {
+            background: white;
+            color: #667eea;
+        }
+
+        .orders-btn {
+            border: 2px solid white;
+            color: white;
+        }
+
+        .hero-icon {
+            font-size: 160px;
+        }
+
+        .section {
+            padding: 55px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+        }
+
+        .section-title p {
+            color: #777;
+            margin-top: 8px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 22px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 58px;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .category-card p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .featured-section {
+            padding: 55px 8%;
+            background: #eef0f9;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-icon {
+            height: 125px;
+            background: #f4f5ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 58px;
+            margin-bottom: 15px;
+        }
+
+        .product-category {
+            display: inline-block;
+            background: #eeeaff;
+            color: #667eea;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-card h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .product-price {
+            color: #667eea;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .rating {
+            color: #f4b400;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            width: 100%;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-btn:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .features {
+            background: white;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            padding: 45px 8%;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .feature h3 {
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .message {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background: #222;
+            color: white;
+            padding: 15px 22px;
+            border-radius: 8px;
+            display: none;
+            z-index: 999;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer p {
+            color: #bbb;
+        }
+
+        @media (max-width: 1100px) {
+            .categories {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            header {
+                padding: 15px 25px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .hero {
+                text-align: center;
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .categories,
+            .products-grid,
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+
+        /* =========================================
+           FINAL MOBILE + UI POLISH
+        ========================================= */
+
+        html { scroll-behavior: smooth; }
+        body { overflow-x: hidden; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+
+        .shop-btn, .orders-btn, .add-btn, .category-card {
+            transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+        }
+        .shop-btn:hover, .orders-btn:hover { transform: translateY(-2px); }
+        .add-btn:active { transform: scale(.98); }
+
+        @media (max-width: 800px) {
+            header { padding: 15px 20px; }
+            .logo { font-size: 25px; }
+            nav { width: 100%; gap: 10px 16px; }
+            nav a { font-size: 14px; }
+            .hero { min-height: auto; padding: 50px 7%; }
+            .hero-content { max-width: 100%; }
+            .hero-icon { font-size: 110px; }
+            .section, .featured-section { padding: 45px 6%; }
+            .features { padding: 35px 6%; }
+        }
+
+        @media (max-width: 500px) {
+            header { position: relative; padding: 16px 14px; }
+            .logo { font-size: 24px; }
+            nav { gap: 8px 14px; }
+            nav a { font-size: 13px; }
+            .hero { padding: 42px 20px; gap: 22px; }
+            .welcome-text { font-size: 13px; margin-bottom: 15px; }
+            .hero h1 { font-size: 32px; line-height: 1.15; margin-bottom: 15px; }
+            .hero p { font-size: 16px; line-height: 1.55; margin-bottom: 24px; }
+            .hero-actions { width: 100%; flex-direction: column; }
+            .shop-btn, .orders-btn { width: 100%; text-align: center; padding: 13px 18px; }
+            .hero-icon { font-size: 80px; }
+            .section, .featured-section { padding: 38px 18px; }
+            .section-title { margin-bottom: 25px; }
+            .section-title h2 { font-size: 26px; }
+            .section-title p { font-size: 14px; line-height: 1.5; }
+            .categories, .products-grid { gap: 16px; }
+            .category-card { padding: 24px 18px; }
+            .category-icon { font-size: 48px; }
+            .product-card { padding: 18px; }
+            .product-icon { height: 110px; font-size: 50px; }
+            .features { padding: 35px 18px; gap: 8px; }
+            .feature { padding: 20px 10px; }
+            .feature-icon { font-size: 35px; }
+            .feature p { font-size: 14px; }
+            .message { left: 15px; right: 15px; bottom: 15px; text-align: center; }
+            footer { padding: 22px 15px; font-size: 13px; }
+        }
+
+        @media (max-width: 360px) {
+            nav { gap: 8px 10px; }
+            nav a { font-size: 12px; }
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 15px; }
+        }
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🛒 AnishMart
+    </div>
+
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="orders.html">Orders</a>
+        <a href="profile.html">👤 My Account</a>
+        <a href="index.html" onclick="logout()">Logout</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="welcome-text" id="welcomeText">
+            Welcome to AnishMart
+        </div>
+
+        <h1>
+            Shop Smart with AnishMart
+        </h1>
+
+        <p>
+            Discover products across multiple categories,
+            add them to your cart, place orders and share
+            your ratings and reviews.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="products.html" class="shop-btn">
+                🛍️ Shop Now
+            </a>
+
+            <a href="orders.html" class="orders-btn">
+                📦 My Orders
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-icon">
+        🛒
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>
+            Shop by Category
+        </h2>
+
+        <p>
+            Choose a category and find the products you need
+        </p>
+
+    </div>
+
+
+    <div class="categories">
+
+        <a href="products.html?category=Electronics" class="category-card">
+
+            <div class="category-icon">
+                📱
+            </div>
+
+            <h3>
+                Electronics
+            </h3>
+
+            <p>
+                Devices, gadgets and accessories
+            </p>
+
+        </a>
+
+
+        <a href="products.html?category=Books" class="category-card">
+
+            <div class="category-icon">
+                📚
+            </div>
+
+            <h3>
+                Books
+            </h3>
+
+            <p>
+                Books and learning materials
+            </p>
+
+        </a>
+
+
+        <a href="products.html?category=Fashion" class="category-card">
+
+            <div class="category-icon">
+                👕
+            </div>
+
+            <h3>
+                Fashion
+            </h3>
+
+            <p>
+                Clothing and accessories
+            </p>
+
+        </a>
+
+
+        <a href="products.html?category=Home" class="category-card">
+
+            <div class="category-icon">
+                🏠
+            </div>
+
+            <h3>
+                Home
+            </h3>
+
+            <p>
+                Useful products for your home
+            </p>
+
+        </a>
+
+
+        <a href="products.html?category=Groceries" class="category-card">
+
+            <div class="category-icon">
+                🛒
+            </div>
+
+            <h3>
+                Groceries
+            </h3>
+
+            <p>
+                Everyday grocery essentials
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="featured-section">
+
+    <div class="section-title">
+
+        <h2>
+            ⭐ Featured Products
+        </h2>
+
+        <p>
+            Explore some products available on AnishMart
+        </p>
+
+    </div>
+
+
+    <div
+        id="featuredProducts"
+        class="products-grid"
+    >
+
+        Loading products...
+
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🛒
+        </div>
+
+        <h3>
+            Easy Shopping
+        </h3>
+
+        <p>
+            Browse products and quickly add items to your cart.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            ⭐
+        </div>
+
+        <h3>
+            Ratings & Reviews
+        </h3>
+
+        <p>
+            Read customer ratings and share your own experience.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🔒
+        </div>
+
+        <h3>
+            Secure Account
+        </h3>
+
+        <p>
+            Your AnishMart login information is securely managed.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            📦
+        </div>
+
+        <h3>
+            Order Tracking
+        </h3>
+
+        <p>
+            View your order history and current order status.
+        </p>
+
+    </div>
+
+</section>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<footer>
+
+    <p>
+        © 2026 AnishMart. All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+const storedUser =
+    localStorage.getItem(
+        "anishmartUser"
+    );
+
+
+if (!storedUser) {
+
+    alert(
+        "Please login to continue."
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+let currentUser;
+
+
+try {
+
+    currentUser =
+        JSON.parse(
+            storedUser
+        );
+
+}
+catch (error) {
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+if (
+    !currentUser ||
+    !currentUser.id ||
+    currentUser.role !== "buyer"
+) {
+
+    alert(
+        "Buyer login required."
+    );
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+const buyerId =
+    currentUser.id;
+
+
+document.getElementById(
+    "welcomeText"
+).textContent =
+    `Welcome, ${currentUser.name || "Customer"} 👋`;
+
+
+const featuredProducts =
+    document.getElementById(
+        "featuredProducts"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+function logout() {
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+}
+
+
+function getProductIcon(category) {
+
+    switch (
+        String(
+            category || ""
+        ).toLowerCase()
+    ) {
+
+        case "electronics":
+            return "📱";
+
+        case "books":
+            return "📚";
+
+        case "fashion":
+            return "👕";
+
+        case "home":
+            return "🏠";
+
+        case "groceries":
+            return "🛒";
+
+        default:
+            return "🛍️";
+
+    }
+
+}
+
+
+function displayStars(rating) {
+
+    const rounded =
+        Math.round(
+            Number(rating || 0)
+        );
+
+
+    let stars = "";
+
+
+    for (
+        let i = 1;
+        i <= 5;
+        i++
+    ) {
+
+        stars +=
+            i <= rounded
+                ? "★"
+                : "☆";
+
+    }
+
+
+    return stars;
+
+}
+
+
+async function loadFeaturedProducts() {
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/products"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            throw new Error(
+                data.message
+            );
+
+        }
+
+
+        const products =
+            (data.products || [])
+            .slice(0, 4);
+
+
+        if (products.length === 0) {
+
+            featuredProducts.innerHTML =
+                "No products available.";
+
+            return;
+
+        }
+
+
+        await Promise.all(
+
+            products.map(
+                async product => {
+
+                    try {
+
+                        const response =
+                            await fetch(
+
+                                `http://localhost:5000/api/reviews/product/${product.id}`
+
+                            );
+
+
+                        const reviewData =
+                            await response.json();
+
+
+                        product.average_rating =
+                            reviewData.success
+                                ? Number(
+                                    reviewData.average_rating || 0
+                                )
+                                : 0;
+
+
+                        product.total_reviews =
+                            reviewData.success
+                                ? Number(
+                                    reviewData.total_reviews || 0
+                                )
+                                : 0;
+
+
+                    }
+                    catch (error) {
+
+                        product.average_rating =
+                            0;
+
+                        product.total_reviews =
+                            0;
+
+                    }
+
+                }
+
+            )
+
+        );
+
+
+        featuredProducts.innerHTML =
+            products.map(
+                product => {
+
+
+                    const stock =
+                        Number(
+                            product.stock
+                        );
+
+
+                    return `
+
+                        <div class="product-card">
+
+                            <div class="product-icon">
+
+                                ${getProductIcon(
+                                    product.category
+                                )}
+
+                            </div>
+
+                            <span class="product-category">
+
+                                ${product.category}
+
+                            </span>
+
+                            <h3>
+
+                                ${product.name}
+
+                            </h3>
+
+                            <div class="product-price">
+
+                                ₹${Number(
+                                    product.price
+                                ).toLocaleString(
+                                    "en-IN"
+                                )}
+
+                            </div>
+
+                            <div class="rating">
+
+                                ${displayStars(
+                                    product.average_rating
+                                )}
+
+                                ${
+                                    product.total_reviews > 0
+                                        ? ` ${Number(
+                                            product.average_rating
+                                        ).toFixed(1)}
+                                        (${product.total_reviews})`
+                                        : " No reviews"
+                                }
+
+                            </div>
+
+                            <button
+                                class="add-btn"
+                                ${stock <= 0 ? "disabled" : ""}
+                                onclick="addToCart(${product.id})"
+                            >
+
+                                ${
+                                    stock <= 0
+                                        ? "Out of Stock"
+                                        : "🛒 Add to Cart"
+                                }
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }
+
+            ).join("");
+
+
+    }
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        featuredProducts.innerHTML = `
+
+            <div>
+                Unable to load featured products.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+async function addToCart(productId) {
+
+    try {
+
+        const response =
+            await fetch(
+
+                "http://localhost:5000/api/cart/add",
+
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            buyer_id:
+                                buyerId,
+
+                            product_id:
+                                productId,
+
+                            quantity:
+                                1
+
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            showMessage(
+                data.message ||
+                "❌ Unable to add product"
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "✅ Product added to cart!"
+        );
+
+
+    }
+    catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        showMessage(
+            "❌ Unable to add product to cart"
+        );
+
+    }
+
+}
+
+
+function showMessage(text) {
+
+    message.textContent =
+        text;
+
+
+    message.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            message.style.display =
+                "none";
+
+        },
+        2200
+    );
+
+}
+
+
+loadFeaturedProducts();
+
+</script>
+
+</body>
+</html>

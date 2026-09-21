@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AnishMart - Manage Users</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f8;
+    color:#222;
+}
+
+header{
+    background:#131921;
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+header h1{
+    font-size:24px;
+}
+
+.header-buttons{
+    display:flex;
+    gap:10px;
+}
+
+button{
+    border:none;
+    padding:10px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.back-btn{
+    background:white;
+    color:#222;
+}
+
+.logout-btn{
+    background:#ff9900;
+    color:#111;
+}
+
+.container{
+    width:94%;
+    max-width:1250px;
+    margin:30px auto;
+}
+
+.top-section{
+    margin-bottom:22px;
+}
+
+.top-section h2{
+    font-size:25px;
+}
+
+.top-section p{
+    margin-top:6px;
+    color:#666;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 14px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#666;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#ff9900;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.section{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 14px rgba(0,0,0,.08);
+    padding:24px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.search-box{
+    width:300px;
+    max-width:100%;
+    padding:11px 12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.search-box:focus{
+    outline:none;
+    border-color:#ff9900;
+    box-shadow:0 0 0 3px rgba(255,153,0,.12);
+}
+
+.table-wrapper{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+table{
+    width:100%;
+    min-width:750px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:14px 12px;
+    text-align:left;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    background:#f5f5f5;
+    white-space:nowrap;
+}
+
+tr:hover{
+    background:#fafafa;
+}
+
+.role{
+    display:inline-block;
+    padding:6px 11px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+.buyer{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.seller{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.admin{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.loading,
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.status{
+    margin-top:15px;
+    color:#666;
+    font-size:14px;
+}
+
+/* TABLET */
+
+@media(max-width:850px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .section-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .search-box{
+        width:100%;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    header{
+        padding:16px;
+        flex-direction:column;
+        text-align:center;
+    }
+
+    header h1{
+        font-size:21px;
+    }
+
+    .header-buttons{
+        width:100%;
+    }
+
+    .header-buttons button{
+        flex:1;
+        min-height:44px;
+    }
+
+    .container{
+        width:100%;
+        padding:0 14px;
+        margin:22px auto;
+    }
+
+    .top-section h2{
+        font-size:22px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .card p{
+        font-size:25px;
+    }
+
+    .section{
+        padding:17px 13px;
+    }
+
+    th,
+    td{
+        padding:12px 10px;
+        font-size:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>
+        👥 AnishMart - Manage Users
+    </h1>
+
+    <div class="header-buttons">
+
+        <button
+            class="back-btn"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="top-section">
+
+        <h2>
+            User Management
+        </h2>
+
+        <p>
+            View registered buyers, sellers and administrators.
+        </p>
+
+    </div>
+
+
+    <!-- USER STATISTICS -->
+
+    <section class="stats">
+
+        <div class="card">
+
+            <h3>Total Users</h3>
+
+            <p id="totalUsers">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Buyers</h3>
+
+            <p id="totalBuyers">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Sellers</h3>
+
+            <p id="totalSellers">
+                0
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- USERS TABLE -->
+
+    <section class="section">
+
+        <div class="section-header">
+
+            <h2>
+                Registered Users
+            </h2>
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search-box"
+                placeholder="Search name, email or role..."
+                oninput="filterUsers()"
+            >
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Role</th>
+
+                        <th>Joined</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="usersTable">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="loading"
+                        >
+                            Loading users...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+const API_URL =
+"http://localhost:5000";
+
+let usersCache = [];
+
+
+/* =====================================
+   ADMIN ACCESS CHECK
+===================================== */
+
+const storedUser =
+localStorage.getItem(
+    "anishmartUser"
+);
+
+let currentUser = null;
+
+
+try{
+
+    currentUser =
+    storedUser
+    ?
+    JSON.parse(storedUser)
+    :
+    null;
+
+}
+catch(error){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+}
+
+
+if(
+    !currentUser ||
+    currentUser.role !== "admin"
+){
+
+    alert(
+        "Admin access only."
+    );
+
+    window.location.href =
+    "index.html";
+
+}
+else{
+
+    loadUsers();
+
+}
+
+
+
+/* =====================================
+   HTML SAFETY
+===================================== */
+
+function escapeHtml(value){
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+
+/* =====================================
+   LOAD USERS
+===================================== */
+
+async function loadUsers(){
+
+    const table =
+    document.getElementById(
+        "usersTable"
+    );
+
+    const status =
+    document.getElementById(
+        "status"
+    );
+
+
+    try{
+
+        const response =
+        await fetch(
+            `${API_URL}/api/admin/users`
+        );
+
+
+        const data =
+        await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Unable to load users"
+            );
+
+        }
+
+
+        usersCache =
+        Array.isArray(data.users)
+        ?
+        data.users
+        :
+        [];
+
+
+        updateStatistics();
+
+        displayUsers(
+            usersCache
+        );
+
+
+        status.innerText =
+        `${usersCache.length} user(s) loaded successfully.`;
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        table.innerHTML =
+        `
+        <tr>
+            <td
+                colspan="5"
+                class="empty"
+            >
+                Could not load users.
+            </td>
+        </tr>
+        `;
+
+
+        status.innerText =
+        "Make sure the AnishMart server is running.";
+
+    }
+
+}
+
+
+
+/* =====================================
+   USER STATISTICS
+===================================== */
+
+function updateStatistics(){
+
+    const buyers =
+    usersCache.filter(
+        user =>
+        String(
+            user.role || ""
+        ).toLowerCase()
+        ===
+        "buyer"
+    );
+
+
+    const sellers =
+    usersCache.filter(
+        user =>
+        String(
+            user.role || ""
+        ).toLowerCase()
+        ===
+        "seller"
+    );
+
+
+    document
+    .getElementById(
+        "totalUsers"
+    )
+    .innerText =
+    usersCache.length;
+
+
+    document
+    .getElementById(
+        "totalBuyers"
+    )
+    .innerText =
+    buyers.length;
+
+
+    document
+    .getElementById(
+        "totalSellers"
+    )
+    .innerText =
+    sellers.length;
+
+}
+
+
+
+/* =====================================
+   DISPLAY USERS
+===================================== */
+
+function displayUsers(users){
+
+    const table =
+    document.getElementById(
+        "usersTable"
+    );
+
+
+    if(users.length === 0){
+
+        table.innerHTML =
+        `
+        <tr>
+
+            <td
+                colspan="5"
+                class="empty"
+            >
+                No users found.
+            </td>
+
+        </tr>
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML = "";
+
+
+    users.forEach(user => {
+
+        const role =
+        String(
+            user.role || "buyer"
+        )
+        .toLowerCase();
+
+
+        const createdDate =
+        user.created_at
+        ?
+        new Date(
+            user.created_at
+        )
+        .toLocaleDateString(
+            "en-IN"
+        )
+        :
+        "-";
+
+
+        const row =
+        document.createElement(
+            "tr"
+        );
+
+
+        row.innerHTML =
+        `
+
+        <td>
+            #${escapeHtml(user.id)}
+        </td>
+
+        <td>
+            <strong>
+                ${escapeHtml(user.name || "-")}
+            </strong>
+        </td>
+
+        <td>
+            ${escapeHtml(user.email || "-")}
+        </td>
+
+        <td>
+
+            <span
+                class="role ${escapeHtml(role)}"
+            >
+                ${escapeHtml(role)}
+            </span>
+
+        </td>
+
+        <td>
+            ${escapeHtml(createdDate)}
+        </td>
+
+        `;
+
+
+        table.appendChild(
+            row
+        );
+
+    });
+
+}
+
+
+
+/* =====================================
+   SEARCH USERS
+===================================== */
+
+function filterUsers(){
+
+    const search =
+    document
+    .getElementById(
+        "searchInput"
+    )
+    .value
+    .trim()
+    .toLowerCase();
+
+
+    const filtered =
+    usersCache.filter(user => {
+
+        return (
+
+            String(
+                user.name || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                user.email || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+            ||
+
+            String(
+                user.role || ""
+            )
+            .toLowerCase()
+            .includes(search)
+
+        );
+
+    });
+
+
+    displayUsers(
+        filtered
+    );
+
+}
+
+
+
+/* =====================================
+   DASHBOARD
+===================================== */
+
+function goDashboard(){
+
+    window.location.href =
+    "admin-dashboard.html";
+
+}
+
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+function logout(){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+    "index.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AnishMart - Products</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#333;
+}
+
+header{
+    background:white;
+    padding:18px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#667eea;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#444;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#667eea;
+}
+
+.hero{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-align:center;
+    padding:55px 20px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+.container{
+    width:90%;
+    max-width:1250px;
+    margin:35px auto;
+}
+
+.controls{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.top-controls{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.search-box{
+    flex:1;
+    min-width:250px;
+}
+
+.search-box input,
+.sort-select{
+    width:100%;
+    padding:14px 18px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+    background:white;
+}
+
+.search-box input:focus,
+.sort-select:focus{
+    border-color:#667eea;
+}
+
+.sort-box{
+    min-width:220px;
+}
+
+.filter-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.category-buttons{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.category-btn{
+    padding:11px 16px;
+    border:none;
+    border-radius:8px;
+    background:#eee;
+    color:#444;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.category-btn:hover,
+.category-btn.active{
+    background:#667eea;
+    color:white;
+}
+
+.extra-filters{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.stock-filter{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:#f5f6ff;
+    padding:10px 13px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.stock-filter input{
+    width:17px;
+    height:17px;
+    cursor:pointer;
+}
+
+.clear-btn{
+    border:none;
+    background:#fff0f0;
+    color:#d93025;
+    padding:11px 15px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.clear-btn:hover{
+    background:#ffe1e1;
+}
+
+.result-info{
+    margin-bottom:20px;
+    color:#666;
+    font-weight:bold;
+}
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.product-card{
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.product-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 28px rgba(0,0,0,.14);
+}
+
+.product-icon{
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f4f5ff;
+    border-radius:12px;
+    font-size:70px;
+    margin-bottom:18px;
+}
+
+.product-image{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    border-radius:12px;
+    display:block;
+}
+
+.category{
+    display:inline-block;
+    background:#eeeaff;
+    color:#667eea;
+    padding:5px 10px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.product-card h3{
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.description{
+    color:#777;
+    font-size:14px;
+    line-height:1.5;
+    min-height:42px;
+    margin-bottom:12px;
+}
+
+.price{
+    color:#667eea;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.stock{
+    color:#16803a;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.out-stock{
+    color:#d93025;
+}
+
+.rating-summary{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-bottom:14px;
+    font-size:14px;
+}
+
+.rating-stars{
+    color:#f4b400;
+    letter-spacing:1px;
+}
+
+.rating-text{
+    color:#666;
+}
+
+.add-btn,
+.wishlist-btn,
+.review-btn{
+    width:100%;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.add-btn{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    margin-bottom:9px;
+}
+
+.wishlist-btn{
+    background:#fff0f3;
+    color:#d6336c;
+    border:1px solid #ffd0dc;
+    margin-bottom:9px;
+}
+
+.wishlist-btn.wishlisted{
+    background:#d6336c;
+    color:white;
+    border-color:#d6336c;
+}
+
+.review-btn{
+    background:#f0f1ff;
+    color:#5865c9;
+    border:1px solid #dfe2ff;
+}
+
+.add-btn:hover,
+.wishlist-btn:hover,
+.review-btn:hover{
+    opacity:.9;
+}
+
+.add-btn:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-content{
+    background:white;
+    width:100%;
+    max-width:600px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:#eee;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.review-product-name{
+    background:#f5f6ff;
+    padding:14px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-weight:bold;
+    color:#4f5fc4;
+}
+
+.rating-input-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.star-input{
+    display:flex;
+    gap:7px;
+    margin-bottom:20px;
+}
+
+.star{
+    font-size:35px;
+    color:#ccc;
+    cursor:pointer;
+}
+
+.star.selected,
+.star:hover{
+    color:#f4b400;
+}
+
+.review-textarea{
+    width:100%;
+    min-height:100px;
+    padding:13px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    resize:vertical;
+    font-family:Arial,sans-serif;
+    font-size:15px;
+}
+
+.submit-review{
+    width:100%;
+    margin-top:13px;
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.review-divider{
+    height:1px;
+    background:#eee;
+    margin:28px 0 20px;
+}
+
+.review-item{
+    border:1px solid #eee;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:12px;
+}
+
+.review-user{
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.review-stars{
+    color:#f4b400;
+    margin-bottom:7px;
+}
+
+.review-comment{
+    color:#555;
+}
+
+.review-date{
+    color:#999;
+    font-size:12px;
+    margin-top:8px;
+}
+
+.review-summary-large{
+    background:#fff9e8;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:17px;
+}
+
+.no-reviews{
+    color:#777;
+    background:#f8f8f8;
+    padding:18px;
+    border-radius:9px;
+    text-align:center;
+}
+
+.empty{
+    background:white;
+    padding:70px 20px;
+    text-align:center;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    grid-column:1/-1;
+}
+
+.empty-icon{
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+.message{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#222;
+    color:white;
+    padding:15px 22px;
+    border-radius:8px;
+    display:none;
+    z-index:2000;
+}
+
+footer{
+    margin-top:60px;
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+footer p{
+    color:#bbb;
+}
+
+@media(max-width:1000px){
+    .products-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:750px){
+    header{
+        padding:15px 25px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav{
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .products-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sort-box{
+        width:100%;
+    }
+}
+
+@media(max-width:500px){
+    .products-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🛒 AnishMart</div>
+
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="wishlist.html">❤️ Wishlist</a>
+        <a href="cart.html">Cart</a>
+        <a href="orders.html">Orders</a>
+        <a href="index.html" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>🛍️ Our Products</h1>
+    <p>Search, filter, shop and review your favourite products</p>
+</section>
+
+<div class="container">
+
+    <div class="controls">
+
+        <div class="top-controls">
+
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔎 Search products..."
+                    oninput="filterProducts()"
+                >
+            </div>
+
+            <div class="sort-box">
+                <select
+                    id="sortSelect"
+                    class="sort-select"
+                    onchange="filterProducts()"
+                >
+                    <option value="default">↕ Sort Products</option>
+                    <option value="price-low">💰 Price: Low to High</option>
+                    <option value="price-high">💰 Price: High to Low</option>
+                    <option value="newest">🆕 Newest First</option>
+                    <option value="rating">⭐ Highest Rated</option>
+                    <option value="name-az">🔤 Name: A to Z</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="filter-row">
+
+            <div
+                class="category-buttons"
+                id="categoryButtons"
+            >
+                <!-- Categories are created automatically from product data -->
+            </div>
+
+            <div class="extra-filters">
+
+                <label class="stock-filter">
+                    <input
+                        type="checkbox"
+                        id="stockOnly"
+                        onchange="filterProducts()"
+                    >
+                    📦 In Stock Only
+                </label>
+
+                <button
+                    class="clear-btn"
+                    onclick="clearFilters()"
+                >
+                    ✖ Clear Filters
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="resultInfo" class="result-info">
+        Loading products...
+    </div>
+
+    <div id="productsContainer" class="products-grid"></div>
+
+</div>
+
+<div id="message" class="message"></div>
+
+<div id="reviewModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-top">
+            <h2>⭐ Product Reviews</h2>
+
+            <button
+                class="close-btn"
+                onclick="closeReviewModal()"
+            >
+                ×
+            </button>
+        </div>
+
+        <div
+            id="reviewProductName"
+            class="review-product-name"
+        ></div>
+
+        <div class="rating-input-title">
+            Your Rating
+        </div>
+
+        <div id="starInput" class="star-input">
+
+            <span class="star" data-rating="1"
+                  onclick="selectRating(1)">★</span>
+
+            <span class="star" data-rating="2"
+                  onclick="selectRating(2)">★</span>
+
+            <span class="star" data-rating="3"
+                  onclick="selectRating(3)">★</span>
+
+            <span class="star" data-rating="4"
+                  onclick="selectRating(4)">★</span>
+
+            <span class="star" data-rating="5"
+                  onclick="selectRating(5)">★</span>
+
+        </div>
+
+        <textarea
+            id="reviewComment"
+            class="review-textarea"
+            maxlength="1000"
+            placeholder="Write your review..."
+        ></textarea>
+
+        <button
+            class="submit-review"
+            onclick="submitReview()"
+        >
+            ⭐ Submit / Update Review
+        </button>
+
+        <div class="review-divider"></div>
+
+        <h3>Customer Reviews</h3>
+        <br>
+
+        <div id="reviewList">
+            Loading reviews...
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 AnishMart. All Rights Reserved.</p>
+</footer>
+
+<script>
+
+/* ===============================
+   LOGIN CHECK
+================================ */
+
+const storedUser =
+    localStorage.getItem("anishmartUser");
+
+if(!storedUser){
+    alert("Please login to continue.");
+    window.location.href = "index.html";
+}
+
+let currentUser;
+
+try{
+    currentUser = JSON.parse(storedUser);
+}catch(error){
+    localStorage.removeItem("anishmartUser");
+    window.location.href = "index.html";
+}
+
+if(
+    !currentUser ||
+    !currentUser.id ||
+    currentUser.role !== "buyer"
+){
+    alert("Buyer login required.");
+    localStorage.removeItem("anishmartUser");
+    window.location.href = "index.html";
+}
+
+const buyerId = currentUser.id;
+
+let allProducts = [];
+let wishlistProductIds = new Set();
+
+let selectedCategory = "All";
+let selectedProductId = null;
+let selectedRating = 0;
+
+
+/* ===============================
+   ELEMENTS
+================================ */
+
+const productsContainer =
+    document.getElementById("productsContainer");
+
+const resultInfo =
+    document.getElementById("resultInfo");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const sortSelect =
+    document.getElementById("sortSelect");
+
+const stockOnly =
+    document.getElementById("stockOnly");
+
+const message =
+    document.getElementById("message");
+
+const categoryButtons =
+    document.getElementById("categoryButtons");
+
+const reviewModal =
+    document.getElementById("reviewModal");
+
+
+/* ===============================
+   LOGOUT
+================================ */
+
+function logout(){
+    localStorage.removeItem("anishmartUser");
+}
+
+
+/* ===============================
+   LOAD PRODUCTS
+================================ */
+
+async function loadProducts(){
+
+    try{
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/products"
+            );
+
+        const data =
+            await response.json();
+
+        if(!data.success){
+            throw new Error(
+                data.message ||
+                "Failed to load products"
+            );
+        }
+
+        allProducts =
+            data.products || [];
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const urlCategory =
+            urlParams.get("category");
+
+        const existingCategories =
+            getUniqueCategories();
+
+        if(urlCategory){
+
+            const matchedCategory =
+                existingCategories.find(
+                    category =>
+                        category.toLowerCase() ===
+                        urlCategory.trim().toLowerCase()
+                );
+
+            selectedCategory =
+                matchedCategory || "All";
+
+        }else{
+
+            selectedCategory = "All";
+        }
+
+        renderCategoryButtons();
+
+        await loadProductRatings();
+
+        await loadWishlistState();
+
+        filterProducts();
+
+    }catch(error){
+
+        console.error(error);
+
+        resultInfo.textContent = "";
+
+        productsContainer.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">⚠️</div>
+                <h2>Unable to Load Products</h2>
+                <p>
+                    Please make sure the AnishMart server is running.
+                </p>
+            </div>
+        `;
+    }
+}
+
+
+/* ===============================
+   LOAD RATINGS
+================================ */
+
+async function loadProductRatings(){
+
+    await Promise.all(
+
+        allProducts.map(async product => {
+
+            try{
+
+                const response =
+                    await fetch(
+                        `http://localhost:5000/api/reviews/product/${product.id}`
+                    );
+
+                const data =
+                    await response.json();
+
+                if(data.success){
+
+                    product.average_rating =
+                        Number(
+                            data.average_rating || 0
+                        );
+
+                    product.total_reviews =
+                        Number(
+                            data.total_reviews || 0
+                        );
+                }
+
+            }catch(error){
+
+                product.average_rating = 0;
+                product.total_reviews = 0;
+            }
+
+        })
+    );
+}
+
+
+/* ===============================
+   WISHLIST STATE
+================================ */
+
+async function loadWishlistState(){
+
+    try{
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/wishlist/${buyerId}`
+            );
+
+        const data =
+            await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to load wishlist"
+            );
+        }
+
+        wishlistProductIds =
+            new Set(
+                (data.wishlist || [])
+                    .map(
+                        item =>
+                            Number(item.product_id)
+                    )
+            );
+
+    }catch(error){
+
+        console.error(
+            "WISHLIST LOAD ERROR:",
+            error
+        );
+
+        wishlistProductIds =
+            new Set();
+    }
+}
+
+
+/* ===============================
+   ADVANCED FILTER + SORT
+================================ */
+
+function filterProducts(){
+
+    const searchText =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    const onlyAvailable =
+        stockOnly.checked;
+
+    const sortValue =
+        sortSelect.value;
+
+
+    let filteredProducts =
+        allProducts.filter(product => {
+
+            const category =
+                String(
+                    product.category || ""
+                );
+
+            const name =
+                String(
+                    product.name || ""
+                );
+
+            const description =
+                String(
+                    product.description || ""
+                );
+
+            const matchesCategory =
+                selectedCategory === "All" ||
+                category.toLowerCase() ===
+                    selectedCategory.toLowerCase();
+
+            const matchesSearch =
+                name
+                    .toLowerCase()
+                    .includes(searchText)
+                ||
+                description
+                    .toLowerCase()
+                    .includes(searchText)
+                ||
+                category
+                    .toLowerCase()
+                    .includes(searchText);
+
+            const matchesStock =
+                !onlyAvailable ||
+                Number(product.stock) > 0;
+
+            return (
+                matchesCategory &&
+                matchesSearch &&
+                matchesStock
+            );
+        });
+
+
+    filteredProducts =
+        [...filteredProducts];
+
+
+    switch(sortValue){
+
+        case "price-low":
+
+            filteredProducts.sort(
+                (a,b) =>
+                    Number(a.price) -
+                    Number(b.price)
+            );
+
+            break;
+
+
+        case "price-high":
+
+            filteredProducts.sort(
+                (a,b) =>
+                    Number(b.price) -
+                    Number(a.price)
+            );
+
+            break;
+
+
+        case "newest":
+
+            filteredProducts.sort(
+                (a,b) => {
+
+                    const dateA =
+                        new Date(
+                            a.created_at || 0
+                        );
+
+                    const dateB =
+                        new Date(
+                            b.created_at || 0
+                        );
+
+                    return dateB - dateA;
+                }
+            );
+
+            break;
+
+
+        case "rating":
+
+            filteredProducts.sort(
+                (a,b) =>
+                    Number(
+                        b.average_rating || 0
+                    )
+                    -
+                    Number(
+                        a.average_rating || 0
+                    )
+            );
+
+            break;
+
+
+        case "name-az":
+
+            filteredProducts.sort(
+                (a,b) =>
+                    String(a.name || "")
+                        .localeCompare(
+                            String(b.name || "")
+                        )
+            );
+
+            break;
+    }
+
+
+    renderProducts(
+        filteredProducts
+    );
+
+
+    resultInfo.textContent =
+        `${filteredProducts.length} product${
+            filteredProducts.length !== 1
+                ? "s"
+                : ""
+        } found`;
+}
+
+
+/* ===============================
+   CLEAR FILTERS
+================================ */
+
+function clearFilters(){
+
+    searchInput.value = "";
+
+    sortSelect.value =
+        "default";
+
+    stockOnly.checked =
+        false;
+
+    selectedCategory =
+        "All";
+
+
+    renderCategoryButtons();
+
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+    url.searchParams.delete(
+        "category"
+    );
+
+    history.replaceState(
+        {},
+        "",
+        url
+    );
+
+
+    filterProducts();
+
+    showMessage(
+        "✅ Filters cleared"
+    );
+}
+
+
+/* ===============================
+   DYNAMIC CATEGORY
+================================ */
+
+function getUniqueCategories(){
+
+    const categoryMap =
+        new Map();
+
+    allProducts.forEach(product => {
+
+        const category =
+            String(
+                product.category || ""
+            ).trim();
+
+        if(!category){
+            return;
+        }
+
+        const key =
+            category.toLowerCase();
+
+        if(!categoryMap.has(key)){
+            categoryMap.set(
+                key,
+                category
+            );
+        }
+    });
+
+    return Array
+        .from(
+            categoryMap.values()
+        )
+        .sort(
+            (a,b) =>
+                a.localeCompare(
+                    b,
+                    undefined,
+                    {
+                        sensitivity:"base"
+                    }
+                )
+        );
+}
+
+
+function renderCategoryButtons(){
+
+    if(!categoryButtons){
+        return;
+    }
+
+    categoryButtons.innerHTML = "";
+
+    const categories =
+        [
+            "All",
+            ...getUniqueCategories()
+        ];
+
+    categories.forEach(category => {
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+        button.type =
+            "button";
+
+        button.className =
+            "category-btn";
+
+        button.textContent =
+            category;
+
+        if(
+            String(selectedCategory)
+                .toLowerCase()
+            ===
+            String(category)
+                .toLowerCase()
+        ){
+            button.classList.add(
+                "active"
+            );
+        }
+
+        button.addEventListener(
+            "click",
+            () => {
+                selectCategory(
+                    category,
+                    button
+                );
+            }
+        );
+
+        categoryButtons.appendChild(
+            button
+        );
+    });
+}
+
+
+function selectCategory(
+    category,
+    button
+){
+
+    selectedCategory =
+        category;
+
+    document
+        .querySelectorAll(
+            ".category-btn"
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
+
+    if(button){
+        button.classList.add(
+            "active"
+        );
+    }
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+    if(category === "All"){
+
+        url.searchParams.delete(
+            "category"
+        );
+
+    }else{
+
+        url.searchParams.set(
+            "category",
+            category
+        );
+    }
+
+    history.replaceState(
+        {},
+        "",
+        url
+    );
+
+    filterProducts();
+}
+
+
+function updateCategoryButton(
+    category
+){
+
+    const categories =
+        getUniqueCategories();
+
+    const matchedCategory =
+        categories.find(
+            item =>
+                item.toLowerCase() ===
+                String(category || "")
+                    .trim()
+                    .toLowerCase()
+        );
+
+    selectedCategory =
+        matchedCategory || "All";
+
+    renderCategoryButtons();
+}
+
+
+/* ===============================
+   PRODUCT ICON
+================================ */
+
+function getProductIcon(category){
+
+    switch(
+        String(
+            category || ""
+        ).toLowerCase()
+    ){
+
+        case "electronics":
+            return "📱";
+
+        case "books":
+            return "📚";
+
+        case "fashion":
+            return "👕";
+
+        case "home":
+            return "🏠";
+
+        case "groceries":
+            return "🛒";
+
+        default:
+            return "🛍️";
+    }
+}
+
+
+/* ===============================
+   STARS
+================================ */
+
+function displayStars(rating){
+
+    const rounded =
+        Math.round(
+            Number(rating)
+        );
+
+    let stars = "";
+
+    for(let i=1;i<=5;i++){
+
+        stars +=
+            i <= rounded
+                ? "★"
+                : "☆";
+    }
+
+    return stars;
+}
+
+
+/* ===============================
+   RENDER PRODUCTS
+================================ */
+
+function renderProducts(products){
+
+    if(products.length === 0){
+
+        productsContainer.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <h2>No Products Found</h2>
+
+                <p>
+                    Try changing your search,
+                    category or filters.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    productsContainer.innerHTML =
+        products.map(product => {
+
+            const stock =
+                Number(
+                    product.stock
+                );
+
+            const outOfStock =
+                stock <= 0;
+
+            const averageRating =
+                Number(
+                    product.average_rating || 0
+                );
+
+            const totalReviews =
+                Number(
+                    product.total_reviews || 0
+                );
+
+            const wishlisted =
+                wishlistProductIds.has(
+                    Number(product.id)
+                );
+
+
+            return `
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        ${product.image_url && String(product.image_url).trim()
+                            ? `<img
+                                class="product-image"
+                                src="${escapeHTML(String(product.image_url).trim())}"
+                                alt="${escapeHTML(product.name || 'Product image')}"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                               >
+                               <span class="product-image-fallback" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:70px;">${getProductIcon(product.category)}</span>`
+                            : `<span class="product-image-fallback" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:70px;">${getProductIcon(product.category)}</span>`
+                        }
+                    </div>
+
+                    <span class="category">
+                        ${escapeHTML(
+                            product.category
+                        )}
+                    </span>
+
+                    <h3>
+                        ${escapeHTML(
+                            product.name
+                        )}
+                    </h3>
+
+                    <p class="description">
+
+                        ${
+                            escapeHTML(
+                                product.description ||
+                                "Quality product from AnishMart"
+                            )
+                        }
+
+                    </p>
+
+                    <div class="price">
+
+                        ₹${Number(
+                            product.price
+                        ).toLocaleString(
+                            "en-IN"
+                        )}
+
+                    </div>
+
+                    <div
+                        class="${
+                            outOfStock
+                                ? "stock out-stock"
+                                : "stock"
+                        }"
+                    >
+
+                        ${
+                            outOfStock
+                                ? "Out of Stock"
+                                : `In Stock (${stock})`
+                        }
+
+                    </div>
+
+                    <div class="rating-summary">
+
+                        <span class="rating-stars">
+
+                            ${displayStars(
+                                averageRating
+                            )}
+
+                        </span>
+
+                        <span class="rating-text">
+
+                            ${
+                                totalReviews > 0
+                                    ? `${averageRating.toFixed(1)} (${totalReviews})`
+                                    : "No reviews"
+                            }
+
+                        </span>
+
+                    </div>
+
+                    <button
+                        class="add-btn"
+                        ${
+                            outOfStock
+                                ? "disabled"
+                                : ""
+                        }
+                        onclick="addToCart(${product.id})"
+                    >
+
+                        ${
+                            outOfStock
+                                ? "Out of Stock"
+                                : "🛒 Add to Cart"
+                        }
+
+                    </button>
+
+                    <button
+                        id="wishlist-btn-${product.id}"
+                        class="wishlist-btn ${
+                            wishlisted
+                                ? "wishlisted"
+                                : ""
+                        }"
+                        onclick="addToWishlist(${product.id})"
+                    >
+
+                        ${
+                            wishlisted
+                                ? "❤️ Wishlisted"
+                                : "🤍 Add to Wishlist"
+                        }
+
+                    </button>
+
+                    <button
+                        class="review-btn"
+                        onclick="openReviewModal(${product.id})"
+                    >
+                        ⭐ Reviews & Rating
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* ===============================
+   ADD TO CART
+================================ */
+
+async function addToCart(productId){
+
+    try{
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/cart/add",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            buyer_id:
+                                buyerId,
+
+                            product_id:
+                                productId,
+
+                            quantity:
+                                1
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+                data.message ||
+                "Failed to add product"
+            );
+
+            return;
+        }
+
+
+        showMessage(
+            "✅ Product added to cart!"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            "❌ Unable to add product to cart"
+        );
+    }
+}
+
+
+/* ===============================
+   ADD TO WISHLIST
+================================ */
+
+async function addToWishlist(
+    productId
+){
+
+    if(
+        wishlistProductIds.has(
+            Number(productId)
+        )
+    ){
+
+        showMessage(
+            "❤️ Product already in wishlist"
+        );
+
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/wishlist/add",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            buyer_id:
+                                buyerId,
+
+                            product_id:
+                                productId
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            showMessage(
+                data.message ||
+                "❌ Unable to add to wishlist"
+            );
+
+            return;
+        }
+
+
+        wishlistProductIds.add(
+            Number(productId)
+        );
+
+
+        const button =
+            document.getElementById(
+                `wishlist-btn-${productId}`
+            );
+
+
+        if(button){
+
+            button.classList.add(
+                "wishlisted"
+            );
+
+            button.textContent =
+                "❤️ Wishlisted";
+        }
+
+
+        showMessage(
+            "❤️ Product added to wishlist!"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "ADD WISHLIST ERROR:",
+            error
+        );
+
+        showMessage(
+            "❌ Unable to add product to wishlist"
+        );
+    }
+}
+
+
+/* ===============================
+   OPEN REVIEWS
+================================ */
+
+async function openReviewModal(
+    productId
+){
+
+    selectedProductId =
+        productId;
+
+    selectedRating =
+        0;
+
+    updateStarInput();
+
+    document
+        .getElementById(
+            "reviewComment"
+        )
+        .value = "";
+
+
+    const product =
+        allProducts.find(
+            item =>
+                Number(item.id) ===
+                Number(productId)
+        );
+
+
+    document
+        .getElementById(
+            "reviewProductName"
+        )
+        .textContent =
+            product
+                ? product.name
+                : "Product";
+
+
+    reviewModal.classList.add(
+        "active"
+    );
+
+
+    await loadReviews(
+        productId
+    );
+}
+
+
+/* ===============================
+   CLOSE REVIEW
+================================ */
+
+function closeReviewModal(){
+
+    reviewModal.classList.remove(
+        "active"
+    );
+
+    selectedProductId =
+        null;
+
+    selectedRating =
+        0;
+}
+
+
+/* ===============================
+   SELECT RATING
+================================ */
+
+function selectRating(rating){
+
+    selectedRating =
+        rating;
+
+    updateStarInput();
+}
+
+
+function updateStarInput(){
+
+    document
+        .querySelectorAll(".star")
+        .forEach(star => {
+
+            const value =
+                Number(
+                    star.dataset.rating
+                );
+
+            if(
+                value <=
+                selectedRating
+            ){
+
+                star.classList.add(
+                    "selected"
+                );
+
+            }else{
+
+                star.classList.remove(
+                    "selected"
+                );
+            }
+
+        });
+}
+
+
+/* ===============================
+   SUBMIT REVIEW
+================================ */
+
+async function submitReview(){
+
+    if(!selectedProductId){
+        return;
+    }
+
+
+    if(
+        selectedRating < 1 ||
+        selectedRating > 5
+    ){
+
+        showMessage(
+            "⭐ Please select a rating from 1 to 5"
+        );
+
+        return;
+    }
+
+
+    const comment =
+        document
+            .getElementById(
+                "reviewComment"
+            )
+            .value
+            .trim();
+
+
+    try{
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/reviews",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            buyer_id:
+                                buyerId,
+
+                            product_id:
+                                selectedProductId,
+
+                            rating:
+                                selectedRating,
+
+                            comment:
+                                comment
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            showMessage(
+                data.message ||
+                "❌ Unable to submit review"
+            );
+
+            return;
+        }
+
+
+        showMessage(
+            "⭐ Review saved successfully!"
+        );
+
+
+        document
+            .getElementById(
+                "reviewComment"
+            )
+            .value = "";
+
+
+        selectedRating =
+            0;
+
+        updateStarInput();
+
+
+        await loadReviews(
+            selectedProductId
+        );
+
+
+        await refreshProductRating(
+            selectedProductId
+        );
+
+
+        filterProducts();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            "❌ Unable to submit review"
+        );
+    }
+}
+
+
+/* ===============================
+   LOAD REVIEWS
+================================ */
+
+async function loadReviews(
+    productId
+){
+
+    const reviewList =
+        document.getElementById(
+            "reviewList"
+        );
+
+
+    reviewList.innerHTML =
+        "Loading reviews...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/reviews/product/${productId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+            throw new Error(
+                data.message
+            );
+        }
+
+
+        const average =
+            Number(
+                data.average_rating || 0
+            );
+
+        const total =
+            Number(
+                data.total_reviews || 0
+            );
+
+
+        let html = `
+
+            <div class="review-summary-large">
+
+                <strong>
+                    ${average.toFixed(1)} ⭐
+                </strong>
+
+                &nbsp;
+
+                ${total}
+                review${total !== 1 ? "s" : ""}
+
+            </div>
+        `;
+
+
+        if(
+            !data.reviews ||
+            data.reviews.length === 0
+        ){
+
+            html += `
+
+                <div class="no-reviews">
+                    No customer reviews yet.
+                    Be the first to review this product.
+                </div>
+            `;
+
+            reviewList.innerHTML =
+                html;
+
+            return;
+        }
+
+
+        data.reviews.forEach(
+            review => {
+
+                html += `
+
+                    <div class="review-item">
+
+                        <div class="review-user">
+                            👤 ${escapeHTML(
+                                review.buyer_name
+                            )}
+                        </div>
+
+                        <div class="review-stars">
+                            ${displayStars(
+                                review.rating
+                            )}
+                        </div>
+
+                        <div class="review-comment">
+
+                            ${
+                                review.comment
+                                    ? escapeHTML(
+                                        review.comment
+                                      )
+                                    : "No comment provided."
+                            }
+
+                        </div>
+
+                        <div class="review-date">
+                            ${formatDate(
+                                review.created_at
+                            )}
+                        </div>
+
+                    </div>
+                `;
+
+            }
+        );
+
+
+        reviewList.innerHTML =
+            html;
+
+
+    }catch(error){
+
+        console.error(error);
+
+        reviewList.innerHTML = `
+            <div class="no-reviews">
+                Unable to load reviews.
+            </div>
+        `;
+    }
+}
+
+
+/* ===============================
+   REFRESH RATING
+================================ */
+
+async function refreshProductRating(
+    productId
+){
+
+    try{
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/reviews/product/${productId}`
+            );
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+            return;
+        }
+
+
+        const product =
+            allProducts.find(
+                item =>
+                    Number(item.id) ===
+                    Number(productId)
+            );
+
+
+        if(product){
+
+            product.average_rating =
+                Number(
+                    data.average_rating || 0
+                );
+
+            product.total_reviews =
+                Number(
+                    data.total_reviews || 0
+                );
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+    }
+}
+
+
+/* ===============================
+   FORMAT DATE
+================================ */
+
+function formatDate(value){
+
+    const date =
+        new Date(value);
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+}
+
+
+/* ===============================
+   HTML ESCAPE
+================================ */
+
+function escapeHTML(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        String(
+            value || ""
+        );
+
+    return div.innerHTML;
+}
+
+
+/* ===============================
+   MESSAGE
+================================ */
+
+function showMessage(text){
+
+    message.textContent =
+        text;
+
+    message.style.display =
+        "block";
+
+    setTimeout(
+        () => {
+
+            message.style.display =
+                "none";
+
+        },
+        2500
+    );
+}
+
+
+/* ===============================
+   MODAL BACKGROUND CLOSE
+================================ */
+
+reviewModal.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            reviewModal
+        ){
+            closeReviewModal();
+        }
+    }
+);
+
+
+/* ===============================
+   START
+================================ */
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

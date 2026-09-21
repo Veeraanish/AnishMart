@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - AnishMart</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .home-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            padding: 9px 16px;
+            border-radius: 8px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 45px auto;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-top {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            background: #eef0ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .profile-top h2 {
+            margin-bottom: 7px;
+        }
+
+        .profile-top p {
+            color: #777;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .info-box {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .info-box span {
+            display: block;
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .info-box strong {
+            font-size: 16px;
+        }
+
+        .edit-section,
+        .password-section {
+            display: none;
+            margin-top: 30px;
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 14px;
+        }
+
+        .edit-section h3,
+        .password-section h3 {
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #667eea;
+        }
+
+        .edit-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .save-btn,
+        .cancel-btn,
+        .password-save-btn {
+            flex: 1;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .save-btn {
+            background: #27ae60;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #219150;
+        }
+
+        .password-save-btn {
+            background: #8e44ad;
+            color: white;
+        }
+
+        .password-save-btn:hover {
+            background: #71368a;
+        }
+
+        .cancel-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            text-align: center;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 10px;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .action-btn:hover {
+            background: #5568d8;
+        }
+
+        .edit-profile {
+            background: #f39c12;
+        }
+
+        .edit-profile:hover {
+            background: #d68910;
+        }
+
+        .change-password {
+            background: #8e44ad;
+        }
+
+        .change-password:hover {
+            background: #71368a;
+        }
+
+        .logout {
+            background: #e74c3c;
+        }
+
+        .logout:hover {
+            background: #c0392b;
+        }
+
+        #message,
+        #passwordMessage {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            .info-grid,
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .profile-card {
+                padding: 25px 20px;
+            }
+
+            .edit-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* =========================================
+           FINAL PREMIUM + MOBILE PROFILE POLISH
+           ========================================= */
+        html { scroll-behavior: smooth; }
+        body { min-height: 100vh; overflow-x: hidden; }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .home-btn, .action-btn, .save-btn, .cancel-btn, .password-save-btn {
+            transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+        }
+
+        .home-btn:hover {
+            background: rgba(255,255,255,.14);
+            transform: translateY(-1px);
+        }
+
+        .profile-card {
+            border: 1px solid rgba(102,126,234,.08);
+        }
+
+        .avatar {
+            box-shadow: 0 8px 24px rgba(102,126,234,.14);
+        }
+
+        .info-box {
+            border: 1px solid #eef0ff;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.06);
+        }
+
+        .edit-section, .password-section {
+            border: 1px solid #eceeff;
+        }
+
+        .form-group input {
+            min-height: 46px;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .form-group input:focus {
+            box-shadow: 0 0 0 3px rgba(102,126,234,.12);
+        }
+
+        .action-btn:hover, .save-btn:hover,
+        .password-save-btn:hover, .cancel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0,0,0,.12);
+        }
+
+        .action-btn:active, .save-btn:active,
+        .password-save-btn:active, .cancel-btn:active {
+            transform: scale(.98);
+        }
+
+        #message, #passwordMessage {
+            min-height: 20px;
+            line-height: 1.45;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                width: 100%;
+                margin: 24px auto;
+                padding: 0 14px;
+            }
+
+            .navbar {
+                padding: 14px 16px;
+            }
+
+            .logo { font-size: 21px; }
+            .home-btn { padding: 8px 12px; font-size: 13px; }
+
+            .profile-card {
+                padding: 22px 16px;
+                border-radius: 15px;
+            }
+
+            .profile-top { padding-bottom: 20px; }
+
+            .avatar {
+                width: 78px;
+                height: 78px;
+                font-size: 38px;
+            }
+
+            .profile-top h2 { font-size: 22px; }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .info-box { padding: 16px; }
+
+            .edit-section, .password-section {
+                margin-top: 22px;
+                padding: 18px 15px;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+                gap: 11px;
+                margin-top: 22px;
+            }
+
+            .action-btn {
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .edit-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .save-btn, .cancel-btn, .password-save-btn {
+                min-height: 46px;
+            }
+
+            .form-group input {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .navbar { padding: 12px; }
+            .logo { font-size: 19px; }
+            .home-btn { padding: 7px 9px; }
+            .profile-card { padding: 18px 13px; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🛒 AnishMart
+        </div>
+
+        <a href="home.html" class="home-btn">
+            🏠 Home
+        </a>
+
+    </nav>
+
+    <main class="container">
+
+        <div class="profile-card">
+
+            <div class="profile-top">
+
+                <div class="avatar">
+                    👤
+                </div>
+
+                <h2 id="profileName">
+                    Buyer
+                </h2>
+
+                <p>
+                    My Account
+                </p>
+
+            </div>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+                    <span>Name</span>
+                    <strong id="name">-</strong>
+                </div>
+
+                <div class="info-box">
+                    <span>Email</span>
+                    <strong id="email">-</strong>
+                </div>
+
+                <div class="info-box">
+                    <span>Account Type</span>
+                    <strong id="role">Buyer</strong>
+                </div>
+
+                <div class="info-box">
+                    <span>Account Status</span>
+                    <strong>Active ✅</strong>
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- EDIT PROFILE -->
+            <!-- ========================= -->
+
+            <div class="edit-section" id="editSection">
+
+                <h3>
+                    ✏️ Edit Profile
+                </h3>
+
+                <div class="form-group">
+
+                    <label>
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editName"
+                        placeholder="Enter your name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="editEmail"
+                        disabled
+                    >
+
+                </div>
+
+                <div class="edit-buttons">
+
+                    <button
+                        class="save-btn"
+                        onclick="saveProfile()"
+                    >
+                        💾 Save Changes
+                    </button>
+
+                    <button
+                        class="cancel-btn"
+                        onclick="cancelEdit()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+                <div id="message"></div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- CHANGE PASSWORD -->
+            <!-- ========================= -->
+
+            <div class="password-section" id="passwordSection">
+
+                <h3>
+                    🔐 Change Password
+                </h3>
+
+                <div class="form-group">
+
+                    <label>
+                        Current Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        placeholder="Enter current password"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        New Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="Enter new password"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Confirm New Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm new password"
+                    >
+
+                </div>
+
+                <div class="edit-buttons">
+
+                    <button
+                        class="password-save-btn"
+                        onclick="changePassword()"
+                    >
+                        🔐 Change Password
+                    </button>
+
+                    <button
+                        class="cancel-btn"
+                        onclick="cancelPassword()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+                <div id="passwordMessage"></div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ACTION BUTTONS -->
+            <!-- ========================= -->
+
+            <div class="actions">
+
+                <button
+                    class="action-btn edit-profile"
+                    onclick="showEditProfile()"
+                >
+                    ✏️ Edit Profile
+                </button>
+
+                <button
+                    class="action-btn change-password"
+                    onclick="showPasswordSection()"
+                >
+                    🔐 Change Password
+                </button>
+
+                <a
+                    href="orders.html"
+                    class="action-btn"
+                >
+                    📦 My Orders
+                </a>
+
+                <a
+                    href="wishlist.html"
+                    class="action-btn"
+                >
+                    ❤️ My Wishlist
+                </a>
+
+                <a
+                    href="products.html"
+                    class="action-btn"
+                >
+                    🛍️ Continue Shopping
+                </a>
+
+                <button
+                    class="action-btn logout"
+                    onclick="logout()"
+                >
+                    🚪 Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        let currentUser = null;
+
+        const userData =
+            localStorage.getItem(
+                "anishmartUser"
+            );
+
+
+        // ===============================
+        // CHECK LOGIN
+        // ===============================
+
+        if (!userData) {
+
+            alert(
+                "Please login first."
+            );
+
+            window.location.href =
+                "index.html";
+
+        } else {
+
+            currentUser =
+                JSON.parse(userData);
+
+
+            // Buyer only
+
+            if (
+                currentUser.role !== "buyer"
+            ) {
+
+                alert(
+                    "This page is only for Buyer accounts."
+                );
+
+
+                if (
+                    currentUser.role === "seller"
+                ) {
+
+                    window.location.href =
+                        "seller-dashboard.html";
+
+                } else {
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            } else {
+
+                loadProfile();
+
+            }
+
+        }
+
+
+        // ===============================
+        // LOAD PROFILE
+        // ===============================
+
+        function loadProfile() {
+
+            document
+                .getElementById(
+                    "profileName"
+                )
+                .textContent =
+                currentUser.name || "Buyer";
+
+
+            document
+                .getElementById(
+                    "name"
+                )
+                .textContent =
+                currentUser.name || "-";
+
+
+            document
+                .getElementById(
+                    "email"
+                )
+                .textContent =
+                currentUser.email || "-";
+
+
+            document
+                .getElementById(
+                    "role"
+                )
+                .textContent =
+                "Buyer";
+
+        }
+
+
+        // ===============================
+        // SHOW EDIT PROFILE
+        // ===============================
+
+        function showEditProfile() {
+
+            document
+                .getElementById(
+                    "passwordSection"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "editSection"
+                )
+                .style.display =
+                "block";
+
+
+            document
+                .getElementById(
+                    "editName"
+                )
+                .value =
+                currentUser.name || "";
+
+
+            document
+                .getElementById(
+                    "editEmail"
+                )
+                .value =
+                currentUser.email || "";
+
+
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent =
+                "";
+
+        }
+
+
+        // ===============================
+        // CANCEL EDIT
+        // ===============================
+
+        function cancelEdit() {
+
+            document
+                .getElementById(
+                    "editSection"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "message"
+                )
+                .textContent =
+                "";
+
+        }
+
+
+        // ===============================
+        // SAVE PROFILE
+        // ===============================
+
+        async function saveProfile() {
+
+            const name =
+                document
+                    .getElementById(
+                        "editName"
+                    )
+                    .value
+                    .trim();
+
+
+            const message =
+                document
+                    .getElementById(
+                        "message"
+                    );
+
+
+            if (!name) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "Please enter your name.";
+
+                return;
+            }
+
+
+            try {
+
+                message.style.color =
+                    "#333";
+
+                message.textContent =
+                    "Updating profile...";
+
+
+                const response =
+                    await fetch(
+                        `/api/users/${currentUser.id}/profile`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    name: name
+                                })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    message.style.color =
+                        "red";
+
+                    message.textContent =
+                        data.message ||
+                        "Unable to update profile.";
+
+                    return;
+                }
+
+
+                currentUser =
+                    data.user;
+
+
+                localStorage.setItem(
+                    "anishmartUser",
+                    JSON.stringify(
+                        currentUser
+                    )
+                );
+
+
+                loadProfile();
+
+
+                message.style.color =
+                    "green";
+
+                message.textContent =
+                    "Profile updated successfully ✅";
+
+
+                setTimeout(
+                    () => {
+
+                        document
+                            .getElementById(
+                                "editSection"
+                            )
+                            .style.display =
+                            "none";
+
+                    },
+                    1200
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "PROFILE UPDATE ERROR:",
+                    error
+                );
+
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "Server connection failed.";
+
+            }
+
+        }
+
+
+        // ===============================
+        // SHOW PASSWORD SECTION
+        // ===============================
+
+        function showPasswordSection() {
+
+            document
+                .getElementById(
+                    "editSection"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "passwordSection"
+                )
+                .style.display =
+                "block";
+
+
+            document
+                .getElementById(
+                    "currentPassword"
+                )
+                .value =
+                "";
+
+
+            document
+                .getElementById(
+                    "newPassword"
+                )
+                .value =
+                "";
+
+
+            document
+                .getElementById(
+                    "confirmPassword"
+                )
+                .value =
+                "";
+
+
+            document
+                .getElementById(
+                    "passwordMessage"
+                )
+                .textContent =
+                "";
+
+        }
+
+
+        // ===============================
+        // CANCEL PASSWORD
+        // ===============================
+
+        function cancelPassword() {
+
+            document
+                .getElementById(
+                    "passwordSection"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "currentPassword"
+                )
+                .value =
+                "";
+
+
+            document
+                .getElementById(
+                    "newPassword"
+                )
+                .value =
+                "";
+
+
+            document
+                .getElementById(
+                    "confirmPassword"
+                )
+                .value =
+                "";
+
+
+            document
+                .getElementById(
+                    "passwordMessage"
+                )
+                .textContent =
+                "";
+
+        }
+
+
+        // ===============================
+        // CHANGE PASSWORD
+        // ===============================
+
+        async function changePassword() {
+
+            const currentPassword =
+                document
+                    .getElementById(
+                        "currentPassword"
+                    )
+                    .value;
+
+
+            const newPassword =
+                document
+                    .getElementById(
+                        "newPassword"
+                    )
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById(
+                        "confirmPassword"
+                    )
+                    .value;
+
+
+            const message =
+                document
+                    .getElementById(
+                        "passwordMessage"
+                    );
+
+
+            if (
+                !currentPassword ||
+                !newPassword ||
+                !confirmPassword
+            ) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "Please fill all password fields.";
+
+                return;
+            }
+
+
+            if (
+                newPassword.length < 6
+            ) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "New password must be at least 6 characters.";
+
+                return;
+            }
+
+
+            if (
+                newPassword !==
+                confirmPassword
+            ) {
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "New password and confirm password do not match.";
+
+                return;
+            }
+
+
+            try {
+
+                message.style.color =
+                    "#333";
+
+                message.textContent =
+                    "Changing password...";
+
+
+                const response =
+                    await fetch(
+                        `/api/users/${currentUser.id}/change-password`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    currentPassword:
+                                        currentPassword,
+
+                                    newPassword:
+                                        newPassword
+                                })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    message.style.color =
+                        "red";
+
+                    message.textContent =
+                        data.message ||
+                        "Unable to change password.";
+
+                    return;
+                }
+
+
+                message.style.color =
+                    "green";
+
+                message.textContent =
+                    "Password changed successfully ✅";
+
+
+                document
+                    .getElementById(
+                        "currentPassword"
+                    )
+                    .value =
+                    "";
+
+
+                document
+                    .getElementById(
+                        "newPassword"
+                    )
+                    .value =
+                    "";
+
+
+                document
+                    .getElementById(
+                        "confirmPassword"
+                    )
+                    .value =
+                    "";
+
+
+                setTimeout(
+                    () => {
+
+                        document
+                            .getElementById(
+                                "passwordSection"
+                            )
+                            .style.display =
+                            "none";
+
+                    },
+                    1500
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "CHANGE PASSWORD ERROR:",
+                    error
+                );
+
+
+                message.style.color =
+                    "red";
+
+                message.textContent =
+                    "Server connection failed.";
+
+            }
+
+        }
+
+
+        // ===============================
+        // LOGOUT
+        // ===============================
+
+        function logout() {
+
+            localStorage.removeItem(
+                "anishmartUser"
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+    
+</body>
+
+</html>

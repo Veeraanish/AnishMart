@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AnishMart - Admin Dashboard</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f6f8;
+    color:#222;
+    overflow-x:hidden;
+}
+
+header{
+    background:#131921;
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+header h1{
+    font-size:25px;
+}
+
+.logout{
+    background:#ff9900;
+    border:none;
+    padding:10px 18px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.container{
+    width:94%;
+    max-width:1250px;
+    margin:30px auto;
+}
+
+.welcome{
+    margin-bottom:24px;
+}
+
+.welcome h2{
+    font-size:25px;
+}
+
+.welcome p{
+    color:#666;
+    margin-top:7px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:28px;
+}
+
+.card,
+.panel{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 14px rgba(0,0,0,.08);
+}
+
+.card{
+    padding:22px;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 22px rgba(0,0,0,.10);
+}
+
+.card h3{
+    font-size:14px;
+    color:#666;
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:28px;
+    font-weight:bold;
+    color:#ff9900;
+}
+
+.panel{
+    padding:25px;
+}
+
+.panel h2{
+    margin-bottom:18px;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.action{
+    display:block;
+    text-decoration:none;
+    color:#222;
+    border:1px solid #e4e7eb;
+    border-radius:10px;
+    padding:22px;
+    background:#fafafa;
+    transition:.2s;
+}
+
+.action:hover{
+    transform:translateY(-2px);
+    border-color:#ff9900;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.action .icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.action h3{
+    margin-bottom:6px;
+}
+
+.action p{
+    color:#666;
+    font-size:14px;
+    line-height:1.45;
+}
+
+.status{
+    margin-top:16px;
+    color:#666;
+    font-size:14px;
+}
+
+/* TABLET */
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .actions{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+/* MOBILE */
+@media(max-width:650px){
+
+    header{
+        padding:16px;
+        flex-direction:column;
+        text-align:center;
+    }
+
+    header h1{
+        font-size:21px;
+    }
+
+    .logout{
+        width:100%;
+        max-width:220px;
+        min-height:44px;
+    }
+
+    .container{
+        width:100%;
+        padding:0 14px;
+        margin:22px auto;
+    }
+
+    .welcome h2{
+        font-size:22px;
+    }
+
+    .stats,
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .card p{
+        font-size:25px;
+    }
+
+    .panel{
+        padding:18px 14px;
+    }
+
+    .action{
+        padding:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛡️ AnishMart Admin Dashboard</h1>
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+</header>
+
+
+<main class="container">
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <h2 id="welcomeAdmin">
+            Welcome, Admin 👋
+        </h2>
+
+        <p>
+            Manage AnishMart users, products and customer
+            orders from one place.
+        </p>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div class="card">
+
+            <h3>Total Users</h3>
+
+            <p id="totalUsers">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Total Products</h3>
+
+            <p id="totalProducts">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Total Orders</h3>
+
+            <p id="totalOrders">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Total Sales</h3>
+
+            <p id="totalSales">
+                ₹0
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADMIN MANAGEMENT -->
+
+    <section class="panel">
+
+        <h2>
+            Admin Management
+        </h2>
+
+
+        <div class="actions">
+
+            <!-- USERS -->
+
+            <a
+                class="action"
+                href="admin-users.html"
+            >
+
+                <div class="icon">
+                    👥
+                </div>
+
+                <h3>
+                    Manage Users
+                </h3>
+
+                <p>
+                    View buyers, sellers and
+                    account information.
+                </p>
+
+            </a>
+
+
+            <!-- PRODUCTS -->
+
+            <a
+                class="action"
+                href="admin-products.html"
+            >
+
+                <div class="icon">
+                    🛍️
+                </div>
+
+                <h3>
+                    Manage Products
+                </h3>
+
+                <p>
+                    View and manage products
+                    available in AnishMart.
+                </p>
+
+            </a>
+
+
+            <!-- ORDERS -->
+
+            <a
+                class="action"
+                href="admin-orders.html"
+            >
+
+                <div class="icon">
+                    📦
+                </div>
+
+                <h3>
+                    Manage Orders
+                </h3>
+
+                <p>
+                    View customer orders and
+                    manage their status.
+                </p>
+
+            </a>
+
+        </div>
+
+
+        <div
+            id="status"
+            class="status"
+        >
+            Loading dashboard statistics...
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+const API_URL =
+"http://localhost:5000";
+
+
+/* ==============================
+   ADMIN LOGIN CHECK
+============================== */
+
+const storedUser =
+localStorage.getItem(
+    "anishmartUser"
+);
+
+let currentUser = null;
+
+
+try{
+
+    currentUser =
+    storedUser
+    ?
+    JSON.parse(storedUser)
+    :
+    null;
+
+}
+catch(error){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+}
+
+
+if(
+    !currentUser ||
+    currentUser.role !== "admin"
+){
+
+    alert(
+        "Admin access only."
+    );
+
+    window.location.href =
+    "index.html";
+
+}
+else{
+
+    document
+    .getElementById(
+        "welcomeAdmin"
+    )
+    .innerText =
+    `Welcome, ${currentUser.name || "Admin"} 👋`;
+
+    loadStats();
+
+}
+
+
+
+/* ==============================
+   LOAD ADMIN STATISTICS
+============================== */
+
+async function loadStats(){
+
+    const status =
+    document.getElementById(
+        "status"
+    );
+
+    try{
+
+        const response =
+        await fetch(
+            `${API_URL}/api/admin/stats`
+        );
+
+
+        const data =
+        await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Unable to load admin statistics"
+            );
+
+        }
+
+
+        const stats =
+        data.stats || data;
+
+
+        /* TOTAL USERS */
+
+        document
+        .getElementById(
+            "totalUsers"
+        )
+        .innerText =
+
+        stats.totalUsers ??
+        stats.total_users ??
+        stats.users ??
+        0;
+
+
+        /* TOTAL PRODUCTS */
+
+        document
+        .getElementById(
+            "totalProducts"
+        )
+        .innerText =
+
+        stats.totalProducts ??
+        stats.total_products ??
+        stats.products ??
+        0;
+
+
+        /* TOTAL ORDERS */
+
+        document
+        .getElementById(
+            "totalOrders"
+        )
+        .innerText =
+
+        stats.totalOrders ??
+        stats.total_orders ??
+        stats.orders ??
+        0;
+
+
+        /* TOTAL SALES */
+
+        const sales =
+
+        stats.totalSales ??
+        stats.total_sales ??
+        stats.sales ??
+        stats.revenue ??
+        0;
+
+
+        document
+        .getElementById(
+            "totalSales"
+        )
+        .innerText =
+
+        "₹" +
+        Number(
+            sales || 0
+        )
+        .toLocaleString(
+            "en-IN"
+        );
+
+
+        status.innerText =
+        "Dashboard statistics loaded successfully ✅";
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        status.innerText =
+        "Could not load dashboard statistics. Make sure the server is running.";
+
+    }
+
+}
+
+
+
+/* ==============================
+   LOGOUT
+============================== */
+
+function logout(){
+
+    localStorage.removeItem(
+        "anishmartUser"
+    );
+
+    window.location.href =
+    "index.html";
+
+}
+
+</script>
+
+</body>
+</html>
