@@ -1,4 +1,4 @@
-const CACHE_NAME = "anishmart-pwa-v1";
+﻿const CACHE_NAME = "anishmart-pwa-v1";
 
 const STATIC_FILES = [
   "/",
@@ -73,3 +73,4 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+

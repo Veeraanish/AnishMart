@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -557,12 +557,12 @@ footer p{
 <body>
 
 <header>
-    <div class="logo">🛒 AnishMart</div>
+    <div class="logo">ðŸ›’ AnishMart</div>
 
     <nav>
         <a href="home.html">Home</a>
         <a href="products.html">Products</a>
-        <a href="wishlist.html">❤️ Wishlist</a>
+        <a href="wishlist.html">â¤ï¸ Wishlist</a>
         <a href="cart.html">Cart</a>
         <a href="orders.html">Orders</a>
         <a href="index.html" onclick="logout()">Logout</a>
@@ -570,7 +570,7 @@ footer p{
 </header>
 
 <section class="hero">
-    <h1>🛍️ Our Products</h1>
+    <h1>ðŸ›ï¸ Our Products</h1>
     <p>Search, filter, shop and review your favourite products</p>
 </section>
 
@@ -584,7 +584,7 @@ footer p{
                 <input
                     type="text"
                     id="searchInput"
-                    placeholder="🔎 Search products..."
+                    placeholder="ðŸ”Ž Search products..."
                     oninput="filterProducts()"
                 >
             </div>
@@ -595,12 +595,12 @@ footer p{
                     class="sort-select"
                     onchange="filterProducts()"
                 >
-                    <option value="default">↕ Sort Products</option>
-                    <option value="price-low">💰 Price: Low to High</option>
-                    <option value="price-high">💰 Price: High to Low</option>
-                    <option value="newest">🆕 Newest First</option>
-                    <option value="rating">⭐ Highest Rated</option>
-                    <option value="name-az">🔤 Name: A to Z</option>
+                    <option value="default">â†• Sort Products</option>
+                    <option value="price-low">ðŸ’° Price: Low to High</option>
+                    <option value="price-high">ðŸ’° Price: High to Low</option>
+                    <option value="newest">ðŸ†• Newest First</option>
+                    <option value="rating">â­ Highest Rated</option>
+                    <option value="name-az">ðŸ”¤ Name: A to Z</option>
                 </select>
             </div>
 
@@ -623,14 +623,14 @@ footer p{
                         id="stockOnly"
                         onchange="filterProducts()"
                     >
-                    📦 In Stock Only
+                    ðŸ“¦ In Stock Only
                 </label>
 
                 <button
                     class="clear-btn"
                     onclick="clearFilters()"
                 >
-                    ✖ Clear Filters
+                    âœ– Clear Filters
                 </button>
 
             </div>
@@ -654,13 +654,13 @@ footer p{
     <div class="modal-content">
 
         <div class="modal-top">
-            <h2>⭐ Product Reviews</h2>
+            <h2>â­ Product Reviews</h2>
 
             <button
                 class="close-btn"
                 onclick="closeReviewModal()"
             >
-                ×
+                Ã—
             </button>
         </div>
 
@@ -676,19 +676,19 @@ footer p{
         <div id="starInput" class="star-input">
 
             <span class="star" data-rating="1"
-                  onclick="selectRating(1)">★</span>
+                  onclick="selectRating(1)">â˜…</span>
 
             <span class="star" data-rating="2"
-                  onclick="selectRating(2)">★</span>
+                  onclick="selectRating(2)">â˜…</span>
 
             <span class="star" data-rating="3"
-                  onclick="selectRating(3)">★</span>
+                  onclick="selectRating(3)">â˜…</span>
 
             <span class="star" data-rating="4"
-                  onclick="selectRating(4)">★</span>
+                  onclick="selectRating(4)">â˜…</span>
 
             <span class="star" data-rating="5"
-                  onclick="selectRating(5)">★</span>
+                  onclick="selectRating(5)">â˜…</span>
 
         </div>
 
@@ -703,7 +703,7 @@ footer p{
             class="submit-review"
             onclick="submitReview()"
         >
-            ⭐ Submit / Update Review
+            â­ Submit / Update Review
         </button>
 
         <div class="review-divider"></div>
@@ -720,7 +720,7 @@ footer p{
 </div>
 
 <footer>
-    <p>© 2026 AnishMart. All Rights Reserved.</p>
+    <p>Â© 2026 AnishMart. All Rights Reserved.</p>
 </footer>
 
 <script>
@@ -814,7 +814,7 @@ async function loadProducts(){
 
         const response =
             await fetch(
-                "http://localhost:5000/api/products"
+                "/api/products"
             );
 
         const data =
@@ -874,7 +874,7 @@ async function loadProducts(){
 
         productsContainer.innerHTML = `
             <div class="empty">
-                <div class="empty-icon">⚠️</div>
+                <div class="empty-icon">âš ï¸</div>
                 <h2>Unable to Load Products</h2>
                 <p>
                     Please make sure the AnishMart server is running.
@@ -899,7 +899,7 @@ async function loadProductRatings(){
 
                 const response =
                     await fetch(
-                        `http://localhost:5000/api/reviews/product/${product.id}`
+                        `/api/reviews/product/${product.id}`
                     );
 
                 const data =
@@ -939,7 +939,7 @@ async function loadWishlistState(){
 
         const response =
             await fetch(
-                `http://localhost:5000/api/wishlist/${buyerId}`
+                `/api/wishlist/${buyerId}`
             );
 
         const data =
@@ -1174,7 +1174,7 @@ function clearFilters(){
     filterProducts();
 
     showMessage(
-        "✅ Filters cleared"
+        "âœ… Filters cleared"
     );
 }
 
@@ -1376,22 +1376,22 @@ function getProductIcon(category){
     ){
 
         case "electronics":
-            return "📱";
+            return "ðŸ“±";
 
         case "books":
-            return "📚";
+            return "ðŸ“š";
 
         case "fashion":
-            return "👕";
+            return "ðŸ‘•";
 
         case "home":
-            return "🏠";
+            return "ðŸ ";
 
         case "groceries":
-            return "🛒";
+            return "ðŸ›’";
 
         default:
-            return "🛍️";
+            return "ðŸ›ï¸";
     }
 }
 
@@ -1413,8 +1413,8 @@ function displayStars(rating){
 
         stars +=
             i <= rounded
-                ? "★"
-                : "☆";
+                ? "â˜…"
+                : "â˜†";
     }
 
     return stars;
@@ -1432,7 +1432,7 @@ function renderProducts(products){
         productsContainer.innerHTML = `
             <div class="empty">
                 <div class="empty-icon">
-                    🔎
+                    ðŸ”Ž
                 </div>
 
                 <h2>No Products Found</h2>
@@ -1517,7 +1517,7 @@ function renderProducts(products){
 
                     <div class="price">
 
-                        ₹${Number(
+                        â‚¹${Number(
                             product.price
                         ).toLocaleString(
                             "en-IN"
@@ -1576,7 +1576,7 @@ function renderProducts(products){
                         ${
                             outOfStock
                                 ? "Out of Stock"
-                                : "🛒 Add to Cart"
+                                : "ðŸ›’ Add to Cart"
                         }
 
                     </button>
@@ -1593,8 +1593,8 @@ function renderProducts(products){
 
                         ${
                             wishlisted
-                                ? "❤️ Wishlisted"
-                                : "🤍 Add to Wishlist"
+                                ? "â¤ï¸ Wishlisted"
+                                : "ðŸ¤ Add to Wishlist"
                         }
 
                     </button>
@@ -1603,7 +1603,7 @@ function renderProducts(products){
                         class="review-btn"
                         onclick="openReviewModal(${product.id})"
                     >
-                        ⭐ Reviews & Rating
+                        â­ Reviews & Rating
                     </button>
 
                 </div>
@@ -1623,7 +1623,7 @@ async function addToCart(productId){
 
         const response =
             await fetch(
-                "http://localhost:5000/api/cart/add",
+                "/api/cart/add",
                 {
                     method:"POST",
 
@@ -1663,7 +1663,7 @@ async function addToCart(productId){
 
 
         showMessage(
-            "✅ Product added to cart!"
+            "âœ… Product added to cart!"
         );
 
 
@@ -1672,7 +1672,7 @@ async function addToCart(productId){
         console.error(error);
 
         showMessage(
-            "❌ Unable to add product to cart"
+            "âŒ Unable to add product to cart"
         );
     }
 }
@@ -1693,7 +1693,7 @@ async function addToWishlist(
     ){
 
         showMessage(
-            "❤️ Product already in wishlist"
+            "â¤ï¸ Product already in wishlist"
         );
 
         return;
@@ -1704,7 +1704,7 @@ async function addToWishlist(
 
         const response =
             await fetch(
-                "http://localhost:5000/api/wishlist/add",
+                "/api/wishlist/add",
                 {
                     method:"POST",
 
@@ -1736,7 +1736,7 @@ async function addToWishlist(
 
             showMessage(
                 data.message ||
-                "❌ Unable to add to wishlist"
+                "âŒ Unable to add to wishlist"
             );
 
             return;
@@ -1761,12 +1761,12 @@ async function addToWishlist(
             );
 
             button.textContent =
-                "❤️ Wishlisted";
+                "â¤ï¸ Wishlisted";
         }
 
 
         showMessage(
-            "❤️ Product added to wishlist!"
+            "â¤ï¸ Product added to wishlist!"
         );
 
 
@@ -1778,7 +1778,7 @@ async function addToWishlist(
         );
 
         showMessage(
-            "❌ Unable to add product to wishlist"
+            "âŒ Unable to add product to wishlist"
         );
     }
 }
@@ -1915,7 +1915,7 @@ async function submitReview(){
     ){
 
         showMessage(
-            "⭐ Please select a rating from 1 to 5"
+            "â­ Please select a rating from 1 to 5"
         );
 
         return;
@@ -1935,7 +1935,7 @@ async function submitReview(){
 
         const response =
             await fetch(
-                "http://localhost:5000/api/reviews",
+                "/api/reviews",
                 {
                     method:"POST",
 
@@ -1970,7 +1970,7 @@ async function submitReview(){
 
             showMessage(
                 data.message ||
-                "❌ Unable to submit review"
+                "âŒ Unable to submit review"
             );
 
             return;
@@ -1978,7 +1978,7 @@ async function submitReview(){
 
 
         showMessage(
-            "⭐ Review saved successfully!"
+            "â­ Review saved successfully!"
         );
 
 
@@ -2013,7 +2013,7 @@ async function submitReview(){
         console.error(error);
 
         showMessage(
-            "❌ Unable to submit review"
+            "âŒ Unable to submit review"
         );
     }
 }
@@ -2041,7 +2041,7 @@ async function loadReviews(
 
         const response =
             await fetch(
-                `http://localhost:5000/api/reviews/product/${productId}`
+                `/api/reviews/product/${productId}`
             );
 
 
@@ -2072,7 +2072,7 @@ async function loadReviews(
             <div class="review-summary-large">
 
                 <strong>
-                    ${average.toFixed(1)} ⭐
+                    ${average.toFixed(1)} â­
                 </strong>
 
                 &nbsp;
@@ -2112,7 +2112,7 @@ async function loadReviews(
                     <div class="review-item">
 
                         <div class="review-user">
-                            👤 ${escapeHTML(
+                            ðŸ‘¤ ${escapeHTML(
                                 review.buyer_name
                             )}
                         </div>
@@ -2177,7 +2177,7 @@ async function refreshProductRating(
 
         const response =
             await fetch(
-                `http://localhost:5000/api/reviews/product/${productId}`
+                `/api/reviews/product/${productId}`
             );
 
         const data =

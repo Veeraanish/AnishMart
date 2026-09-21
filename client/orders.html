@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -576,7 +576,7 @@
 <header>
 
     <div class="logo">
-        🛒 AnishMart
+        ðŸ›’ AnishMart
     </div>
 
     <nav>
@@ -613,7 +613,7 @@
 <section class="page-header">
 
     <h1>
-        📦 My Orders
+        ðŸ“¦ My Orders
     </h1>
 
     <p>
@@ -635,7 +635,7 @@
 <footer>
 
     <p>
-        © 2026 AnishMart. All Rights Reserved.
+        Â© 2026 AnishMart. All Rights Reserved.
     </p>
 
 </footer>
@@ -844,7 +844,7 @@ function getPaymentMethod(
         paymentMethod === "COD"
     ) {
 
-        return "💵 Cash on Delivery";
+        return "ðŸ’µ Cash on Delivery";
 
     }
 
@@ -853,7 +853,7 @@ function getPaymentMethod(
         paymentMethod === "ONLINE"
     ) {
 
-        return "💳 Online Payment";
+        return "ðŸ’³ Online Payment";
 
     }
 
@@ -875,7 +875,7 @@ async function loadOrders() {
         const response =
             await fetch(
 
-                `http://localhost:5000/api/orders/history/${buyerId}`
+                `/api/orders/history/${buyerId}`
 
             );
 
@@ -910,7 +910,7 @@ async function loadOrders() {
                 <div class="empty-state">
 
                     <div class="empty-icon">
-                        📦
+                        ðŸ“¦
                     </div>
 
                     <h2>
@@ -925,7 +925,7 @@ async function loadOrders() {
                         href="products.html"
                         class="shop-btn"
                     >
-                        🛍️ Start Shopping
+                        ðŸ›ï¸ Start Shopping
                     </a>
 
                 </div>
@@ -1012,7 +1012,7 @@ async function loadOrders() {
 
                                 <div class="order-number">
 
-                                    📦 Order #${order.id}
+                                    ðŸ“¦ Order #${order.id}
 
                                 </div>
 
@@ -1061,7 +1061,7 @@ async function loadOrders() {
 
                                 <strong class="amount">
 
-                                    ₹${formatAmount(
+                                    â‚¹${formatAmount(
                                         order.total_amount
                                     )}
 
@@ -1147,7 +1147,7 @@ async function loadOrders() {
 
                             <div class="delivery-title">
 
-                                🚚 Delivery Details
+                                ðŸšš Delivery Details
 
                             </div>
 
@@ -1256,7 +1256,7 @@ async function loadOrders() {
 
                 <h2>
 
-                    ⚠️ Unable to Load Orders
+                    âš ï¸ Unable to Load Orders
 
                 </h2>
 

@@ -1,4 +1,4 @@
-(() => {
+﻿(() => {
   let deferredInstallPrompt = null;
 
   function getInstallButton() {
@@ -17,7 +17,7 @@
 
   window.installAnishMart = async function () {
     if (!deferredInstallPrompt) {
-      alert("Install option is not ready yet. Open this page in Chrome or Edge using http://localhost:5000 and try again.");
+      alert("Install option is not ready yet. Open this page in Chrome or Edge using  and try again.");
       return;
     }
 
@@ -47,3 +47,4 @@
     });
   }
 })();
+

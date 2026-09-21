@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -310,7 +310,7 @@ footer p{
 <header>
 
     <div class="logo">
-        🛒 AnishMart
+        ðŸ›’ AnishMart
     </div>
 
     <nav>
@@ -324,7 +324,7 @@ footer p{
         </a>
 
         <a href="wishlist.html">
-            ❤️ Wishlist
+            â¤ï¸ Wishlist
         </a>
 
         <a href="cart.html">
@@ -347,7 +347,7 @@ footer p{
 <section class="hero">
 
     <h1>
-        ❤️ My Wishlist
+        â¤ï¸ My Wishlist
     </h1>
 
     <p>
@@ -383,7 +383,7 @@ footer p{
 <footer>
 
     <p>
-        © 2026 AnishMart. All Rights Reserved.
+        Â© 2026 AnishMart. All Rights Reserved.
     </p>
 
 </footer>
@@ -504,7 +504,7 @@ async function loadWishlist(){
 
         const response =
             await fetch(
-                `http://localhost:5000/api/wishlist/${buyerId}`
+                `/api/wishlist/${buyerId}`
             );
 
 
@@ -552,7 +552,7 @@ async function loadWishlist(){
             <div class="empty">
 
                 <div class="empty-icon">
-                    ⚠️
+                    âš ï¸
                 </div>
 
                 <h2>
@@ -587,22 +587,22 @@ function getProductIcon(
     ){
 
         case "electronics":
-            return "📱";
+            return "ðŸ“±";
 
         case "books":
-            return "📚";
+            return "ðŸ“š";
 
         case "fashion":
-            return "👕";
+            return "ðŸ‘•";
 
         case "home":
-            return "🏠";
+            return "ðŸ ";
 
         case "groceries":
-            return "🛒";
+            return "ðŸ›’";
 
         default:
-            return "🛍️";
+            return "ðŸ›ï¸";
 
     }
 
@@ -626,7 +626,7 @@ function renderWishlist(
             <div class="empty">
 
                 <div class="empty-icon">
-                    🤍
+                    ðŸ¤
                 </div>
 
                 <h2>
@@ -641,7 +641,7 @@ function renderWishlist(
                     class="shop-btn"
                     href="products.html"
                 >
-                    🛍️ Browse Products
+                    ðŸ›ï¸ Browse Products
                 </a>
 
             </div>
@@ -716,7 +716,7 @@ function renderWishlist(
 
                         <div class="price">
 
-                            ₹${Number(
+                            â‚¹${Number(
                                 product.price
                             ).toLocaleString(
                                 "en-IN"
@@ -755,7 +755,7 @@ function renderWishlist(
                             ${
                                 outOfStock
                                 ? "Out of Stock"
-                                : "🛒 Add to Cart"
+                                : "ðŸ›’ Add to Cart"
                             }
 
                         </button>
@@ -766,7 +766,7 @@ function renderWishlist(
                             onclick="removeFromWishlist(${product.product_id})"
                         >
 
-                            🗑️ Remove from Wishlist
+                            ðŸ—‘ï¸ Remove from Wishlist
 
                         </button>
 
@@ -794,7 +794,7 @@ async function addToCart(
         const response =
             await fetch(
 
-                "http://localhost:5000/api/cart/add",
+                "/api/cart/add",
 
                 {
 
@@ -834,7 +834,7 @@ async function addToCart(
             showMessage(
 
                 data.message ||
-                "❌ Failed to add product to cart"
+                "âŒ Failed to add product to cart"
 
             );
 
@@ -844,7 +844,7 @@ async function addToCart(
 
 
         showMessage(
-            "✅ Product added to cart!"
+            "âœ… Product added to cart!"
         );
 
 
@@ -856,7 +856,7 @@ async function addToCart(
 
 
         showMessage(
-            "❌ Unable to add product to cart"
+            "âŒ Unable to add product to cart"
         );
 
     }
@@ -890,7 +890,7 @@ async function removeFromWishlist(
         const response =
             await fetch(
 
-                "http://localhost:5000/api/wishlist/remove",
+                "/api/wishlist/remove",
 
                 {
 
@@ -927,7 +927,7 @@ async function removeFromWishlist(
             showMessage(
 
                 data.message ||
-                "❌ Failed to remove product"
+                "âŒ Failed to remove product"
 
             );
 
@@ -937,7 +937,7 @@ async function removeFromWishlist(
 
 
         showMessage(
-            "🗑️ Removed from wishlist"
+            "ðŸ—‘ï¸ Removed from wishlist"
         );
 
 
@@ -952,7 +952,7 @@ async function removeFromWishlist(
 
 
         showMessage(
-            "❌ Unable to remove product"
+            "âŒ Unable to remove product"
         );
 
     }

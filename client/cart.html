@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1203,7 +1203,7 @@
 
         <div class="logo">
 
-            🛒 AnishMart
+            ðŸ›’ AnishMart
 
         </div>
 
@@ -1243,7 +1243,7 @@
     <section class="page-header">
 
         <h1>
-            🛒 Shopping Cart
+            ðŸ›’ Shopping Cart
         </h1>
 
         <p>
@@ -1276,7 +1276,7 @@
 
 
             <h2>
-                📦 Delivery Details
+                ðŸ“¦ Delivery Details
             </h2>
 
 
@@ -1478,7 +1478,7 @@
                 <div class="form-group full-width" style="background:#f7f8ff;border:1px solid #e3e5ff;border-radius:10px;padding:14px;margin-top:4px;">
                     <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
                         <input type="checkbox" id="saveDeliveryAddress" checked style="width:18px;height:18px;">
-                        <span>💾 Save this delivery address for next time</span>
+                        <span>ðŸ’¾ Save this delivery address for next time</span>
                     </label>
                     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;">
                         <span id="savedAddressStatus" style="font-size:13px;color:#666;">Checking saved address...</span>
@@ -1495,7 +1495,7 @@
 
 
                     <h2>
-                        💳 Payment Method
+                        ðŸ’³ Payment Method
                     </h2>
 
 
@@ -1536,7 +1536,7 @@
 
                             <div class="payment-title">
 
-                                💵 Cash on Delivery
+                                ðŸ’µ Cash on Delivery
 
                             </div>
 
@@ -1575,7 +1575,7 @@
 
                             <div class="payment-title">
 
-                                💳 Online Payment
+                                ðŸ’³ Online Payment
 
                             </div>
 
@@ -1600,7 +1600,7 @@
                         class="online-note"
                     >
 
-                        ⚠️ Online payment gateway
+                        âš ï¸ Online payment gateway
                         is currently in prototype mode.
                         The order can be created,
                         but payment status will remain
@@ -1628,7 +1628,7 @@
 
                     >
 
-                        ← Back to Cart
+                        â† Back to Cart
 
                     </button>
 
@@ -1646,7 +1646,7 @@
 
                     >
 
-                        ✅ Place Order
+                        âœ… Place Order
 
                     </button>
 
@@ -1668,7 +1668,7 @@
 
         <p>
 
-            © 2026 AnishMart.
+            Â© 2026 AnishMart.
             All Rights Reserved.
 
         </p>
@@ -1862,7 +1862,7 @@
                 const response =
                     await fetch(
 
-                        `http://localhost:5000/api/cart/${buyerId}`
+                        `/api/cart/${buyerId}`
 
                     );
 
@@ -1908,7 +1908,7 @@
                             <div class=
                             "empty-cart-icon">
 
-                                🛒
+                                ðŸ›’
 
                             </div>
 
@@ -1933,7 +1933,7 @@
                                 class="shop-btn"
                             >
 
-                                🛍️ Continue Shopping
+                                ðŸ›ï¸ Continue Shopping
 
                             </a>
 
@@ -2014,7 +2014,7 @@
                                     <div class=
                                     "price">
 
-                                        ₹${Number(
+                                        â‚¹${Number(
                                             item.price
                                         ).toLocaleString(
                                             "en-IN"
@@ -2052,7 +2052,7 @@
 
                                     >
 
-                                        −
+                                        âˆ’
 
                                     </button>
 
@@ -2102,7 +2102,7 @@
                                 <div class=
                                 "item-total">
 
-                                    ₹${Number(
+                                    â‚¹${Number(
                                         item.total
                                     ).toLocaleString(
                                         "en-IN"
@@ -2124,7 +2124,7 @@
 
                                 >
 
-                                    🗑️ Remove
+                                    ðŸ—‘ï¸ Remove
 
                                 </button>
 
@@ -2189,7 +2189,7 @@
 
                                 <span>
 
-                                    ₹${subtotal
+                                    â‚¹${subtotal
                                         .toLocaleString(
                                             "en-IN"
                                         )}
@@ -2236,7 +2236,7 @@
 
                                 <span>
 
-                                    ₹${subtotal
+                                    â‚¹${subtotal
                                         .toLocaleString(
                                             "en-IN"
                                         )}
@@ -2258,7 +2258,7 @@
 
                             >
 
-                                📦 Proceed to Checkout
+                                ðŸ“¦ Proceed to Checkout
 
                             </button>
 
@@ -2295,7 +2295,7 @@
                             "empty-cart-icon"
                         >
 
-                            ⚠️
+                            âš ï¸
 
                         </div>
 
@@ -2351,7 +2351,7 @@
                 const response =
                     await fetch(
 
-                        "http://localhost:5000/api/cart/update",
+                        "/api/cart/update",
 
                         {
 
@@ -2419,7 +2419,7 @@
 
                 showMessage(
 
-                    "❌ Unable to update quantity",
+                    "âŒ Unable to update quantity",
 
                     "error"
 
@@ -2464,7 +2464,7 @@
                 const response =
                     await fetch(
 
-                        "http://localhost:5000/api/cart/remove",
+                        "/api/cart/remove",
 
                         {
 
@@ -2519,7 +2519,7 @@
 
                 showMessage(
 
-                    "🗑️ Product removed from cart",
+                    "ðŸ—‘ï¸ Product removed from cart",
 
                     "success"
 
@@ -2540,7 +2540,7 @@
 
                 showMessage(
 
-                    "❌ Unable to remove product",
+                    "âŒ Unable to remove product",
 
                     "error"
 
@@ -2667,7 +2667,7 @@
                 setAddressValue("pincode", saved.pincode);
 
                 hasSavedAddress = true;
-                setSavedAddressStatus("✅ Saved address loaded automatically.");
+                setSavedAddressStatus("âœ… Saved address loaded automatically.");
                 if (deleteButton) deleteButton.style.display = "inline-block";
             }
             catch (error) {
@@ -2694,7 +2694,7 @@
                 }
 
                 hasSavedAddress = true;
-                setSavedAddressStatus("✅ Delivery address saved.");
+                setSavedAddressStatus("âœ… Delivery address saved.");
 
                 const deleteButton = document.getElementById("deleteSavedAddressBtn");
                 if (deleteButton) deleteButton.style.display = "inline-block";
@@ -2841,7 +2841,7 @@
 
                         showMessage(
 
-                            "❌ Please fill all delivery details",
+                            "âŒ Please fill all delivery details",
 
                             "error"
 
@@ -2864,7 +2864,7 @@
 
                         showMessage(
 
-                            "❌ Please enter a valid 10-digit phone number",
+                            "âŒ Please enter a valid 10-digit phone number",
 
                             "error"
 
@@ -2887,7 +2887,7 @@
 
                         showMessage(
 
-                            "❌ Please enter a valid 6-digit pincode",
+                            "âŒ Please enter a valid 6-digit pincode",
 
                             "error"
 
@@ -2947,7 +2947,7 @@
 
 
                     button.textContent =
-                        "⏳ Placing Order...";
+                        "â³ Placing Order...";
 
 
 
@@ -2966,7 +2966,7 @@
                         const response =
                             await fetch(
 
-                                "http://localhost:5000/api/orders/create",
+                                "/api/orders/create",
 
                                 {
 
@@ -3042,7 +3042,7 @@
 
 
                             button.textContent =
-                                "✅ Place Order";
+                                "âœ… Place Order";
 
 
                             return;
@@ -3057,11 +3057,11 @@
 
                         message.textContent =
 
-                            `✅ Order #${data.order_id} placed successfully! ` +
+                            `âœ… Order #${data.order_id} placed successfully! ` +
 
                             `Payment: ${data.payment_method}. ` +
 
-                            `Total: ₹${Number(
+                            `Total: â‚¹${Number(
                                 data.total_amount
                             ).toLocaleString(
                                 "en-IN"
@@ -3125,7 +3125,7 @@
 
                         showMessage(
 
-                            "❌ Unable to place order. Please try again.",
+                            "âŒ Unable to place order. Please try again.",
 
                             "error"
 
@@ -3137,7 +3137,7 @@
 
 
                         button.textContent =
-                            "✅ Place Order";
+                            "âœ… Place Order";
 
                     }
 

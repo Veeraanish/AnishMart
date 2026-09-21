@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -429,7 +429,7 @@
 <header>
 
     <div class="logo">
-        🛒 AnishMart
+        ðŸ›’ AnishMart
     </div>
 
     <nav>
@@ -437,7 +437,7 @@
         <a href="products.html">Products</a>
         <a href="cart.html">Cart</a>
         <a href="orders.html">Orders</a>
-        <a href="profile.html">👤 My Account</a>
+        <a href="profile.html">ðŸ‘¤ My Account</a>
         <a href="index.html" onclick="logout()">Logout</a>
     </nav>
 
@@ -465,11 +465,11 @@
         <div class="hero-actions">
 
             <a href="products.html" class="shop-btn">
-                🛍️ Shop Now
+                ðŸ›ï¸ Shop Now
             </a>
 
             <a href="orders.html" class="orders-btn">
-                📦 My Orders
+                ðŸ“¦ My Orders
             </a>
 
         </div>
@@ -477,7 +477,7 @@
     </div>
 
     <div class="hero-icon">
-        🛒
+        ðŸ›’
     </div>
 
 </section>
@@ -503,7 +503,7 @@
         <a href="products.html?category=Electronics" class="category-card">
 
             <div class="category-icon">
-                📱
+                ðŸ“±
             </div>
 
             <h3>
@@ -520,7 +520,7 @@
         <a href="products.html?category=Books" class="category-card">
 
             <div class="category-icon">
-                📚
+                ðŸ“š
             </div>
 
             <h3>
@@ -537,7 +537,7 @@
         <a href="products.html?category=Fashion" class="category-card">
 
             <div class="category-icon">
-                👕
+                ðŸ‘•
             </div>
 
             <h3>
@@ -554,7 +554,7 @@
         <a href="products.html?category=Home" class="category-card">
 
             <div class="category-icon">
-                🏠
+                ðŸ 
             </div>
 
             <h3>
@@ -571,7 +571,7 @@
         <a href="products.html?category=Groceries" class="category-card">
 
             <div class="category-icon">
-                🛒
+                ðŸ›’
             </div>
 
             <h3>
@@ -594,7 +594,7 @@
     <div class="section-title">
 
         <h2>
-            ⭐ Featured Products
+            â­ Featured Products
         </h2>
 
         <p>
@@ -621,7 +621,7 @@
     <div class="feature">
 
         <div class="feature-icon">
-            🛒
+            ðŸ›’
         </div>
 
         <h3>
@@ -638,7 +638,7 @@
     <div class="feature">
 
         <div class="feature-icon">
-            ⭐
+            â­
         </div>
 
         <h3>
@@ -655,7 +655,7 @@
     <div class="feature">
 
         <div class="feature-icon">
-            🔒
+            ðŸ”’
         </div>
 
         <h3>
@@ -672,7 +672,7 @@
     <div class="feature">
 
         <div class="feature-icon">
-            📦
+            ðŸ“¦
         </div>
 
         <h3>
@@ -697,7 +697,7 @@
 <footer>
 
     <p>
-        © 2026 AnishMart. All Rights Reserved.
+        Â© 2026 AnishMart. All Rights Reserved.
     </p>
 
 </footer>
@@ -773,7 +773,7 @@ const buyerId =
 document.getElementById(
     "welcomeText"
 ).textContent =
-    `Welcome, ${currentUser.name || "Customer"} 👋`;
+    `Welcome, ${currentUser.name || "Customer"} ðŸ‘‹`;
 
 
 const featuredProducts =
@@ -806,22 +806,22 @@ function getProductIcon(category) {
     ) {
 
         case "electronics":
-            return "📱";
+            return "ðŸ“±";
 
         case "books":
-            return "📚";
+            return "ðŸ“š";
 
         case "fashion":
-            return "👕";
+            return "ðŸ‘•";
 
         case "home":
-            return "🏠";
+            return "ðŸ ";
 
         case "groceries":
-            return "🛒";
+            return "ðŸ›’";
 
         default:
-            return "🛍️";
+            return "ðŸ›ï¸";
 
     }
 
@@ -847,8 +847,8 @@ function displayStars(rating) {
 
         stars +=
             i <= rounded
-                ? "★"
-                : "☆";
+                ? "â˜…"
+                : "â˜†";
 
     }
 
@@ -864,7 +864,7 @@ async function loadFeaturedProducts() {
 
         const response =
             await fetch(
-                "http://localhost:5000/api/products"
+                "/api/products"
             );
 
 
@@ -906,7 +906,7 @@ async function loadFeaturedProducts() {
                         const response =
                             await fetch(
 
-                                `http://localhost:5000/api/reviews/product/${product.id}`
+                                `/api/reviews/product/${product.id}`
 
                             );
 
@@ -986,7 +986,7 @@ async function loadFeaturedProducts() {
 
                             <div class="product-price">
 
-                                ₹${Number(
+                                â‚¹${Number(
                                     product.price
                                 ).toLocaleString(
                                     "en-IN"
@@ -1020,7 +1020,7 @@ async function loadFeaturedProducts() {
                                 ${
                                     stock <= 0
                                         ? "Out of Stock"
-                                        : "🛒 Add to Cart"
+                                        : "ðŸ›’ Add to Cart"
                                 }
 
                             </button>
@@ -1062,7 +1062,7 @@ async function addToCart(productId) {
         const response =
             await fetch(
 
-                "http://localhost:5000/api/cart/add",
+                "/api/cart/add",
 
                 {
 
@@ -1103,7 +1103,7 @@ async function addToCart(productId) {
 
             showMessage(
                 data.message ||
-                "❌ Unable to add product"
+                "âŒ Unable to add product"
             );
 
             return;
@@ -1112,7 +1112,7 @@ async function addToCart(productId) {
 
 
         showMessage(
-            "✅ Product added to cart!"
+            "âœ… Product added to cart!"
         );
 
 
@@ -1125,7 +1125,7 @@ async function addToCart(productId) {
 
 
         showMessage(
-            "❌ Unable to add product to cart"
+            "âŒ Unable to add product to cart"
         );
 
     }

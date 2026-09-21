@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -268,7 +268,7 @@
     <div class="login-container">
 
         <div class="logo">
-            <h1>🛒 AnishMart</h1>
+            <h1>ðŸ›’ AnishMart</h1>
         </div>
 
 
@@ -293,7 +293,7 @@
                         class="role-card"
                         onclick="selectRole('buyer')"
                     >
-                        <span class="icon">🛍️</span>
+                        <span class="icon">ðŸ›ï¸</span>
                         Buyer
                     </div>
 
@@ -302,7 +302,7 @@
                         class="role-card"
                         onclick="selectRole('seller')"
                     >
-                        <span class="icon">🏪</span>
+                        <span class="icon">ðŸª</span>
                         Seller
                     </div>
 
@@ -311,7 +311,7 @@
                         class="role-card"
                         onclick="selectRole('admin')"
                     >
-                        <span class="icon">👑</span>
+                        <span class="icon">ðŸ‘‘</span>
                         Admin
                     </div>
 
@@ -411,7 +411,7 @@
                 type="button"
                 onclick="installAnishMart()"
             >
-                📲 Install AnishMart App
+                ðŸ“² Install AnishMart App
             </button>
 
         </div>
@@ -423,7 +423,7 @@
         <div id="forgotSection">
 
             <h2 class="reset-title">
-                🔐 Reset Password
+                ðŸ” Reset Password
             </h2>
 
             <p class="reset-description">
@@ -503,7 +503,7 @@
                     type="button"
                     onclick="showLogin()"
                 >
-                    ← Back to Login
+                    â† Back to Login
                 </button>
 
             </div>
@@ -720,7 +720,7 @@
                         const response =
                             await fetch(
 
-                                "http://localhost:5000/api/users/reset-password",
+                                "/api/users/reset-password",
 
                                 {
                                     method: "POST",
@@ -763,7 +763,7 @@
                             "#16803a";
 
                         resetMessage.textContent =
-                            "Password reset successfully ✅";
+                            "Password reset successfully âœ…";
 
 
                         setTimeout(
@@ -886,7 +886,7 @@
                         const response =
                             await fetch(
 
-                                "http://localhost:5000/api/users/login",
+                                "/api/users/login",
 
                                 {
                                     method: "POST",
@@ -981,7 +981,7 @@
 
 
                         message.textContent =
-                            "Login successful ✅";
+                            "Login successful âœ…";
 
 
                         setTimeout(
