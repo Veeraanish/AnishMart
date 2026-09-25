@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -373,7 +373,7 @@ tbody tr:hover{
 <header>
 
     <h1>
-        ðŸ“¦ Manage Products
+        📦 Manage Products
     </h1>
 
     <div class="header-actions">
@@ -382,7 +382,7 @@ tbody tr:hover{
             class="header-btn"
             onclick="goDashboard()"
         >
-            â† Dashboard
+            ← Dashboard
         </button>
 
         <button
@@ -720,7 +720,7 @@ function renderProducts(products){
 
             <td>
 
-                â‚¹${Number(
+                ₹${Number(
                     product.price || 0
                 ).toFixed(2)}
 
@@ -881,7 +881,7 @@ async function removeProduct(productId){
 
         message.textContent =
         data.message ||
-        "Product removed successfully âœ…";
+        "Product removed successfully ✅";
 
 
         await loadProducts();

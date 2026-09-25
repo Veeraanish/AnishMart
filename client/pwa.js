@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   let deferredInstallPrompt = null;
 
   function getInstallButton() {
@@ -47,4 +47,3 @@
     });
   }
 })();
-

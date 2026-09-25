@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -332,7 +332,7 @@
 
 <header>
 
-    <h1>ðŸ“¦ Order Details</h1>
+    <h1>📦 Order Details</h1>
 
     <div class="header-actions">
 
@@ -340,14 +340,14 @@
             class="print-btn"
             onclick="printInvoice()"
         >
-            ðŸ–¨ï¸ Print Invoice
+            🖨️ Print Invoice
         </button>
 
         <button
             class="header-btn"
             onclick="backToOrders()"
         >
-            â† Orders
+            ← Orders
         </button>
 
         <button
@@ -387,7 +387,7 @@
     class="floating-print-btn no-print"
     onclick="printInvoice()"
 >
-    ðŸ–¨ï¸ Print Invoice
+    🖨️ Print Invoice
 </button>
 
 <script>
@@ -554,13 +554,13 @@ function renderOrder(order, items) {
                             </td>
 
                             <td>
-                                â‚¹${Number(
+                                ₹${Number(
                                     item.unit_price || 0
                                 ).toFixed(2)}
                             </td>
 
                             <td>
-                                â‚¹${Number(
+                                ₹${Number(
                                     item.item_total || 0
                                 ).toFixed(2)}
                             </td>
@@ -723,7 +723,7 @@ function renderOrder(order, items) {
         <div class="card">
 
             <h2>
-                ðŸ‘¤ Customer & Delivery
+                👤 Customer & Delivery
             </h2>
 
 
@@ -814,7 +814,7 @@ function renderOrder(order, items) {
         <div class="card">
 
             <h2>
-                ðŸ›’ Ordered Products
+                🛒 Ordered Products
             </h2>
 
 
@@ -851,7 +851,7 @@ function renderOrder(order, items) {
                 <div class="grand-total">
 
                     Grand Total:
-                    â‚¹${Number(
+                    ₹${Number(
                         order.total_amount || 0
                     ).toFixed(2)}
 

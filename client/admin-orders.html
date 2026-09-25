@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -482,7 +482,7 @@ select:focus{
 
 <header>
 
-    <h1>ðŸ§¾ Manage Orders</h1>
+    <h1>🧾 Manage Orders</h1>
 
     <div class="header-actions">
 
@@ -490,7 +490,7 @@ select:focus{
             class="header-btn"
             onclick="goDashboard()"
         >
-            â† Dashboard
+            ← Dashboard
         </button>
 
         <button
@@ -831,7 +831,7 @@ function renderOrders(orders){
 
             <td>
 
-                â‚¹${Number(
+                ₹${Number(
                     order.total_amount || 0
                 ).toFixed(2)}
 
@@ -959,7 +959,7 @@ function renderOrders(orders){
                     class="invoice-btn"
                     onclick="openInvoice(${Number(order.id)})"
                 >
-                    ðŸ–¨ï¸ View / Print
+                    🖨️ View / Print
                 </button>
 
             </td>
@@ -1073,7 +1073,7 @@ async function updateOrderStatus(orderId){
 
 
         message.textContent =
-        `Order #${orderId} updated successfully. âœ…`;
+        `Order #${orderId} updated successfully. ✅`;
 
 
         await loadOrders();

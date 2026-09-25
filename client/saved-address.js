@@ -1,4 +1,4 @@
-﻿// ==========================================
+// ==========================================
 // ANISHMART SAVED DELIVERY ADDRESS
 // ==========================================
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "
                 >
 
-                ðŸ“ Save this delivery address
+                📍 Save this delivery address
 
             </label>
 
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     cursor:pointer;
                 "
             >
-                ðŸ—‘ï¸ Delete Saved Address
+                🗑️ Delete Saved Address
             </button>
 
         `;
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             status.textContent =
-                "âœ… Saved address loaded automatically.";
+                "✅ Saved address loaded automatically.";
 
             deleteButton.style.display =
                 "inline-block";
@@ -310,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             status.textContent =
-                "âœ… Delivery address saved.";
+                "✅ Delivery address saved.";
 
             deleteButton.style.display =
                 "inline-block";
@@ -326,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             status.textContent =
-                "âŒ Address could not be saved.";
+                "❌ Address could not be saved.";
 
             return false;
         }
@@ -408,7 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 status.textContent =
-                    "âŒ Unable to delete saved address.";
+                    "❌ Unable to delete saved address.";
             }
 
         }

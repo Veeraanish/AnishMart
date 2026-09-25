@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -218,7 +218,7 @@ header h1{
 <body>
 
 <header>
-    <h1>ðŸ›¡ï¸ AnishMart Admin Dashboard</h1>
+    <h1>🛡️ AnishMart Admin Dashboard</h1>
 
     <button
         class="logout"
@@ -236,7 +236,7 @@ header h1{
     <section class="welcome">
 
         <h2 id="welcomeAdmin">
-            Welcome, Admin ðŸ‘‹
+            Welcome, Admin 👋
         </h2>
 
         <p>
@@ -289,7 +289,7 @@ header h1{
             <h3>Total Sales</h3>
 
             <p id="totalSales">
-                â‚¹0
+                ₹0
             </p>
 
         </div>
@@ -316,7 +316,7 @@ header h1{
             >
 
                 <div class="icon">
-                    ðŸ‘¥
+                    👥
                 </div>
 
                 <h3>
@@ -339,7 +339,7 @@ header h1{
             >
 
                 <div class="icon">
-                    ðŸ›ï¸
+                    🛍️
                 </div>
 
                 <h3>
@@ -362,7 +362,7 @@ header h1{
             >
 
                 <div class="icon">
-                    ðŸ“¦
+                    📦
                 </div>
 
                 <h3>
@@ -448,7 +448,7 @@ else{
         "welcomeAdmin"
     )
     .innerText =
-    `Welcome, ${currentUser.name || "Admin"} ðŸ‘‹`;
+    `Welcome, ${currentUser.name || "Admin"} 👋`;
 
     loadStats();
 
@@ -555,7 +555,7 @@ async function loadStats(){
         )
         .innerText =
 
-        "â‚¹" +
+        "₹" +
         Number(
             sales || 0
         )
@@ -565,7 +565,7 @@ async function loadStats(){
 
 
         status.innerText =
-        "Dashboard statistics loaded successfully âœ…";
+        "Dashboard statistics loaded successfully ✅";
 
     }
     catch(error){

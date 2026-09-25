@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -484,7 +484,7 @@ button:hover{
 <div class="welcome">
 
 <h2 id="welcomeSeller">
-Welcome, Seller ðŸ‘‹
+Welcome, Seller 👋
 </h2>
 
 <p>
@@ -523,7 +523,7 @@ Manage products and active customer orders from one place.
 <h3>Total Sales</h3>
 
 <p id="totalSales">
-â‚¹0
+₹0
 </p>
 
 </div>
@@ -608,7 +608,7 @@ id="message"
 <div class="section">
 
 <h2>
-ðŸ“¦ Active Customer Orders
+📦 Active Customer Orders
 </h2>
 
 <table class="order-table">
@@ -666,7 +666,7 @@ Loading active orders...
 <div class="section">
 
 <h2>
-ðŸ›ï¸ Manage Products
+🛍️ Manage Products
 </h2>
 
 <table class="product-table">
@@ -783,7 +783,7 @@ if(
 document.getElementById(
     "welcomeSeller"
 ).innerText =
-`Welcome, ${currentUser.name || "Seller"} ðŸ‘‹`;
+`Welcome, ${currentUser.name || "Seller"} 👋`;
 
 
 
@@ -946,7 +946,7 @@ async function loadProducts(){
                 </td>
 
                 <td>
-                â‚¹${Number(
+                ₹${Number(
                     product.price || 0
                 ).toLocaleString("en-IN")}
                 </td>
@@ -1245,7 +1245,7 @@ document
             "green";
 
             message.innerText =
-            "Product added successfully âœ…";
+            "Product added successfully ✅";
 
 
             document
@@ -1264,7 +1264,7 @@ document
             "red";
 
             message.innerText =
-            "Product add failed âŒ " +
+            "Product add failed ❌ " +
             error.message;
 
         }
@@ -1470,7 +1470,7 @@ async function editProduct(id){
 
 
         alert(
-            "Product updated successfully âœ…"
+            "Product updated successfully ✅"
         );
 
 
@@ -1484,7 +1484,7 @@ async function editProduct(id){
         );
 
         alert(
-            "Update failed âŒ " +
+            "Update failed ❌ " +
             error.message
         );
 
@@ -1543,7 +1543,7 @@ async function deleteProduct(id){
 
 
         alert(
-            "Product deleted successfully âœ…"
+            "Product deleted successfully ✅"
         );
 
 
@@ -1557,7 +1557,7 @@ async function deleteProduct(id){
         );
 
         alert(
-            "Delete failed âŒ " +
+            "Delete failed ❌ " +
             error.message
         );
 
@@ -1711,7 +1711,7 @@ async function loadOrders(){
             "totalSales"
         )
         .innerText =
-        "â‚¹" +
+        "₹" +
         totalSales
         .toLocaleString(
             "en-IN"
@@ -1774,7 +1774,7 @@ async function loadOrders(){
             class="empty-message"
             >
 
-            âœ… No active customer orders.
+            ✅ No active customer orders.
 
             </td>
 
@@ -1901,7 +1901,7 @@ async function loadOrders(){
 
                 <td class="order-total">
 
-                â‚¹${Number(
+                ₹${Number(
                     order.total_amount || 0
                 )
                 .toLocaleString(
@@ -2131,7 +2131,7 @@ async function updateOrderStatus(
 
             alert(
 
-                `Order #${orderId} delivered successfully âœ…`
+                `Order #${orderId} delivered successfully ✅`
 
             );
 
@@ -2152,7 +2152,7 @@ async function updateOrderStatus(
 
             alert(
 
-                `Order #${orderId} status changed to ${newStatus} âœ…`
+                `Order #${orderId} status changed to ${newStatus} ✅`
 
             );
 
@@ -2180,7 +2180,7 @@ async function updateOrderStatus(
 
         alert(
 
-            "Status update failed âŒ " +
+            "Status update failed ❌ " +
             error.message
 
         );
