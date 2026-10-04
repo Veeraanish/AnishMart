@@ -12,6 +12,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/chat", chatRoutes);
 
 
 
