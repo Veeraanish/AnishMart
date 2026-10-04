@@ -3,47 +3,29 @@ const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
 
-const userRoutes =
-    require("./routes/userRoutes");
+const pool = require("./config/db");
 
-const productRoutes =
-    require("./routes/productRoutes");
-
-const cartRoutes =
-    require("./routes/cartRoutes");
-
-const orderRoutes =
-    require("./routes/orderRoutes");
-
-const reviewRoutes =
-    require("./routes/reviewRoutes");
-
-const wishlistRoutes =
-    require("./routes/wishlistRoutes");
-
-// 👑 Admin Routes
-const adminRoutes =
-    require("./routes/adminRoutes");
-
+const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
-const PORT =
-    process.env.PORT || 5000;
-
+const PORT = process.env.PORT || 5000;
 
 // ==========================================
 // MIDDLEWARE
 // ==========================================
 
 app.use(cors());
-
 app.use(express.json());
-
 
 // Request logger
 app.use((req, res, next) => {
-
     console.log(
         "REQUEST:",
         req.method,
@@ -51,9 +33,7 @@ app.use((req, res, next) => {
     );
 
     next();
-
 });
-
 
 // ==========================================
 // FRONTEND STATIC FILES
@@ -68,113 +48,69 @@ app.use(
     )
 );
 
-
 // ==========================================
 // API ROUTES
 // ==========================================
 
-app.use(
-    "/api/users",
-    userRoutes
-);
-
-
-app.use(
-    "/api/products",
-    productRoutes
-);
-
-
-app.use(
-    "/api/cart",
-    cartRoutes
-);
-
-
-app.use(
-    "/api/orders",
-    orderRoutes
-);
-
-
-app.use(
-    "/api/reviews",
-    reviewRoutes
-);
-
-
-// ❤️ Wishlist API
-app.use(
-    "/api/wishlist",
-    wishlistRoutes
-);
-
-
-// 👑 Admin API
-app.use(
-    "/api/admin",
-    adminRoutes
-);
-
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ==========================================
 // HEALTH CHECK
 // ==========================================
 
-app.get(
-    "/api/health",
-    (req, res) => {
+app.get("/api/health", async (req, res) => {
+    try {
+        await pool.query("SELECT 1");
 
         res.json({
-
             success: true,
-
-            message:
-                "AnishMart API is running",
-
-            status:
-                "UP"
-
+            message: "AnishMart API is running",
+            status: "UP",
+            db: "UP"
         });
 
-    }
-);
+    } catch (error) {
+        console.error(
+            "HEALTH CHECK ERROR:",
+            error.message
+        );
 
+        res.status(500).json({
+            success: false,
+            message: "Database connection failed",
+            status: "DOWN",
+            db: "DOWN"
+        });
+    }
+});
 
 // ==========================================
 // HOME PAGE
 // ==========================================
 
-app.get(
-    "/",
-    (req, res) => {
-
-        res.sendFile(
-
-            path.join(
-                __dirname,
-                "../client/index.html"
-            )
-
-        );
-
-    }
-);
-
+app.get("/", (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            "../client/index.html"
+        )
+    );
+});
 
 // ==========================================
 // START SERVER
 // ==========================================
 
-app.listen(
-    PORT,
-    () => {
-
-        console.log(
-            `AnishMart full application running on http://localhost:${PORT}`
-        );
-
-    }
-);
+app.listen(PORT, () => {
+    console.log(
+        `AnishMart full application running on http://localhost:${PORT}`
+    );
+});
 
 process.stdin.resume();
