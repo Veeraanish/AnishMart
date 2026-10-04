@@ -60,11 +60,10 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/admin", adminRoutes);
 
-// ==========================================
-// HEALTH CHECK
-// ==========================================
 
-app.get("/api/health", async (req, res) => {
+
+
+app.get("/api/v1/health", async (req, res) => {
     try {
         await pool.query("SELECT 1");
 
@@ -76,11 +75,6 @@ app.get("/api/health", async (req, res) => {
         });
 
     } catch (error) {
-        console.error(
-            "HEALTH CHECK ERROR:",
-            error.message
-        );
-
         res.status(500).json({
             success: false,
             message: "Database connection failed",
