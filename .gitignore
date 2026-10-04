@@ -11,3 +11,6 @@ client/.env
 Thumbs.db
 
 server.zip
+
+anishmart-backup.sql
+anishmart-railway.sql
