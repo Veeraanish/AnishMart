@@ -16,7 +16,7 @@ const faqAnswers = [
         reply: "To add an item to your cart, open the Products page and click Add to Cart. You can update quantity or remove items from the Cart page."
     },
     {
-        keywords: ["payment", "cod", "cash on delivery"],
+        keywords: ["payment", "pay", "cod", "cash on delivery"],
         reply: "AnishMart currently supports Cash on Delivery for the academic demo. Real online payment is not enabled."
     },
     {
