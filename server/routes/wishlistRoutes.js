@@ -6,19 +6,29 @@ const {
     removeFromWishlist
 } = require("../controllers/wishlistcontroller");
 
+const {
+    requireBuyerBody,
+    requireBuyerParam
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
+router.post(
+    "/add",
+    requireBuyerBody("buyer_id"),
+    addToWishlist
+);
 
-// Add product to wishlist
-router.post("/add", addToWishlist);
+router.get(
+    "/:buyer_id",
+    requireBuyerParam("buyer_id"),
+    getWishlist
+);
 
-
-// Get buyer wishlist
-router.get("/:buyer_id", getWishlist);
-
-
-// Remove product from wishlist
-router.delete("/remove", removeFromWishlist);
-
+router.delete(
+    "/remove",
+    requireBuyerBody("buyer_id"),
+    removeFromWishlist
+);
 
 module.exports = router;

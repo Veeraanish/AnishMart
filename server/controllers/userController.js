@@ -1,34 +1,53 @@
 const pool = require("../config/db");
 const bcrypt = require("bcryptjs");
 
-
-// ===============================
-// REGISTER USER
-// ===============================
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password, role } = req.body;
+        const {
+            name,
+            email,
+            password,
+            role
+        } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
-                message: "Name, email and password are required"
+                message:
+                    "Name, email and password are required"
             });
         }
 
-        const [existingUser] = await pool.query(
-            "SELECT id FROM users WHERE email = ?",
-            [email]
-        );
+        if (password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Password must be at least 6 characters"
+            });
+        }
+
+        const cleanEmail =
+            email.trim().toLowerCase();
+
+        const [existingUser] =
+            await pool.query(
+                "SELECT id FROM users WHERE email = ?",
+                [cleanEmail]
+            );
 
         if (existingUser.length > 0) {
             return res.status(409).json({
                 success: false,
-                message: "Email already registered"
+                message:
+                    "Email already registered"
             });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword =
+            await bcrypt.hash(
+                password,
+                10
+            );
 
         const userRole =
             role === "seller"
@@ -36,19 +55,31 @@ const registerUser = async (req, res) => {
                 : "buyer";
 
         await pool.query(
-            "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-            [name, email, hashedPassword, userRole]
+            `INSERT INTO users
+             (name, email, password, role)
+             VALUES (?, ?, ?, ?)`,
+            [
+                name.trim(),
+                cleanEmail,
+                hashedPassword,
+                userRole
+            ]
         );
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
-            message: "User registered successfully"
+            message:
+                "User registered successfully"
         });
 
     } catch (error) {
-        console.error("REGISTER ERROR:", error);
 
-        res.status(500).json({
+        console.error(
+            "REGISTER ERROR:",
+            error.message
+        );
+
+        return res.status(500).json({
             success: false,
             message: "Server error"
         });
@@ -56,62 +87,126 @@ const registerUser = async (req, res) => {
 };
 
 
-// ===============================
-// LOGIN USER
-// ===============================
 const loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
+
+        const {
+            email,
+            password
+        } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({
                 success: false,
-                message: "Email and password are required"
+                message:
+                    "Email and password are required"
             });
         }
 
-        const [users] = await pool.query(
-            "SELECT id, name, email, password, role FROM users WHERE email = ?",
-            [email]
-        );
+        const [users] =
+            await pool.query(
+                `SELECT
+                    id,
+                    name,
+                    email,
+                    password,
+                    role
+                 FROM users
+                 WHERE email = ?`,
+                [
+                    email
+                        .trim()
+                        .toLowerCase()
+                ]
+            );
 
         if (users.length === 0) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid email or password"
+                message:
+                    "Invalid email or password"
             });
         }
 
-        const user = users[0];
+        const user =
+            users[0];
 
-        const passwordMatch = await bcrypt.compare(
-            password,
-            user.password
-        );
+        const passwordMatch =
+            await bcrypt.compare(
+                password,
+                user.password
+            );
 
         if (!passwordMatch) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid email or password"
+                message:
+                    "Invalid email or password"
             });
         }
 
-        res.json({
-            success: true,
-            message: "Login successful",
+        const sessionUser = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        };
 
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                role: user.role
+        req.session.regenerate(
+            error => {
+
+                if (error) {
+                    console.error(
+                        "SESSION REGENERATE ERROR:",
+                        error.message
+                    );
+
+                    return res.status(500).json({
+                        success: false,
+                        message:
+                            "Unable to create login session"
+                    });
+                }
+
+                req.session.user =
+                    sessionUser;
+
+                req.session.save(
+                    saveError => {
+
+                        if (saveError) {
+                            console.error(
+                                "SESSION SAVE ERROR:",
+                                saveError.message
+                            );
+
+                            return res.status(500).json({
+                                success: false,
+                                message:
+                                    "Unable to save login session"
+                            });
+                        }
+
+                        return res.json({
+                            success: true,
+                            message:
+                                "Login successful",
+                            user:
+                                sessionUser
+                        });
+                    }
+                );
             }
-        });
+        );
 
     } catch (error) {
-        console.error("LOGIN ERROR:", error);
 
-        res.status(500).json({
+        console.error(
+            "LOGIN ERROR:",
+            error.message
+        );
+
+        return res.status(500).json({
             success: false,
             message: "Server error"
         });
@@ -119,84 +214,81 @@ const loginUser = async (req, res) => {
 };
 
 
-// ===============================
-// RESET PASSWORD - DEMO VERSION
-// ===============================
-const resetPassword = async (req, res) => {
-    try {
-        const {
-            email,
-            newPassword
-        } = req.body;
+const logoutUser = (req, res) => {
 
-        if (!email || !newPassword) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and new password are required"
-            });
-        }
-
-        if (newPassword.length < 6) {
-            return res.status(400).json({
-                success: false,
-                message: "Password must be at least 6 characters"
-            });
-        }
-
-        const [users] = await pool.query(
-            "SELECT id FROM users WHERE email = ?",
-            [email]
-        );
-
-        if (users.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "No account found with this email"
-            });
-        }
-
-        const hashedPassword =
-            await bcrypt.hash(
-                newPassword,
-                10
-            );
-
-        await pool.query(
-            "UPDATE users SET password = ? WHERE email = ?",
-            [
-                hashedPassword,
-                email
-            ]
-        );
-
-        res.json({
+    if (!req.session) {
+        return res.json({
             success: true,
-            message: "Password reset successfully"
-        });
-
-    } catch (error) {
-        console.error(
-            "RESET PASSWORD ERROR:",
-            error
-        );
-
-        res.status(500).json({
-            success: false,
-            message: "Failed to reset password"
+            message: "Logged out"
         });
     }
+
+    req.session.destroy(
+        error => {
+
+            if (error) {
+
+                console.error(
+                    "LOGOUT ERROR:",
+                    error.message
+                );
+
+                return res.status(500).json({
+                    success: false,
+                    message:
+                        "Unable to logout"
+                });
+            }
+
+            res.clearCookie(
+                "anishmart.sid",
+                {
+                    path: "/"
+                }
+            );
+
+            return res.json({
+                success: true,
+                message:
+                    "Logged out successfully"
+            });
+        }
+    );
 };
 
 
-// ===============================
-// UPDATE PROFILE
-// ===============================
+const getSessionUser = (req, res) => {
+
+    return res.json({
+        success: true,
+        user:
+            req.session.user
+    });
+};
+
+
+// Public email-only password reset is unsafe.
+// User can change password from Profile after login.
+const resetPassword = async (req, res) => {
+
+    return res.status(403).json({
+        success: false,
+        message:
+            "For security, password reset is disabled in this demo. Login and use Change Password from your profile."
+    });
+};
+
+
 const updateProfile = async (req, res) => {
+
     try {
+
         const userId =
             Number(req.params.id);
 
-        const { name } = req.body;
+        const {
+            name
+        } = req.body;
 
         if (
             !Number.isInteger(userId) ||
@@ -204,14 +296,16 @@ const updateProfile = async (req, res) => {
         ) {
             return res.status(400).json({
                 success: false,
-                message: "Invalid user ID"
+                message:
+                    "Invalid user ID"
             });
         }
 
         if (!name || !name.trim()) {
             return res.status(400).json({
                 success: false,
-                message: "Name is required"
+                message:
+                    "Name is required"
             });
         }
 
@@ -221,13 +315,14 @@ const updateProfile = async (req, res) => {
         if (cleanName.length > 100) {
             return res.status(400).json({
                 success: false,
-                message: "Name is too long"
+                message:
+                    "Name is too long"
             });
         }
 
         const [users] =
             await pool.query(
-                `SELECT id, name, email, role
+                `SELECT id
                  FROM users
                  WHERE id = ?`,
                 [userId]
@@ -236,7 +331,8 @@ const updateProfile = async (req, res) => {
         if (users.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "User not found"
+                message:
+                    "User not found"
             });
         }
 
@@ -252,7 +348,11 @@ const updateProfile = async (req, res) => {
 
         const [updatedUsers] =
             await pool.query(
-                `SELECT id, name, email, role
+                `SELECT
+                    id,
+                    name,
+                    email,
+                    role
                  FROM users
                  WHERE id = ?`,
                 [userId]
@@ -261,37 +361,44 @@ const updateProfile = async (req, res) => {
         const updatedUser =
             updatedUsers[0];
 
-        res.json({
-            success: true,
-            message: "Profile updated successfully",
+        if (
+            req.session?.user &&
+            Number(
+                req.session.user.id
+            ) === userId
+        ) {
+            req.session.user.name =
+                updatedUser.name;
+        }
 
-            user: {
-                id: updatedUser.id,
-                name: updatedUser.name,
-                email: updatedUser.email,
-                role: updatedUser.role
-            }
+        return res.json({
+            success: true,
+            message:
+                "Profile updated successfully",
+            user:
+                updatedUser
         });
 
     } catch (error) {
+
         console.error(
             "UPDATE PROFILE ERROR:",
-            error
+            error.message
         );
 
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            message: "Failed to update profile"
+            message:
+                "Failed to update profile"
         });
     }
 };
 
 
-// ===============================
-// CHANGE PASSWORD
-// ===============================
 const changePassword = async (req, res) => {
+
     try {
+
         const userId =
             Number(req.params.id);
 
@@ -299,16 +406,6 @@ const changePassword = async (req, res) => {
             currentPassword,
             newPassword
         } = req.body;
-
-        if (
-            !Number.isInteger(userId) ||
-            userId <= 0
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid user ID"
-            });
-        }
 
         if (
             !currentPassword ||
@@ -331,14 +428,17 @@ const changePassword = async (req, res) => {
 
         const [users] =
             await pool.query(
-                "SELECT id, password FROM users WHERE id = ?",
+                `SELECT id, password
+                 FROM users
+                 WHERE id = ?`,
                 [userId]
             );
 
         if (users.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "User not found"
+                message:
+                    "User not found"
             });
         }
 
@@ -380,26 +480,29 @@ const changePassword = async (req, res) => {
             );
 
         await pool.query(
-            "UPDATE users SET password = ? WHERE id = ?",
+            `UPDATE users
+             SET password = ?
+             WHERE id = ?`,
             [
                 hashedPassword,
                 userId
             ]
         );
 
-        res.json({
+        return res.json({
             success: true,
             message:
                 "Password changed successfully"
         });
 
     } catch (error) {
+
         console.error(
             "CHANGE PASSWORD ERROR:",
-            error
+            error.message
         );
 
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message:
                 "Failed to change password"
@@ -408,12 +511,11 @@ const changePassword = async (req, res) => {
 };
 
 
-// ===============================
-// EXPORTS
-// ===============================
 module.exports = {
     registerUser,
     loginUser,
+    logoutUser,
+    getSessionUser,
     resetPassword,
     updateProfile,
     changePassword

@@ -7,14 +7,35 @@ const {
     removeFromCart
 } = require("../controllers/cartController");
 
+const {
+    requireBuyerBody,
+    requireBuyerParam
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-router.post("/add", addToCart);
+router.post(
+    "/add",
+    requireBuyerBody("buyer_id"),
+    addToCart
+);
 
-router.get("/:buyer_id", getCart);
+router.get(
+    "/:buyer_id",
+    requireBuyerParam("buyer_id"),
+    getCart
+);
 
-router.put("/update", updateCartQuantity);
+router.put(
+    "/update",
+    requireBuyerBody("buyer_id"),
+    updateCartQuantity
+);
 
-router.delete("/remove", removeFromCart);
+router.delete(
+    "/remove",
+    requireBuyerBody("buyer_id"),
+    removeFromCart
+);
 
 module.exports = router;

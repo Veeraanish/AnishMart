@@ -51,8 +51,7 @@ const getDashboardStats = async (req, res) => {
 
         res.status(500).json({
             success: false,
-            message: "Failed to load admin dashboard stats",
-            error: error.message
+            message: "Failed to load admin dashboard stats"
         });
     }
 };
@@ -92,8 +91,7 @@ const getAllUsers = async (req, res) => {
 
         res.status(500).json({
             success: false,
-            message: "Failed to load users",
-            error: error.message
+            message: "Failed to load users"
         });
     }
 };
@@ -137,8 +135,7 @@ const getAllProducts = async (req, res) => {
 
         res.status(500).json({
             success: false,
-            message: "Failed to load products",
-            error: error.message
+            message: "Failed to load products"
         });
     }
 };
@@ -186,8 +183,7 @@ const deleteProduct = async (req, res) => {
 
         res.status(500).json({
             success: false,
-            message: "Failed to remove product",
-            error: error.message
+            message: "Failed to remove product"
         });
     }
 };
@@ -240,8 +236,7 @@ const getAllOrders = async (req, res) => {
 
         res.status(500).json({
             success: false,
-            message: "Failed to load orders",
-            error: error.message
+            message: "Failed to load orders"
         });
     }
 };
@@ -312,8 +307,7 @@ const updateAdminOrderStatus = async (
 
         res.status(500).json({
             success: false,
-            message: "Failed to update order status",
-            error: error.message
+            message: "Failed to update order status"
         });
     }
 };
@@ -412,8 +406,7 @@ const getOrderDetails = async (
 
         res.status(500).json({
             success: false,
-            message: "Failed to load order details",
-            error: error.message
+            message: "Failed to load order details"
         });
     }
 };

@@ -4,6 +4,8 @@ const {
     registerUser,
     loginUser,
     resetPassword,
+    logoutUser,
+    getSessionUser,
     updateProfile,
     changePassword
 } = require("../controllers/userController");
@@ -14,38 +16,67 @@ const {
     deleteSavedAddress
 } = require("../controllers/addressController");
 
+const {
+    requireAuth,
+    requireRole,
+    requireSelfParam
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-
-// ====================================
-// AUTH
-// ====================================
-
+// PUBLIC AUTH
 router.post("/register", registerUser);
-
 router.post("/login", loginUser);
+router.post("/logout", logoutUser);
 
-router.post("/reset-password", resetPassword);
+// Session status
+router.get(
+    "/session",
+    requireAuth,
+    getSessionUser
+);
 
+// Disabled insecure demo reset
+router.post(
+    "/reset-password",
+    resetPassword
+);
 
-// ====================================
 // PROFILE
-// ====================================
+router.put(
+    "/:id/profile",
+    requireAuth,
+    requireSelfParam("id"),
+    updateProfile
+);
 
-router.put("/:id/profile", updateProfile);
+router.put(
+    "/:id/change-password",
+    requireAuth,
+    requireSelfParam("id"),
+    changePassword
+);
 
-router.put("/:id/change-password", changePassword);
+// BUYER SAVED ADDRESS
+router.get(
+    "/:id/address",
+    requireRole("buyer"),
+    requireSelfParam("id"),
+    getSavedAddress
+);
 
+router.put(
+    "/:id/address",
+    requireRole("buyer"),
+    requireSelfParam("id"),
+    saveAddress
+);
 
-// ====================================
-// SAVED DELIVERY ADDRESS
-// ====================================
-
-router.get("/:id/address", getSavedAddress);
-
-router.put("/:id/address", saveAddress);
-
-router.delete("/:id/address", deleteSavedAddress);
-
+router.delete(
+    "/:id/address",
+    requireRole("buyer"),
+    requireSelfParam("id"),
+    deleteSavedAddress
+);
 
 module.exports = router;

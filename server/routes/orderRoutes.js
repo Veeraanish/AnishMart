@@ -7,20 +7,38 @@ const {
     updateOrderStatus
 } = require("../controllers/orderController");
 
+const {
+    requireRole,
+    requireBuyerBody,
+    requireBuyerParam
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 console.log("ORDER ROUTES LOADED");
 
-// Buyer: Create order
-router.post("/create", createOrder);
+router.post(
+    "/create",
+    requireBuyerBody("buyer_id"),
+    createOrder
+);
 
-// Buyer: Order history
-router.get("/history/:buyer_id", getOrderHistory);
+router.get(
+    "/history/:buyer_id",
+    requireBuyerParam("buyer_id"),
+    getOrderHistory
+);
 
-// Seller: Get all customer orders
-router.get("/", getAllOrders);
+router.get(
+    "/",
+    requireRole("seller", "admin"),
+    getAllOrders
+);
 
-// Seller: Update order status
-router.put("/:id/status", updateOrderStatus);
+router.put(
+    "/:id/status",
+    requireRole("seller", "admin"),
+    updateOrderStatus
+);
 
 module.exports = router;

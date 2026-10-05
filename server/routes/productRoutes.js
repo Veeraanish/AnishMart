@@ -7,19 +7,38 @@ const {
     deleteProduct
 } = require("../controllers/productController");
 
+const {
+    requireRole
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
 console.log("PRODUCT ROUTES LOADED");
 
 router.get("/", getAllProducts);
 
-// Add product
-router.post("/", addProduct);
-router.post("/add", addProduct);
+router.post(
+    "/",
+    requireRole("seller", "admin"),
+    addProduct
+);
 
-// Update product
-router.put("/:id", updateProduct);
+router.post(
+    "/add",
+    requireRole("seller", "admin"),
+    addProduct
+);
 
-router.delete("/:id", deleteProduct);
+router.put(
+    "/:id",
+    requireRole("seller", "admin"),
+    updateProduct
+);
+
+router.delete(
+    "/:id",
+    requireRole("seller", "admin"),
+    deleteProduct
+);
 
 module.exports = router;

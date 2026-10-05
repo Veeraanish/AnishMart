@@ -10,7 +10,15 @@ const {
     getOrderDetails
 } = require("../controllers/adminController");
 
+const {
+    requireRole
+} = require("../middleware/authMiddleware");
+
 const router = express.Router();
+
+router.use(
+    requireRole("admin")
+);
 
 
 // ==========================================
