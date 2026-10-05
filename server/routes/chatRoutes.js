@@ -5,7 +5,6 @@ const {
 } = require("../services/chat/providerFactory");
 
 const router = express.Router();
-
 const provider = createChatProvider();
 
 const RATE_LIMIT_MAX = 10;
@@ -15,16 +14,55 @@ const PROVIDER_TIMEOUT_MS = 5000;
 
 const sessionState = new Map();
 
+function normalizeMessage(message) {
+    return String(message || "")
+        .trim()
+        .replace(/\s+/g, " ");
+}
+
+function validateMessage(rawMessage) {
+    const message = normalizeMessage(rawMessage);
+
+    if (!message) {
+        return {
+            valid: false,
+            code: "VALIDATION_ERROR",
+            message:
+                "Please type a question about AnishMart."
+        };
+    }
+
+    if (message.length > INPUT_LIMIT) {
+        return {
+            valid: false,
+            code: "MESSAGE_TOO_LONG",
+            message:
+                `Please keep your question under ${INPUT_LIMIT} characters.`
+        };
+    }
+
+    return {
+        valid: true,
+        message
+    };
+}
+
 function getClientKey(req) {
+    const forwarded =
+        req.headers["x-forwarded-for"];
+
+    if (forwarded) {
+        return forwarded
+            .toString()
+            .split(",")[0]
+            .trim();
+    }
+
     return (
-        req.headers["x-forwarded-for"] ||
         req.ip ||
-        req.socket.remoteAddress ||
+        req.socket?.remoteAddress ||
         "anonymous"
-    )
-        .toString()
-        .split(",")[0]
-        .trim();
+    );
 }
 
 function getState(key) {
@@ -34,7 +72,8 @@ function getState(key) {
 
     if (
         !state ||
-        now - state.windowStartedAt >= RATE_LIMIT_WINDOW_MS
+        now - state.windowStartedAt >=
+            RATE_LIMIT_WINDOW_MS
     ) {
         state = {
             windowStartedAt: now,
@@ -51,30 +90,34 @@ function getState(key) {
     return state;
 }
 
-function normalizeMessage(message) {
-    return String(message || "")
-        .trim()
-        .replace(/\s+/g, " ");
-}
-
 async function getReplyWithTimeout(message) {
-    const providerCall =
-        provider.getReply(message);
+    let timeoutId;
 
-    const timeout =
-        new Promise((_, reject) => {
-            setTimeout(
-                () => reject(
-                    new Error("CHAT_PROVIDER_TIMEOUT")
-                ),
-                PROVIDER_TIMEOUT_MS
-            );
-        });
+    try {
+        const timeoutPromise =
+            new Promise((_, reject) => {
+                timeoutId = setTimeout(
+                    () => {
+                        reject(
+                            new Error(
+                                "CHAT_PROVIDER_TIMEOUT"
+                            )
+                        );
+                    },
+                    PROVIDER_TIMEOUT_MS
+                );
+            });
 
-    return Promise.race([
-        providerCall,
-        timeout
-    ]);
+        return await Promise.race([
+            provider.getReply(message),
+            timeoutPromise
+        ]);
+
+    } finally {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+    }
 }
 
 async function getReply(message) {
@@ -83,33 +126,26 @@ async function getReply(message) {
 
 router.post("/", async (req, res) => {
     try {
-        const message =
-            normalizeMessage(
+        const validation =
+            validateMessage(
                 req.body?.message
             );
 
-        if (!message) {
+        if (!validation.valid) {
             return res.status(400).json({
                 success: false,
                 data: null,
                 error: {
-                    code: "VALIDATION_ERROR",
-                    message: "Please type a question about AnishMart."
+                    code:
+                        validation.code,
+                    message:
+                        validation.message
                 }
             });
         }
 
-        if (message.length > INPUT_LIMIT) {
-            return res.status(400).json({
-                success: false,
-                data: null,
-                error: {
-                    code: "MESSAGE_TOO_LONG",
-                    message:
-                        `Please keep your question under ${INPUT_LIMIT} characters.`
-                }
-            });
-        }
+        const message =
+            validation.message;
 
         const clientKey =
             getClientKey(req);
@@ -140,18 +176,19 @@ router.post("/", async (req, res) => {
         if (
             state.cache.has(cacheKey)
         ) {
+            const cachedReply =
+                state.cache.get(cacheKey);
+
             return res.json({
                 success: true,
                 data: {
-                    reply:
-                        state.cache.get(cacheKey),
+                    reply: cachedReply,
                     cached: true
                 },
                 error: null,
 
-                // Legacy UI compatibility
-                reply:
-                    state.cache.get(cacheKey)
+                // Legacy frontend support
+                reply: cachedReply
             });
         }
 
@@ -159,9 +196,8 @@ router.post("/", async (req, res) => {
 
         try {
             reply =
-                await getReply(
-                    message
-                );
+                await getReply(message);
+
         } catch (providerError) {
             console.error(
                 "CHAT PROVIDER ERROR:",
@@ -177,7 +213,7 @@ router.post("/", async (req, res) => {
             reply
         );
 
-        res.json({
+        return res.json({
             success: true,
             data: {
                 reply,
@@ -185,7 +221,7 @@ router.post("/", async (req, res) => {
             },
             error: null,
 
-            // Legacy chatbot.js compatibility
+            // Legacy frontend support
             reply
         });
 
@@ -195,7 +231,7 @@ router.post("/", async (req, res) => {
             error.message
         );
 
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             data: null,
             error: {
@@ -211,3 +247,4 @@ router.post("/", async (req, res) => {
 
 module.exports = router;
 module.exports.getReply = getReply;
+module.exports.validateMessage = validateMessage;

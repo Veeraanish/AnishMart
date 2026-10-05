@@ -1,46 +1,95 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { getReply } = require("../routes/chatRoutes");
+const {
+    getReply,
+    validateMessage
+} = require("../routes/chatRoutes");
 
-test("greets user", () => {
+test("greets user", async () => {
+    const reply =
+        await getReply("hello");
+
     assert.match(
-        getReply("hello"),
+        reply,
         /shopping assistant/i
     );
 });
 
-test("answers cart question", () => {
+test("answers cart question", async () => {
+    const reply =
+        await getReply(
+            "How do I add to cart?"
+        );
+
     assert.match(
-        getReply("How do I add to cart?"),
+        reply,
         /cart/i
     );
 });
 
-test("answers payment question", () => {
+test("answers payment question", async () => {
+    const reply =
+        await getReply(
+            "How can I pay?"
+        );
+
     assert.match(
-        getReply("What payment is available?"),
+        reply,
         /Cash on Delivery/i
     );
 });
 
-test("answers order question", () => {
+test("answers order question", async () => {
+    const reply =
+        await getReply(
+            "Where are my orders?"
+        );
+
     assert.match(
-        getReply("Where are my orders?"),
+        reply,
         /Orders page/i
     );
 });
 
 test("rejects empty message", () => {
+    const result =
+        validateMessage("");
+
+    assert.equal(
+        result.valid,
+        false
+    );
+
+    assert.equal(
+        result.code,
+        "VALIDATION_ERROR"
+    );
+
     assert.match(
-        getReply(""),
+        result.message,
         /Please type/i
     );
 });
 
 test("limits long input", () => {
+    const result =
+        validateMessage(
+            "a".repeat(301)
+        );
+
+    assert.equal(
+        result.valid,
+        false
+    );
+
+    assert.equal(
+        result.code,
+        "MESSAGE_TOO_LONG"
+    );
+
     assert.match(
-        getReply("a".repeat(301)),
+        result.message,
         /300 characters/i
     );
 });
