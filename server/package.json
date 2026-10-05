@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node --test tests/chat.test.js && node --check server.js && node --check routes/chatRoutes.js",
+    "test": "node --test && node --check server.js && node --check routes/chatRoutes.js && node --check middleware/authMiddleware.js",
     "start": "node server.js"
   },
   "keywords": [],
