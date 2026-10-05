@@ -50,7 +50,8 @@ app.use(
 );
 
 // ==========================================
-// API ROUTES
+// LEGACY API ROUTES
+// Existing frontend continues to work
 // ==========================================
 
 app.use("/api/users", userRoutes);
@@ -62,29 +63,63 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/chat", chatRoutes);
 
+// ==========================================
+// VERSIONED API ROUTES
+// PDF-required /api/v1/... endpoints
+// ==========================================
 
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/v1/wishlist", wishlistRoutes);
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/chat", chatRoutes);
 
+// ==========================================
+// HEALTH CHECK
+// ==========================================
 
-app.get("/api/v1/health", async (req, res) => {
+const healthCheck = async (req, res) => {
     try {
         await pool.query("SELECT 1");
 
         res.json({
             success: true,
-            message: "AnishMart API is running",
+            data: {
+                status: "UP",
+                db: "UP",
+                application: "AnishMart"
+            },
+            error: null,
+
+            // Kept for backward compatibility
             status: "UP",
             db: "UP"
         });
 
     } catch (error) {
+        console.error(
+            "HEALTH CHECK ERROR:",
+            error.message
+        );
+
         res.status(500).json({
             success: false,
-            message: "Database connection failed",
+            data: null,
+            error: {
+                code: "DATABASE_ERROR",
+                message: "Database connection failed"
+            },
             status: "DOWN",
             db: "DOWN"
         });
     }
-});
+};
+
+app.get("/api/health", healthCheck);
+app.get("/api/v1/health", healthCheck);
 
 // ==========================================
 // HOME PAGE
@@ -97,6 +132,21 @@ app.get("/", (req, res) => {
             "../client/index.html"
         )
     );
+});
+
+// ==========================================
+// API 404
+// ==========================================
+
+app.use("/api", (req, res) => {
+    res.status(404).json({
+        success: false,
+        data: null,
+        error: {
+            code: "NOT_FOUND",
+            message: "API endpoint not found"
+        }
+    });
 });
 
 // ==========================================
