@@ -381,6 +381,76 @@ const getAllOrders = async (
 
     try {
 
+        if (
+            req.user.role === "seller"
+        ) {
+
+            const sellerId =
+                Number(req.user.id);
+
+            const [orders] =
+                await pool.query(
+                    `SELECT
+                        o.id,
+                        o.buyer_id,
+                        u.name AS buyer_name,
+                        u.email AS buyer_email,
+                        o.customer_name,
+                        o.phone,
+                        o.address,
+                        o.city,
+                        o.state,
+                        o.pincode,
+
+                        SUM(
+                            oi.quantity *
+                            oi.unit_price
+                        ) AS total_amount,
+
+                        o.payment_method,
+                        o.status,
+                        o.payment_status,
+                        o.created_at
+
+                     FROM orders o
+
+                     JOIN users u
+                     ON o.buyer_id = u.id
+
+                     JOIN order_items oi
+                     ON oi.order_id = o.id
+
+                     JOIN products p
+                     ON p.id = oi.product_id
+
+                     WHERE p.seller_id = ?
+
+                     GROUP BY
+                        o.id,
+                        o.buyer_id,
+                        u.name,
+                        u.email,
+                        o.customer_name,
+                        o.phone,
+                        o.address,
+                        o.city,
+                        o.state,
+                        o.pincode,
+                        o.payment_method,
+                        o.status,
+                        o.payment_status,
+                        o.created_at
+
+                     ORDER BY o.created_at DESC`,
+                    [sellerId]
+                );
+
+            return res.json({
+                success: true,
+                orders
+            });
+        }
+
         const [orders] =
             await pool.query(
                 `SELECT
@@ -405,35 +475,29 @@ const getAllOrders = async (
                  ORDER BY o.created_at DESC`
             );
 
-
-        res.json({
+        return res.json({
             success: true,
-            orders: orders
+            orders
         });
-
 
     } catch (error) {
 
         console.error(
-            "GET ALL ORDERS ERROR:",
-            error
+            "GET ORDERS ERROR:",
+            error.message
         );
 
-
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message:
-                "Failed to fetch all customer orders"
+                "Failed to fetch customer orders"
         });
-
     }
-
 };
 
 
-
 // ==========================================
-// SELLER: UPDATE ORDER STATUS
+// SELLER / ADMIN: UPDATE ORDER STATUS
 // ==========================================
 const updateOrderStatus = async (
     req,
@@ -442,15 +506,12 @@ const updateOrderStatus = async (
 
     try {
 
-        const {
-            id
-        } = req.params;
-
+        const orderId =
+            Number(req.params.id);
 
         const {
             status
         } = req.body;
-
 
         const allowedStatuses = [
             "PLACED",
@@ -459,7 +520,6 @@ const updateOrderStatus = async (
             "DELIVERED",
             "CANCELLED"
         ];
-
 
         if (
             !allowedStatuses.includes(
@@ -472,9 +532,41 @@ const updateOrderStatus = async (
                 message:
                     "Invalid order status"
             });
-
         }
 
+        if (
+            req.user.role === "seller"
+        ) {
+
+            const [ownership] =
+                await pool.query(
+                    `SELECT
+                        o.id
+                     FROM orders o
+                     JOIN order_items oi
+                     ON oi.order_id = o.id
+                     JOIN products p
+                     ON p.id = oi.product_id
+                     WHERE o.id = ?
+                     AND p.seller_id = ?
+                     LIMIT 1`,
+                    [
+                        orderId,
+                        Number(req.user.id)
+                    ]
+                );
+
+            if (
+                ownership.length === 0
+            ) {
+
+                return res.status(403).json({
+                    success: false,
+                    message:
+                        "You can manage only orders containing your products"
+                });
+            }
+        }
 
         const [result] =
             await pool.query(
@@ -483,10 +575,9 @@ const updateOrderStatus = async (
                  WHERE id = ?`,
                 [
                     status,
-                    id
+                    orderId
                 ]
             );
-
 
         if (
             result.affectedRows === 0
@@ -497,35 +588,28 @@ const updateOrderStatus = async (
                 message:
                     "Order not found"
             });
-
         }
 
-
-        res.json({
+        return res.json({
             success: true,
             message:
                 "Order status updated successfully"
         });
 
-
     } catch (error) {
 
         console.error(
             "UPDATE ORDER STATUS ERROR:",
-            error
+            error.message
         );
 
-
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message:
                 "Failed to update order status"
         });
-
     }
-
 };
-
 
 
 // ==========================================

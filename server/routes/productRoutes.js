@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
     getAllProducts,
+    getSellerProducts,
     addProduct,
     updateProduct,
     deleteProduct
@@ -15,8 +16,20 @@ const router = express.Router();
 
 console.log("PRODUCT ROUTES LOADED");
 
-router.get("/", getAllProducts);
+// Seller's own products
+router.get(
+    "/mine",
+    requireRole("seller"),
+    getSellerProducts
+);
 
+// Public catalogue
+router.get(
+    "/",
+    getAllProducts
+);
+
+// Seller/admin create
 router.post(
     "/",
     requireRole("seller", "admin"),
@@ -29,6 +42,7 @@ router.post(
     addProduct
 );
 
+// Seller own product / Admin any product
 router.put(
     "/:id",
     requireRole("seller", "admin"),
