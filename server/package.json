@@ -22,7 +22,7 @@
   },
   "overrides": {
     "express-mysql-session": {
-      "mysql2": ""
+      "mysql2": "3.24.3"
     }
   }
 }
