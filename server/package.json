@@ -18,7 +18,8 @@
     "express": "^5.2.1",
     "express-mysql-session": "^3.0.3",
     "express-session": "^1.19.0",
-    "mysql2": "^3.24.3"
+    "mysql2": "3.24.5",
+    "proxy-addr": "2.0.8"
   },
   "overrides": {
     "express-mysql-session": {
